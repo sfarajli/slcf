@@ -1,7 +1,7 @@
 DEST_HOME ?= $(HOME)
 PREFIX ?= /usr/local
 
-CONFIRM_DOTFILES ?= true
+CONFIRM_DOTFILES ?= false
 CONFIRM_SCRIPTS ?= false
 CONFIRM_ARCH ?= false
 
