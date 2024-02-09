@@ -1,0 +1,108 @@
+########################################################
+#########         General keybinds            ##########
+########################################################
+
+#Launch terminal
+alt + Return
+    alacritty
+
+#Launch browser
+alt + shift + Return
+	qutebrowser
+
+#Change wallpaper
+alt + shift + v 
+    nitrogen --set-zoom-fill --random ~/.config/wallpapers
+
+#Launch terminal alternative
+alt + shift + n 
+   kitty
+
+#Kill all the alternative terminal instances
+alt + shift + m
+    killall kitty
+
+#Open gruvbox themed dmenu
+alt + d
+    dmenu_run -i -nb '#282828' -nf '#ebdbb2' -sb '#ebdbb2' -sf '#1f222d' -fn 'Roboto:bold:pixelsize=14'
+
+#passmenu
+alt+p
+	passmenu
+
+#Volume buttons
+XF86AudioRaiseVolume 
+    pactl set-sink-volume @DEFAULT_SINK@ +10%
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -10%
+XF86AudioMute 
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+XF86AudioMute
+   pactl set-source-mute @DEFAULT_SINK@
+
+#Brightness buttons
+XF86MonBrightnessUp 
+    brightnessctl -c backlight set +5%
+XF86MonBrightnessDown
+    brightnessctl -c backlight set 5%-
+
+#Screenshot
+alt + shift + s
+    maim ~/Pictures/screenshots/$(date +%s).png
+
+
+########################################################
+#########       BSPWM specific keybinds	      ##########
+########################################################
+
+#Change workspaces
+alt + {_,shift + }{1-9}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#Change Focus
+alt + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+#Reload bspwm
+alt + shift + r 
+    bspc wm -r
+
+#Exit bspwm
+alt + shift + 0 
+    killall bspwm
+
+#Toggle fullscreen mode
+alt + f
+    bspc node -t fullscreen
+
+#Toggle titled mode
+alt + a
+    bspc node -t tiled
+
+#Toggle floating mode
+alt+s
+    bspc node -t floating
+
+#Move windowns in floating mode
+super + shift + {h,j,k,l}
+    bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#Kill the focused window
+alt + shift + q
+    bspc node -c
+
+# Focus next floating window
+alt + space 
+   bspc node -f next.floating
+
+#Expanding the focused node
+super + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20, bottom 0 -20, left 20 0}
+
+#moving the focused node 
+alt + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+alt + r
+	bspc node @/ -R 90
+

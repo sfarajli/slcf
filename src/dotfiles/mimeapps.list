@@ -1,0 +1,6 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop
+[Default Applications]
+image/jpeg=sxiv.desktop
+[Default Applications]
+text/plain=nvim.desktop
