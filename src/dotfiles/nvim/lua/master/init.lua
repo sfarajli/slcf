@@ -1,0 +1,7 @@
+require("master.packer")
+require("master.vim_settings")
+require("master.plugins.gruvbox")
+require("master.plugins.comment")
+require("master.plugins.toggleterm")
+require("master.plugins.neotree")
+require("master.plugins.nvim-autopairs")

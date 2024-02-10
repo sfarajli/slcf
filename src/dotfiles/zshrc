@@ -83,6 +83,7 @@ alias lf="lfcd"
 alias touchOff='synclient TouchpadOff=1'
 alias ping='ping -c 2'
 alias clear='clear -x'
+alias vim='nvim'
 
 unsetopt nomatch
 LFS=/mnt/lfs
