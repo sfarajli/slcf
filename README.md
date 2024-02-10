@@ -1,6 +1,6 @@
-# Configuration files for gnu/linux systems
+# Suleyman's Linux configuration files (SLCF)
 
-## installation 
+## Installation 
 
 This software doesn't have any configure script at the moment, 
 instead you are supposed to use environment variables to configure 
@@ -13,14 +13,17 @@ export CONFIRM_SCRIPTS=true   #enable installing scripts
 
 export CONFIRM_ARCH=true      #enable installing arch specific (pacman.conf)
 
-DEST_HOME=/home/$USER         #give the user's home directory as the destination directory for installing the dotfiles (useful when running with sudo)
+export DEST_HOME=/home/$USER         #give the user's home directory as the destination directory for installing the dotfiles (useful when running with sudo)
+
+make install (or sudo make install if you want to install anything to the root directory)
 
 ```
 
-Or you might just run all of them in one line, as:
+Or if you don't know what you are doing you might just run the following command,
+but be aware that this will overwrite you existing configuration files.
 
 ```
-export CONFIRM_DOTFILES=false export CONFIRM_SCRIPTS=true make install
+CONFIRM_SCRIPTS=true CONFIRM_DOTFILES=true DEST_HOME=/home/theion sudo make install
 ```
 
 ### WARNING
