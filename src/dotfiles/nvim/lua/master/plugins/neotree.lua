@@ -5,6 +5,8 @@ require("neo-tree").setup({
 			mappings = {
 				["l"] = "open",
 				["h"] = "close_node",
+				["zh"] = "toggle_hidden",
+				["H"] = "close_all_nodes",
 			}
 		}
 	},
