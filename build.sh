@@ -50,7 +50,7 @@ EOF
 exit 2
 }
 
-[ $# = 0 ] && help
+[ $# = 0 ] && help 
 
 for argument in $@;do
 	if [ $argument = "--force" ];then
@@ -78,7 +78,7 @@ for argument in $@;do
 			profile_install;;
 
 		"--archlinux") 
-			as_sudo archlinux_install
+			archlinux_install
 			;;
 				
 		"--all") 
@@ -86,6 +86,9 @@ for argument in $@;do
 			scripts_install
 			profile_install
 			;;
+
+		"--help")help;;
+
 		"--force");;
 
 		*) help ;;
