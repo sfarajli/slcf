@@ -26,10 +26,6 @@ archlinux_install() {
 }
 
 profile_install() {
-	COPY ./src/dotfiles/zsh/user_profile "$home_dir/.profile"
-	LINK "$home_dir/.profile" "$home_dir/.zprofile" || echo "WARNING: Couldn't link .zprofile to .profile"
-	LINK "$home_dir/.profile" "$home_dir/.bash_profile" || echo "WARNING: Couldn't link .bash_profile to .profile"
-
 	[ -d /etc/profile.d ] || { sudo mkdir /etc/profile.d && printf "/etc/profile.d directory created" ; }
 	as_sudo COPY ./src/etc/profile.d/theion.sh /etc/profile.d || echo "Couldn't install to /etc/profile.d"
 }
@@ -55,10 +51,8 @@ exit 2
 for argument in $@;do
 	if [ $argument = "--force" ];then
 		COPY(){ $SUDO cp -r $@; }
-		LINK(){ ln -sf $@; }
 		break
 	fi
-	LINK(){ ln -s $@; }
 	COPY(){ $SUDO cp -nr $@; }
 done
 

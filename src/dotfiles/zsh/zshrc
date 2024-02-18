@@ -68,3 +68,23 @@ setopt interactive_comments
 unsetopt nomatch
 setopt INC_APPEND_HISTORY 	# Adds command to history when they are run
 setopt HIST_FIND_NO_DUPS	# Doesn't show duplicate commands when backward searching
+
+# Aliases
+[ -f $XINITRC ] && alias startx="startx $XINITRC"
+[ -x "$(command -v nvim)" ] && alias vim="nvim" 
+alias ls="ls -A --color=auto"
+alias ping="ping -c 2"
+alias clear="clear -x"
+alias open="xdg-open"
+alias lf="lfcd"
+alias vim="nvim"
+alias touchOn="synclient TouchpadOff=0"
+alias touchOff="synclient TouchpadOff=1"
+
+# Systemd and Arch linux specific aliases
+alias pacman="sudo pacman"
+alias systemctl="sudo systemctl"
+alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
+alias is="systemctl stop NetworkManager"
+alias blue="sudo systemctl start bluetooth"
+alias net="sudo systemctl start NetworkManager"	

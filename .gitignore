@@ -6,3 +6,4 @@ configure.ac
 dock.png
 xinitrc
 Makefile
+user_profile
