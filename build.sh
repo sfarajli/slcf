@@ -87,8 +87,6 @@ for argument in $@;do
 			profile_install
 			;;
 
-		"--help")help;;
-
 		"--force");;
 
 		*) help ;;
