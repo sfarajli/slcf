@@ -90,7 +90,7 @@ alias blue="sudo systemctl start bluetooth"
 alias net="sudo systemctl start NetworkManager"	
 
 # Directory change aliases
-alias gp="cd ~/Proj"
+alias gp="cd ~/proj"
 alias gt="cd ~/testProj"
 alias gc="cd ~/.config"
 alias gu="cd /usr/local/bin"
