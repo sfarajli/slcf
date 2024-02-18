@@ -5,3 +5,4 @@ install
 configure.ac 
 dock.png
 xinitrc
+Makefile
