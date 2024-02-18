@@ -12,7 +12,7 @@ home_dir="${XDG_DATA_HOME:-$HOME}"
 dotfiles_install() {
 	[ -d $config_dir ] || mkdir -v $config_dir
 	COPY ./src/dotfiles/*  "$config_dir"
-	COPY ./src/dotfiles/zsh/zshrc "$home_dir"
+	COPY ./src/dotfiles/zsh/zshrc "$home_dir"/.zshrc
 	COPY ./src/dotfiles/Xresources "$home_dir"/.Xresources
 }
 
