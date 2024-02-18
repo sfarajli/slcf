@@ -1,3 +1,5 @@
 #!/bin/sh
 
+# Replace all the spaces in file names with "_" in the current working directory
+
 for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done

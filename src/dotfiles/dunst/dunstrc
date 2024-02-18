@@ -1,0 +1,33 @@
+# Very minimal dunst config 
+
+[global]
+	width = 300
+	height = 300
+	origin = bottom-right
+	offset = 10x10
+	scale = 0
+	notification_limit = 6
+	separator_height = 2
+	alignment = left
+	stack_duplicates = true
+	frame_width = 3
+	frame_color = "#4E3524"
+	gap_size = 6
+	separator_color = frame
+	font = JetBrainsMono Nerd Font 10
+	line_height = 3
+
+[urgency_normal]
+	foreground = "#a89984"
+	background = "#282828" 
+	timeout = 5
+
+[urgency_low]
+	foreground = "#a89984"
+	background = "#282828" 
+	timeout = 3
+
+[urgency_critical]
+	foreground = "#a89984"
+	background = "#282828" 
+	timeout = 8

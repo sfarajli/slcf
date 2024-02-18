@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Wrapper script for volume control
+
+arg=$1
+[ $# = 0 ] && { echo ERROR: No argument ; exit 2; }
+[ $# -gt 1 ] && { echo Too much arguments ; exit 2 ; }
+
+[ $arg = '--toggle' ] && { pactl set-sink-mute @DEFAULT_SINK@ toggle ; exit 0 ;}
+
+pactl set-sink-volume @DEFAULT_SINK@ $1%

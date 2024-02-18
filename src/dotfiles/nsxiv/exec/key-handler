@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# For theme to be applied ~/.Xresource file must be present
+
+while read -r file
+do
+	case "$1" in
+
+		"m") 
+			[ -z $destdir ] && destdir="$(echo "$HOME/Pictures" | dmenu -p "Move directory: " | sed "s|~|$HOME|g")" 
+
+			[ ! -d $destdir ] && { nsend "Not a directory" ; exit 2 ;}
+
+			mv "$file" "$destdir" && nsend "$file moved to $destdir" & 	 
+			;;
+
+		"c")
+
+			[ -z $destdir ] && destdir="$(echo "$HOME/Pictures" | dmenu -p "Copy directory: " | sed "s|~|$HOME|g")" 
+
+			[ ! -d $destdir ] && { nsend "Not a directory" ; exit 2 ;}
+
+			cp "$file" "$destdir" && nsend "$file copied to $destdir" & 	 
+			;;
+
+		"w")
+			setwp "$file" && nsend "Wallpaper changed to $file" ;;
+		"d")
+			[ ! -d ~/.trash ] && { mkdir ~/.trash && nsend "~/.trash created";}
+			mv "$file" ~/.trash && nsend "$file is moved to ~/.trash"  ;;
+		"r")
+			convert -rotate 90 "$file" "$file" ;;
+		"R")
+			convert -rotate -90 "$file" "$file" ;;
+		"f")
+			convert -flop "$file" "$file" ;; 
+		"y")
+			echo -n "$file" | xclip -selection clipboard && nsend "Copied to clipboard" & ;;
+		"Y")  
+			readlink -f "$file" | tr -d '\n' | xclip -selection clipboard && nsend "Copied to clipboard" & ;;
+
+		esac
+	done

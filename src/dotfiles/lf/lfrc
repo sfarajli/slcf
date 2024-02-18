@@ -1,0 +1,44 @@
+# Suleyman's gruvbox themed lf config at "https://github.com/thei0n/slcf"
+# Due to the facts that ueberzug is no longer maintained and adds extra complexity it is not included in the config
+
+# Options
+set incsearch
+set scrolloff 4 #smooth scrolling
+
+# Key-maps
+map <enter> shell
+map m push $mkdir<space>
+map t push $touch<space>
+map D trash
+map gf $lf -remote "send $id select $(fzf --layout=reverse --height=10)"
+map x $$f # execute current file (must be executable)
+
+map zb :{{ set sortby natural; set info size; set preview; set ratios 5:2; }}
+map zz :{{ set preview; set ratios 1:2:3; }}
+
+# Directory change 
+map gp cd ~/proj
+map gt cd ~/testProj
+map gc cd ~/.config
+map gh cd ~
+map gu cd /usr/local/bin
+
+# Colors
+set cursoractivefmt "\033[0;1;7m" #white
+# set cursoractivefmt "\033[32;1;7m" #yellowish green
+# set cursoractivefmt "\033[33;1;7m" #orange
+# set cursoractivefmt "\033[36;1;7m" #green
+
+set cursorparentfmt "\033[0;1;7m"
+set tagfmt "\033[32;1;7m"
+set rulerfmt "\033[32;1;7m"
+
+set promptfmt "\033[48;1;234m %w/%f"
+
+
+cmd trash !{{
+	[ ! -d ~/.trash ] && mkdir -p ~/.trash
+	set -f
+	printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]" && read ans
+	[ $ans == "y" ] && mv $fx ~/.trash && echo "Trash complete!" || echo "Failed! Use y to trash."
+}}

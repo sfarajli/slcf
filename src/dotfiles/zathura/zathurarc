@@ -1,3 +1,5 @@
+# Gruvbox themed zathura theme at "https://github.com/eastack/zathura-gruvbox"
+
 set notification-error-bg       "#282828" # bg
 set notification-error-fg       "#fb4934" # bright:red
 set notification-warning-bg     "#282828" # bg

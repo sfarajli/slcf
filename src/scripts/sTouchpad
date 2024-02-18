@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Wrapper script for activating and deactivating touchpad
+
+[ -d ~/.cache ] && mkdir ~/.cache || { echo "Couldn't create ~/.cache " && exit 2; }
+
+file=~/.cache/touchpad_on
+
+if [ -f $file ];then
+	rm $file
+	xinput disable "$(xinput list --name-only | grep Touchpad)"
+else
+	touch $file 
+	xinput enable "$(xinput list --name-only | grep Touchpad)"
+fi

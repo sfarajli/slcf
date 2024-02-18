@@ -1,6 +1,17 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop
+
 [Default Applications]
-image/jpeg=sxiv.desktop
+image/jpeg=nsxiv.desktop
+image/png=nsxiv.desktop
+image/jpg=nsxiv.desktop
+
 [Default Applications]
 text/plain=nvim.desktop
+
+[Default Applications]
+text/html=org.qutebrowser.qutebrowser.desktop
+
+[Default Application]
+x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
+x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop

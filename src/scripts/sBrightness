@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Wrapper script for backlight control
+
+arg=$1
+
+[ $# -eq 0 ] && { echo "Error: No argument" ; exit 2 ;} 
+
+[ $# -gt 1 ] && { echo Too much arguments ; exit 2 ; }
+
+[ $arg -lt 0 ] && positive_arg=$(echo $arg | tr -d "-") && brightnessctl -c backlight set $positive_arg%- && exit 0
+
+brightnessctl -c backlight set $arg%

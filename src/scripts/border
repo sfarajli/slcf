@@ -3,4 +3,3 @@
 bspc config border_width $1
 
 [ $1 = "blue" ] && bspc config focused_border_color "#099999"
-

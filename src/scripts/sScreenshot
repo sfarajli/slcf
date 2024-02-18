@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Wrapper script for screenshots 
+
+[ -d ~/Pictures/screenshots ] || mkdir -p ~/Pictures/screenshots
+
+maim ~/Pictures/screenshots/$(date +%s).png

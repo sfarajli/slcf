@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Wrapper script for setting wallpaper
+
+program_name=setwp
+
+for argument in $@;
+do
+	[ ! -e $argument ] && { echo $program_name: cannot access "'$argument'": No such file or directory  && exit 2; }
+
+	[ -d $argument ] && wallpaper_list="$wallpaper_list $(ls -d $argument/*)"
+
+	[ -f $argument ] && wallpaper_list="$wallpaper_list $argument"
+	
+done
+
+
+xwallpaper --zoom $(shuf -en 1 $wallpaper_list)

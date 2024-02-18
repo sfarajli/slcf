@@ -1,22 +1,14 @@
-#Theion's zsh config
+# This config is a fork of Luke Smith's zshrc at "https://github.com/LukeSmithxyz/voidrice"
 
-# Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
-PROMPT="%B%F{cyan}%~ %F{none}$%b "
-
+PROMPT="%B%F{red}%(?..%? )%B%F{blue}%n%b%f@%m %B%~ %% %b"
 
 #git integration
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-RPROMPT='%(?..[%?] ) ${vcs_info_msg_0_}'
+RPROMPT='%B${vcs_info_msg_0_}'
 zstyle ':vcs_info:git:*' formats '%b'
-
-
-setopt autocd		# Automatically cd into typed directory.
-stty stop undef		# Disable ctrl-s to freeze terminal.
-setopt interactive_comments
 
 # History in cache directory:
 HISTSIZE=10000000
@@ -31,8 +23,10 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
+
 # vi mode
 bindkey -v
+bindkey '^R' history-incremental-search-backward
 export KEYTIMEOUT=1
 
 # Use vim keys in tab complete menu:
@@ -43,15 +37,9 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
 
-#function to quit in the direcory changed by lf
 lfcd () {
-    tmp="$(mktemp -uq)"
-    trap 'rm -f $tmp >/dev/null 2>&1 && trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
+    # `command` is needed in case `lfcd` is aliased to `lf`
+    cd "$(command lf -print-last-dir "$@")"
 }
 
 # Change cursor shape for different vi modes.
@@ -61,6 +49,8 @@ function zle-keymap-select () {
         viins|main) echo -ne '\e[5 q';; # beam
     esac
 }
+
+
 zle -N zle-keymap-select
 zle-line-init() {
     zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
@@ -70,20 +60,11 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
-#aliases
-alias pacman='sudo pacman'
-alias systemctl='sudo systemctl'
-alias arch-wiki='cd /usr/share/doc/arch-wiki/html/en/'
-alias ls='ls --color=auto'
-alias open='xdg-open'
-alias is="systemctl stop NetworkManager"
-alias blue="sudo systemctl start bluetooth"
-alias net="sudo systemctl start NetworkManager"
-alias lf="lfcd"
-alias touchOff='synclient TouchpadOff=1'
-alias ping='ping -c 2'
-alias clear='clear -x'
-alias vim='nvim'
 
+# Options
+setopt autocd			# Automatically cd into typed directory.
+# stty stop undef		# Disable ctrl-s to freeze terminal.
+setopt interactive_comments
 unsetopt nomatch
-LFS=/mnt/lfs
+setopt INC_APPEND_HISTORY 	# Adds command to history when they are run
+setopt HIST_FIND_NO_DUPS	# Doesn't show duplicate commands when backward searching

@@ -1,4 +1,4 @@
-#Theion's i3-wm config
+# Theion's i3-wm config
 font pango: JetBrainsMono Nerd Font 0
 
 set $bg #282828
@@ -213,4 +213,3 @@ bindsym $mod+Shift+m exec killall kitty
 bindsym $mod+Shift+n exec --no-startup-id kitty --class=floating
 
 bindsym $mod+Shift+p exec ~/.config/polybar/launch.sh
-

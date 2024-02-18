@@ -1,26 +1,26 @@
-########################################################
-#########         General keybinds            ##########
-########################################################
+# For some keybinds to work properly some scripts from "https://github.com/thei0n/slcf" must be installed
+
+#########       General keybinds	      ##########
 
 #Launch terminal
 alt + Return
-    alacritty
+   [ -z $TERMINAL ] && alacritty || $TERMINAL
 
 #Launch browser
 alt + shift + Return
-	qutebrowser
+   [ -z $BROWSER ] && qutebrowser || $BROWSER
 
 #Change wallpaper
 alt + shift + v 
-    nitrogen --set-zoom-fill --random ~/.config/wallpapers
+	setwp ~/.config/wallpapers
 
 #Launch terminal alternative
 alt + shift + n 
-   kitty
+   [ -z $TERMINAL_ALTERNATIVE ] && kitty || $TERMINAL_ALTERNATIVE
 
 #Kill all the alternative terminal instances
 alt + shift + m
-    killall kitty
+	[ -z $TERMINAL_ALTERNATIVE ] && killall kitty || killall $TERMINAL_ALTERNATIVE
 
 #Open gruvbox themed dmenu
 alt + d
@@ -32,28 +32,26 @@ alt+p
 
 #Volume buttons
 XF86AudioRaiseVolume 
-    pactl set-sink-volume @DEFAULT_SINK@ +10%
+	sVolume +10
+
 XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -10%
+	sVolume -10
+
 XF86AudioMute 
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
-XF86AudioMute
-   pactl set-source-mute @DEFAULT_SINK@
+	sVolume --toggle
 
 #Brightness buttons
 XF86MonBrightnessUp 
-    brightnessctl -c backlight set +5%
+    sBrightness +5
 XF86MonBrightnessDown
-    brightnessctl -c backlight set 5%-
+    sBrightness -5
 
 #Screenshot
 alt + shift + s
-    maim ~/Pictures/screenshots/$(date +%s).png
+    sScreenshot 
 
 
-########################################################
 #########       BSPWM specific keybinds	      ##########
-########################################################
 
 #Change workspaces
 alt + {_,shift + }{1-9}
@@ -105,4 +103,3 @@ alt + shift + {h,j,k,l}
 
 alt + r
 	bspc node @/ -R 90
-
