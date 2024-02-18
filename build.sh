@@ -7,7 +7,7 @@ as_sudo(){
 }
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
-home_dir="${XDG_DATA_HOME:-$HOME}"
+home_dir="$HOME"
 
 dotfiles_install() {
 	[ -d $config_dir ] || mkdir -v $config_dir
