@@ -88,3 +88,11 @@ alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
 alias is="systemctl stop NetworkManager"
 alias blue="sudo systemctl start bluetooth"
 alias net="sudo systemctl start NetworkManager"	
+
+# Directory change aliases
+alias gp="cd ~/Proj"
+alias gt="cd ~/testProj"
+alias gc="cd ~/.config"
+alias gu="cd /usr/local/bin"
+
+
