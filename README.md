@@ -1,6 +1,6 @@
 # Suleyman's Linux configuration files (SLCF)
 
-## Some of Contents
+## Contents
 * Some simple scripts 
 * Gruvbox themed configuration
 * Neovim config with bootstraping packer 
