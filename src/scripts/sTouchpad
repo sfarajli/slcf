@@ -2,7 +2,7 @@
 
 # Wrapper script for activating and deactivating touchpad
 
-[ -d ~/.cache ] && mkdir ~/.cache || { echo "Couldn't create ~/.cache " && exit 2; }
+[ -d ~/.cache ] || { mkdir ~/.cache || { echo "Couldn't create ~/.cache " && exit 2; };}
 
 file=~/.cache/touchpad_on
 
