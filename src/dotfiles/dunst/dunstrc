@@ -18,8 +18,8 @@
 	line_height = 3
 
 [urgency_normal]
-	foreground = "#a89984"
-	background = "#282828" 
+	foreground = "#282828" 
+	background = "#a89984"
 	timeout = 5
 
 [urgency_low]
