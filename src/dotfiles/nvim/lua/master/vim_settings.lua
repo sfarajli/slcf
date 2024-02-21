@@ -7,7 +7,7 @@ vim.opt.fillchars = {eob = " "}
 --[[ Changes to make vim look simpler ]]
 vim.cmd([[ set shortmess+=I ]]) --Remove Intro text when entering vim
 vim.cmd("set noshowmode") 
-vim.cmd("set noshowcmd")
+-- vim.cmd("set noshowcmd")
 vim.cmd("set noruler")
 vim.cmd("set laststatus=-")
 vim.cmd("set statusline=0")
