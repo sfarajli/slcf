@@ -39,7 +39,6 @@ Usage $0:
 
 	--profile	Install profile files
 	--archlinux	Install Arch linux specific files
-	--fix-profile	make /etc/profile.d sourced
 	--force		Overwrite the existing files
 	--all		Install everything (except Arch linux specific files)
 EOF
