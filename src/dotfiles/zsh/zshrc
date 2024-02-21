@@ -11,8 +11,8 @@ RPROMPT='%B${vcs_info_msg_0_}'
 zstyle ':vcs_info:git:*' formats '%b'
 
 # History in cache directory:
-HISTSIZE=10000000
-SAVEHIST=10000000
+HISTSIZE=1000000000
+SAVEHIST=1000000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
 
@@ -94,5 +94,4 @@ alias gp="cd ~/proj"
 alias gt="cd ~/testProj"
 alias gc="cd ~/.config"
 alias gu="cd /usr/local/bin"
-
 
