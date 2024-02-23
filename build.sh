@@ -1,7 +1,7 @@
 #!/bin/sh
 
 as_sudo(){
-	SUDO=sudo 
+	SUDO=sudo
 	$@
 	SUDO=""
 }
