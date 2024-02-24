@@ -45,3 +45,4 @@ map i recolor
 map J zoom in
 map K zoom out
 set selection-clipboard clipboard
+set guioptions none
