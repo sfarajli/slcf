@@ -1,17 +1,17 @@
---[[Vim settings]]
+-- [[Vim settings]]
 
 vim.cmd("set clipboard+=unnamedplus") --Use System Clipboard
 vim.opt.fillchars = {eob = " "}
 
 
---[[ Changes to make vim look simpler ]]
+-- [[ Changes to make vim look simpler ]]
 vim.cmd([[ set shortmess+=I ]]) --Remove Intro text when entering vim
 vim.cmd("set noshowmode") 
 -- vim.cmd("set noshowcmd")
 vim.cmd("set noruler")
 vim.cmd("set laststatus=-")
 vim.cmd("set statusline=0")
---[]
+-- []
 
 vim.cmd([[set number]]) 
 
@@ -23,7 +23,14 @@ vim.cmd([[set formatoptions-=cro]]) --deactivating autocomment
 
 vim.cmd([[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]])
 
---[[Mappings]]
+-- [[Mappings]]
+
+-- Move cursor in Insert mode
+vim.keymap.set('i','<C-k>','<C-o>gk')
+vim.keymap.set('i','<C-h>','<Left>')
+vim.keymap.set('i','<C-l>','<Right>')
+vim.keymap.set('i','<C-j>','<C-o>gj')
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
