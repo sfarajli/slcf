@@ -8,8 +8,8 @@ file=~/.cache/touchpad_on
 
 if [ -f $file ];then
 	rm $file
-	xinput disable "$(xinput list --name-only | grep Touchpad)"
+	xinput disable "$(xinput list --name-only | grep Touchpad)" && nsend Touchpad Disabled
 else
 	touch $file 
-	xinput enable "$(xinput list --name-only | grep Touchpad)"
+	xinput enable "$(xinput list --name-only | grep Touchpad)" && nsend Touchpad Enabled
 fi
