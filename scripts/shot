@@ -1,0 +1,28 @@
+#!/bin/sh
+
+
+help() {
+cat << EOF
+$0: Wrapper script to take screenshots
+
+options:
+ -s 		Select the area with the cursor
+ -h 		Print this message and exit
+
+NOTE: save directory is ~/pic/screenshots
+EOF
+}
+
+directory="${XDG_CONFIG_HOME:-$HOME}/pics/screenshots"
+[ -d "$directory" ] || { mkdir -p "$directory" || echo "failed to create directory" >&2; }
+filename="$directory"/%b%d::%H%M%S.png
+
+while getopts "sh" option; do
+case $option in
+	s) FLG="-fs"				;;
+	h) help ; exit 0			;;
+	*) echo "$0 -h for help"; exit 1	;;
+esac
+done
+
+scrot $FLG -z $filename > /dev/null 2>&1 || { echo Screenshot failed; exit 1; }
