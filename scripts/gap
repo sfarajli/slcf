@@ -1,3 +1,0 @@
-#!/bin/sh
-
-bspc config window_gap $1
