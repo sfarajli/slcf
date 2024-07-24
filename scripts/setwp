@@ -29,7 +29,7 @@ while getopts "hcd:" option; do
 	;;
 	c)
 		xwallpaper --clear > /dev/null 2>&1 \
-		err "Couldn't clear wallpaper"
+		|| err "Couldn't clear wallpaper"
 		exit 0
 	;;
 	d) buf="${OPTARG}" ;;
