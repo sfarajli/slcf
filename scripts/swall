@@ -2,6 +2,7 @@
 
 # TODO add the option error checking with optind
 
+
 err() {
 	echo "${0}": "${1}"
 	exit 1
@@ -21,7 +22,8 @@ NOTE: default wallpaper directory is ~/.config/wallpapers
 EOF
 }
 
-waldir="${XDG_CONFIG_HOME:-$HOME}/.config/wallpapers"
+waldir="${HOME}"/.config/wallpapers
+# FIXME add xdg home variable
 
 while getopts "hcd:" option; do
 	case "${option}" in
