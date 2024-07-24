@@ -1,18 +1,56 @@
 #!/bin/sh
 
-# Wrapper script for setting wallpaper
+err() {
+	echo "${0}": "${1}"
+	exit 1
+}
 
-program_name=setwp
 
-for argument in $@;
-do
-	[ ! -e $argument ] && { echo $program_name: cannot access "'$argument'": No such file or directory  && exit 2; }
+help() {
+cat << EOF
+$0: Wrapper script to set wallpapers
 
-	[ -d $argument ] && wallpaper_list="$wallpaper_list $(ls -d $argument/*)"
+options:
+ -d [File]	Select a wallpaper or a directory
+ -h 		Print this message and exit
+ -c 		Remove the current wallpaper
 
-	[ -f $argument ] && wallpaper_list="$wallpaper_list $argument"
-	
+NOTE: default wallpaper directory is ~/.config/wallpapers
+EOF
+}
+
+waldir="${XDG_CONFIG_HOME:-$HOME}/.config/wallpapers"
+
+while getopts "hcd:" option; do
+	case "${option}" in
+	h)
+		help
+		exit 0
+	;;
+	c)
+		xwallpaper --clear > /dev/null 2>&1 \
+		err "Couldn't clear wallpaper"
+		exit 0
+	;;
+	d) buf="${OPTARG}" ;;
+	*) err 'add -h for help' ;;
+	esac
 done
 
 
-xwallpaper --zoom $(shuf -en 1 $wallpaper_list)
+if [ -n "${buf}" ]; then
+	case $(file -b --mime-type "${buf}") in
+	image/*) image="${buf}" ;;
+	inode/directory) waldir="${buf}" ;;
+	*) err "Couldn't read given file" ;;
+	esac
+fi
+
+if [ -z "${image}" ]; then
+	image=$(find "${waldir}" -iregex '.*\.jpeg\|.*\.jpng\|.*\.png' 2>/dev/null \
+	| shuf -n 1 2>/dev/null)
+fi
+
+xwallpaper --zoom "${image}" > /dev/null 2>&1 || err "Couldn't set wallpaper"
+
+echo "${image}"
