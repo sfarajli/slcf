@@ -2,12 +2,12 @@
 application/pdf=org.pwmt.zathura.desktop
 
 [Default Applications]
-image/jpeg=nsxiv.desktop
-image/png=nsxiv.desktop
-image/jpg=nsxiv.desktop
+image/jpeg=sxiv.desktop
+image/png=sxiv.desktop
+image/jpg=sxiv.desktop
 
 [Default Applications]
-text/plain=nvim.desktop
+text/plain=vim.desktop
 
 [Default Applications]
 text/html=org.qutebrowser.qutebrowser.desktop
