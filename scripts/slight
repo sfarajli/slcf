@@ -1,0 +1,62 @@
+#!/bin/sh
+
+help() {
+cat << EOF
+$0: Wrapper script to change backlight
+
+options:
+ -i [Brg]	Increase backlight by Brg
+ -d [Brg]	Decrease backlight by Brg
+ -s [Brg] 	Set backlight to Brg
+ -p		Show the current backlight
+ -h 		Print this message and exit
+
+NOTE: Script interprets values as percentages
+EOF
+}
+
+err() {
+	printf "$*\n"
+	exit 1
+}
+
+run() {
+	if ! $(${1} > /dev/null 2>&1); then
+		err "%s""${2}"
+	fi
+}
+
+
+if [ $# != 1 ] && [ $# != 2 ]; then
+	err "${0}: Invalid usage\nTry '$0 -h' for help."
+fi
+
+if ! command -v brightnessctl > /dev/null 2>&1; then
+	err "brightnessctl must be installed"
+fi
+
+while getopts "i:d:s:ph" option; do
+	case "${option}" in
+	i)
+		run "brightnessctl set +${OPTARG}%" \
+		"${0}: Failed to increase brightness"
+	;;
+	d)
+		run "brightnessctl set ${OPTARG}-%" \
+		"${0}: Failed to decrease brightness"
+	;;
+	s)
+		run "brightnessctl set ${OPTARG}%" \
+		"${0}: Failed to set brightness"
+	;;
+	p)
+		if ! brightnessctl 2>/dev/null; then
+			err "Failed to get current brightness"
+		fi
+	;;
+	h) help; exit 0 ;;
+
+	*) err "Try '$0 -h' for help.";;
+
+	esac
+done
