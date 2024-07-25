@@ -1,5 +1,7 @@
 # Suleyman's gruvbox themed lf config at "https://github.com/thei0n/slcf"
-# Due to the facts that ueberzug is no longer maintained and adds extra complexity it is not included in the config
+
+# Due to the facts that ueberzug is no longer maintained and adds extra \
+# complexity it is not included in the config
 
 # Options
 set incsearch
