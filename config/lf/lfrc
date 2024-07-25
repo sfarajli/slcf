@@ -16,7 +16,7 @@ map x $$f # execute current file (must be executable)
 map zb :{{ set sortby natural; set info size; set preview; set ratios 5:2; }}
 map zz :{{ set preview; set ratios 1:2:3; }}
 
-# Directory change 
+# Directory change
 map gp cd ~/proj
 map gt cd ~/testProj
 map gc cd ~/.config
@@ -38,7 +38,13 @@ set promptfmt "\033[48;1;234m %w/%f"
 
 cmd trash !{{
 	[ ! -d ~/.trash ] && mkdir -p ~/.trash
-	set -f
-	printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]" && read ans
-	[ $ans == "y" ] && mv $fx ~/.trash && echo "Trash complete!" || echo "Failed! Use y to trash."
+	printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]"
+	read ans
+
+	if [ "${ans}" = "y" ];then
+		mv "${fx}" ~/.trash
+		echo "Trash complete!"
+	else
+		echo "Failed! Use y to trash."
+	fi
 }}
