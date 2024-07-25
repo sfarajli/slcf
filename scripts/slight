@@ -21,7 +21,7 @@ err() {
 }
 
 run() {
-	if ! $(${1} > /dev/null 2>&1); then
+	if ! ${1} > /dev/null 2>&1; then
 		err "%s""${2}"
 	fi
 }
@@ -40,14 +40,17 @@ while getopts "i:d:s:ph" option; do
 	i)
 		run "brightnessctl set +${OPTARG}%" \
 		"${0}: Failed to increase brightness"
+		exit 0
 	;;
 	d)
 		run "brightnessctl set ${OPTARG}-%" \
 		"${0}: Failed to decrease brightness"
+		exit 0
 	;;
 	s)
 		run "brightnessctl set ${OPTARG}%" \
 		"${0}: Failed to set brightness"
+		exit 0
 	;;
 	p)
 		if ! brightnessctl 2>/dev/null; then
@@ -60,3 +63,5 @@ while getopts "i:d:s:ph" option; do
 
 	esac
 done
+
+err "${0}: Invalid usage\nTry '$0 -h' for help."
