@@ -8,6 +8,8 @@ options:
  -d [File]	Select a wallpaper or a directory
  -h 		Print this message and exit
  -c 		Remove the current wallpaper
+
+NOTE: default directory is ~/.config/wallpapers
 EOF
 }
 
