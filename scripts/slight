@@ -54,6 +54,8 @@ while getopts "i:d:s:ph" option; do
 	p)
 		if ! brightnessctl 2>/dev/null; then
 			err "Failed to get current brightness"
+		else
+			exit 0
 		fi
 	;;
 	h) help; exit 0 ;;
