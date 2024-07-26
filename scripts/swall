@@ -14,7 +14,9 @@ EOF
 }
 
 err() {
-	echo "$*" >&2
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
 	exit 1
 }
 
@@ -22,17 +24,18 @@ run() {
 	if ! ${1} > /dev/null 2>&1; then
 		err "${2}"
 	fi
+	exit 0
 }
 
 if ! command -v xwallpaper > /dev/null 2>&1; then
 	err "${0}: xwallpaper must be installed"
 fi
 
-if [ $# = 0 ]; then
+if [ ${#} = 0 ]; then
 	input="${HOME}/.config/wallpapers"
-elif [ $# != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage
-Try '$0 -h' for help."
+elif [ ${#} != 1 ] && [ $# != 2 ]; then
+	err "${0}: Invalid usage" \
+	    "Try '$0 -h' for help."
 fi
 
 while getopts "hcd:" option; do
@@ -40,7 +43,6 @@ while getopts "hcd:" option; do
 	c)
 		run "xwallpaper --clear" \
 		"${0}: Failed to clear wallpaper"
-		exit 0
 	;;
 	d) input="${OPTARG}" ;;
 
@@ -57,7 +59,7 @@ if [ -n "${input}" ]; then
 
 	inode/directory) waldir="${input}" ;;
 
-	*) err "Couldn't read given file" ;;
+	*) err "${0}: Couldn't read given file" ;;
 	esac
 fi
 
@@ -68,7 +70,6 @@ fi
 
 [ -z "${image}" ] && err "${0}: No image file found"
 
-run "xwallpaper --zoom ${image}" \
-"${0}: Failed to set wallpaper"
+run "xwallpaper --zoom ${image}" "${0}: Failed to set wallpaper"
 
 echo "${image}"
