@@ -2,7 +2,7 @@
 
 help() {
 cat << EOF
-$0: Wrapper script to change backlight
+${0}: Wrapper script to change backlight
 
 options:
  -i [Brg]	Increase backlight by Brg
@@ -16,7 +16,10 @@ EOF
 }
 
 err() {
-	echo "$*" >&2
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
+
 	exit 1
 }
 
@@ -30,9 +33,9 @@ if ! command -v brightnessctl > /dev/null 2>&1; then
 	err "${0}: brightnessctl must be installed"
 fi
 
-if [ $# != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage
-Try '$0 -h' for help."
+if [ ${#} != 1 ] && [ ${#} != 2 ]; then
+	err "${0}: Invalid usage" \
+	    "Try '${0} -h' for help."
 fi
 
 while getopts "i:d:s:ph" option; do
@@ -61,10 +64,10 @@ while getopts "i:d:s:ph" option; do
 	;;
 	h) help; exit 0 ;;
 
-	*) err "Try '$0 -h' for help.";;
+	*) err "Try '${0} -h' for help.";;
 
 	esac
 done
 
-err "${0}: Invalid usage
-Try '$0 -h' for help."
+err "${0}: Invalid usage" \
+    "Try '${0} -h' for help."
