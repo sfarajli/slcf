@@ -1,10 +1,5 @@
 #!/bin/sh
 
-err() {
-	printf "${1} \n"
-	exit 1
-}
-
 help() {
 cat << EOF
 $0: Wrapper script to change volume
@@ -19,43 +14,61 @@ options:
 EOF
 }
 
+err() {
+	echo "$*" >&2
+	exit 1
+}
+
+run() {
+	if ! ${1} > /dev/null 2>&1; then
+		err "${2}"
+	fi
+}
+
+if ! command -v pactl > /dev/null 2>&1; then
+	err "${0}: pulseaudio must be installed"
+fi
+
 if [ $# != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage\nTry \'$0 -h\' for help."
+	err "${0}: Invalid usage
+Try '$0 -h' for help."
 fi
 
 while getopts "i:d:s:pth" option; do
 	case "${option}" in
 	i)
-		pactl set-sink-volume @DEFAULT_SINK@ +"${OPTARG}"% \
-		> /dev/null 2>&1 && exit 0 \
-		|| err "${0}: Failed to increase"
-	;;
-	d)
-		pactl set-sink-volume @DEFAULT_SINK@ -"${OPTARG}"% \
-		> /dev/null 2>&1 && exit 0 \
-		|| err "${0}: Failed to decrease"
-	;;
-	s)
-		pactl set-sink-volume @DEFAULT_SINK@ "${OPTARG}"% \
-		> /dev/null 2>&1 && exit 0 \
-		|| err "${0}: Failed to set"
-	;;
-	p)
-		pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null\
-		|| err "${0}: Failed"
-	;;
-	t)
-		pactl set-sink-volume @DEFAULT_SINK@ toggle \
-		> /dev/null 2>&1 && exit 0 \
-		|| err "${0}: Failed to toggle"
-	;;
-	h)
-		help
+		run "pactl set-sink-volume @DEFAULT_SINK@ +${OPTARG}%" \
+		"${0}: Failed to increase volume"
 		exit 0
 	;;
-	*)
-		err "Try \'${0} -h\' for help"
+	d)
+		run "pactl set-sink-volume @DEFAULT_SINK@ -${OPTARG}%" \
+		"${0}: Failed to decrease volume"
+		exit 0
 	;;
+	s)
+		run "pactl set-sink-volume @DEFAULT_SINK@ ${OPTARG}%" \
+		"${0}: Failed to set volume"
+		exit 0
+	;;
+	t)
+		run "set-sink-volume @DEFAULT_SINK@ toggle" \
+		"${0}: Failed to toggle volume"
+		exit 0
+	;;
+	p)
+		if ! pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null; then
+			err "Failed to get current volume"
+		else
+			exit 0
+		fi
+	;;
+	h) help; exit 0 ;;
+
+	*) err "Try '${0} -h' for help" ;;
 
 	esac
 done
+
+err "${0}: Invalid usage
+Try '$0 -h' for help."
