@@ -64,7 +64,7 @@ if [ -n "${waldir}" ]; then
 	| shuf -n 1 )
 fi
 
-[ -z ${image} ] && err "${0}: No image file found"
+[ -z "${image}" ] && err "${0}: No image file found"
 
 run "xwallpaper --zoom ${image}" \
 "${0}: Failed to set wallpaper"
