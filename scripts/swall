@@ -1,14 +1,5 @@
 #!/bin/sh
 
-# TODO add the option error checking with optind
-
-
-err() {
-	echo "${0}": "${1}"
-	exit 1
-}
-
-
 help() {
 cat << EOF
 $0: Wrapper script to set wallpapers
@@ -22,22 +13,41 @@ NOTE: default wallpaper directory is ~/.config/wallpapers
 EOF
 }
 
+err() {
+	echo "$*" >&2
+	exit 1
+}
+
+run() {
+	if ! ${1} > /dev/null 2>&1; then
+		err "${2}"
+	fi
+}
+
+if ! command -v xwallpaper > /dev/null 2>&1; then
+	err "${0}: xwallpaper must be installed"
+fi
+
+if [ $# != 0 ] && [ $# != 1 ] && [ $# != 2 ]; then
+	err "${0}: Invalid usage
+Try '$0 -h' for help."
+fi
+
+
 waldir="${HOME}"/.config/wallpapers
-# FIXME add xdg home variable
 
 while getopts "hcd:" option; do
 	case "${option}" in
-	h)
-		help
-		exit 0
-	;;
 	c)
-		xwallpaper --clear > /dev/null 2>&1 \
-		|| err "Couldn't clear wallpaper"
+		run "xwallpaper --clear" \
+		"${0}: Failed to clear wallpaper"
 		exit 0
 	;;
 	d) buf="${OPTARG}" ;;
-	*) err 'add -h for help' ;;
+
+	h) help; exit 0 ;;
+
+	*) err "Try '${0} -h' for help" ;;
 	esac
 done
 
@@ -45,16 +55,19 @@ done
 if [ -n "${buf}" ]; then
 	case $(file -b --mime-type "${buf}") in
 	image/*) image="${buf}" ;;
+
 	inode/directory) waldir="${buf}" ;;
+
 	*) err "Couldn't read given file" ;;
 	esac
 fi
 
 if [ -z "${image}" ]; then
 	image=$(find "${waldir}" -iregex '.*\.jpeg\|.*\.jpng\|.*\.png' 2>/dev/null \
-	| shuf -n 1 2>/dev/null)
+	| shuf -n 1 )
 fi
 
-xwallpaper --zoom "${image}" > /dev/null 2>&1 || err "Couldn't set wallpaper"
+run "xwallpaper --zoom ${image}" \
+"${0}: Failed to set wallpaper"
 
 echo "${image}"
