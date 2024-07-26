@@ -19,7 +19,6 @@ err() {
 	for line in "${@}"; do
 		echo "${line}" >&2
 	done
-
 	exit 1
 }
 
@@ -27,6 +26,7 @@ run() {
 	if ! ${1} > /dev/null 2>&1; then
 		err "${2}"
 	fi
+	exit 0
 }
 
 if ! command -v brightnessctl > /dev/null 2>&1; then
@@ -43,17 +43,14 @@ while getopts "i:d:s:ph" option; do
 	i)
 		run "brightnessctl set +${OPTARG}%" \
 		"${0}: Failed to increase brightness"
-		exit 0
 	;;
 	d)
 		run "brightnessctl set ${OPTARG}-%" \
 		"${0}: Failed to decrease brightness"
-		exit 0
 	;;
 	s)
 		run "brightnessctl set ${OPTARG}%" \
 		"${0}: Failed to set brightness"
-		exit 0
 	;;
 	p)
 		if ! brightnessctl 2>/dev/null; then
