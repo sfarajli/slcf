@@ -16,13 +16,13 @@ EOF
 }
 
 err() {
-	printf "$*\n"
+	echo "$*" >&2
 	exit 1
 }
 
 run() {
 	if ! ${1} > /dev/null 2>&1; then
-		err "%s""${2}"
+		err "${2}"
 	fi
 }
 
@@ -65,4 +65,5 @@ while getopts "i:d:s:ph" option; do
 	esac
 done
 
-err "${0}: Invalid usage\nTry '$0 -h' for help."
+err "${0}: Invalid usage
+Try '$0 -h' for help."
