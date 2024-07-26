@@ -27,7 +27,7 @@ run() {
 }
 
 if ! command -v brightnessctl > /dev/null 2>&1; then
-	err "brightnessctl must be installed"
+	err "${0}: brightnessctl must be installed"
 fi
 
 if [ $# != 1 ] && [ $# != 2 ]; then
