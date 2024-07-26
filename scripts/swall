@@ -8,8 +8,6 @@ options:
  -d [File]	Select a wallpaper or a directory
  -h 		Print this message and exit
  -c 		Remove the current wallpaper
-
-NOTE: default wallpaper directory is ~/.config/wallpapers
 EOF
 }
 
@@ -28,13 +26,12 @@ if ! command -v xwallpaper > /dev/null 2>&1; then
 	err "${0}: xwallpaper must be installed"
 fi
 
-if [ $# != 0 ] && [ $# != 1 ] && [ $# != 2 ]; then
+if [ $# = 0 ]; then
+	input="${HOME}/.config/wallpapers"	
+elif [ $# != 1 ] && [ $# != 2 ]; then
 	err "${0}: Invalid usage
 Try '$0 -h' for help."
 fi
-
-
-waldir="${HOME}"/.config/wallpapers
 
 while getopts "hcd:" option; do
 	case "${option}" in
@@ -43,7 +40,7 @@ while getopts "hcd:" option; do
 		"${0}: Failed to clear wallpaper"
 		exit 0
 	;;
-	d) buf="${OPTARG}" ;;
+	d) input="${OPTARG}" ;;
 
 	h) help; exit 0 ;;
 
@@ -52,20 +49,22 @@ while getopts "hcd:" option; do
 done
 
 
-if [ -n "${buf}" ]; then
-	case $(file -b --mime-type "${buf}") in
-	image/*) image="${buf}" ;;
+if [ -n "${input}" ]; then
+	case $(file -b --mime-type "${input}") in
+	image/*) image="${input}" ;;
 
-	inode/directory) waldir="${buf}" ;;
+	inode/directory) waldir="${input}" ;;
 
 	*) err "Couldn't read given file" ;;
 	esac
 fi
 
-if [ -z "${image}" ]; then
+if [ -n "${waldir}" ]; then
 	image=$(find "${waldir}" -iregex '.*\.jpeg\|.*\.jpng\|.*\.png' 2>/dev/null \
 	| shuf -n 1 )
 fi
+
+[ -z ${image} ] && err "No image file"
 
 run "xwallpaper --zoom ${image}" \
 "${0}: Failed to set wallpaper"
