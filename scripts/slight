@@ -26,13 +26,12 @@ run() {
 	fi
 }
 
+if ! command -v brightnessctl > /dev/null 2>&1; then
+	err "brightnessctl must be installed"
+fi
 
 if [ $# != 1 ] && [ $# != 2 ]; then
 	err "${0}: Invalid usage\nTry '$0 -h' for help."
-fi
-
-if ! command -v brightnessctl > /dev/null 2>&1; then
-	err "brightnessctl must be installed"
 fi
 
 while getopts "i:d:s:ph" option; do
