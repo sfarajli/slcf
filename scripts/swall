@@ -27,7 +27,7 @@ if ! command -v xwallpaper > /dev/null 2>&1; then
 fi
 
 if [ $# = 0 ]; then
-	input="${HOME}/.config/wallpapers"	
+	input="${HOME}/.config/wallpapers"
 elif [ $# != 1 ] && [ $# != 2 ]; then
 	err "${0}: Invalid usage
 Try '$0 -h' for help."
@@ -64,7 +64,7 @@ if [ -n "${waldir}" ]; then
 	| shuf -n 1 )
 fi
 
-[ -z ${image} ] && err "No image file"
+[ -z ${image} ] && err "${0}: No image file found"
 
 run "xwallpaper --zoom ${image}" \
 "${0}: Failed to set wallpaper"
