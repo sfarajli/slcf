@@ -26,6 +26,8 @@ run() {
 	if ! ${1} > /dev/null 2>&1; then
 		err "${2}"
 	fi
+
+	[ -n "${3}" ] && echo "${3}"
 	exit 0
 }
 
@@ -34,8 +36,7 @@ if ! command -v brightnessctl > /dev/null 2>&1; then
 fi
 
 if [ ${#} != 1 ] && [ ${#} != 2 ]; then
-	err "${0}: Invalid usage" \
-	    "Try '${0} -h' for help."
+	err "${0}: Invalid usage" "Try '${0} -h' for help."
 fi
 
 while getopts "i:d:s:ph" option; do
@@ -65,5 +66,4 @@ while getopts "i:d:s:ph" option; do
 	esac
 done
 
-err "${0}: Invalid usage" \
-    "Try '${0} -h' for help."
+err "${0}: Invalid usage" "Try '${0} -h' for help."
