@@ -64,7 +64,7 @@ while getopts "i:d:s:ph" option; do
 	;;
 	h) help; exit 0 ;;
 
-	*) err "Try '${0} -h' for help.";;
+	*) err "Try '${0} -h' for help." ;;
 
 	esac
 done
