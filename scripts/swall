@@ -2,7 +2,7 @@
 
 help() {
 cat << EOF
-$0: Wrapper script to set wallpapers
+${0}: Wrapper script to set wallpapers
 
 options:
  -d [File]	Select a wallpaper or a directory
