@@ -1,11 +1,11 @@
 #!/bin/sh
 
-
 help() {
 cat << EOF
-$0: Wrapper script to take screenshots
+${0}: Wrapper script to take screenshots
 
 options:
+ -d [File] 	Write to File
  -s 		Select the area with the cursor
  -h 		Print this message and exit
 
@@ -13,16 +13,65 @@ NOTE: save directory is ~/pic/screenshots
 EOF
 }
 
-directory="${XDG_CONFIG_HOME:-$HOME}/pics/screenshots"
-[ -d "$directory" ] || { mkdir -p "$directory" || echo "failed to create directory" >&2; }
-filename="$directory"/%b%d::%H%M%S.png
+err() {
+	for line in "$@"; do
+		echo "${line}" >&2
+	done
 
-while getopts "sh" option; do
-case $option in
-	s) FLG="-fs"				;;
-	h) help ; exit 0			;;
-	*) echo "$0 -h for help"; exit 1	;;
-esac
+	exit 1
+}
+
+run() {
+	if ! ${1} > /dev/null 2>&1; then
+		err "${2}"
+	fi
+
+	[ -n "${3}" ] && echo "${3}"
+	exit 0
+}
+
+default_dir="${HOME}"/pics/screenshots
+s_flg=""
+while getopts "d:sh" option; do
+	case "${option}" in
+	d) input="${OPTARG}" ;;
+
+	s) s_flg="1" ;;
+
+	h) help; exit 0 ;;
+
+	*) err "Try '${0} -h' for help" ;;
+	esac
 done
 
-scrot $FLG -z $filename > /dev/null 2>&1 || { echo Screenshot failed; exit 1; }
+shift $((OPTIND - 1))
+
+if [ $# != 0 ];then
+	err "${0}: Invalid usage" \
+	    "Try '${0} -h' for help."
+fi
+
+if [ -n "${input}" ]; then
+	case $(file -b --mime-type "${input}") in
+	image/*) outfile="${input}" ;;
+
+	inode/directory) outdir="${input}" ;;
+
+	*) err "Couldn't read given file" ;;
+	esac
+fi
+
+if [ -z "${outfile}" ]; then
+	if [ -z "${outdir}" ]; then
+	 	[ ! -d "${default_dir}" ] && mkdir -pv "${default_dir}"
+		outdir="${default_dir}"
+	fi
+	outfile="${outdir}"/%b%d::%H%M%S.png
+fi
+
+
+if [ "${s_flg}" = "1" ]; then
+	run "scrot -zs ${outfile}" "Failed to screenshot"
+else
+	run "scrot -z ${outfile}" "Failed to screenshot"
+fi

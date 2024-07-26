@@ -24,6 +24,8 @@ run() {
 	if ! ${1} > /dev/null 2>&1; then
 		err "${2}"
 	fi
+
+	[ -n "${3}" ] && echo "${3}"
 	exit 0
 }
 
@@ -70,6 +72,4 @@ fi
 
 [ -z "${image}" ] && err "${0}: No image file found"
 
-run "xwallpaper --zoom ${image}" "${0}: Failed to set wallpaper"
-
-echo "${image}"
+run "xwallpaper --zoom ${image}" "${0}: Failed to set wallpaper" "${image}"

@@ -2,7 +2,7 @@
 
 help() {
 cat << EOF
-$0: Wrapper script to change volume
+${0}: Wrapper script to change volume
 
 options:
  -i [Vol]	Increase volume by Vol
@@ -15,7 +15,9 @@ EOF
 }
 
 err() {
-	echo "$*" >&2
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
 	exit 1
 }
 
@@ -23,6 +25,9 @@ run() {
 	if ! ${1} > /dev/null 2>&1; then
 		err "${2}"
 	fi
+
+	[ -n "${3}" ] && echo "${3}"
+	exit 0
 }
 
 if ! command -v pactl > /dev/null 2>&1; then
@@ -30,8 +35,7 @@ if ! command -v pactl > /dev/null 2>&1; then
 fi
 
 if [ $# != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage
-Try '$0 -h' for help."
+	err "${0}: Invalid usage" "Try '$0 -h' for help."
 fi
 
 while getopts "i:d:s:pth" option; do
@@ -39,22 +43,18 @@ while getopts "i:d:s:pth" option; do
 	i)
 		run "pactl set-sink-volume @DEFAULT_SINK@ +${OPTARG}%" \
 		"${0}: Failed to increase volume"
-		exit 0
 	;;
 	d)
 		run "pactl set-sink-volume @DEFAULT_SINK@ -${OPTARG}%" \
 		"${0}: Failed to decrease volume"
-		exit 0
 	;;
 	s)
 		run "pactl set-sink-volume @DEFAULT_SINK@ ${OPTARG}%" \
 		"${0}: Failed to set volume"
-		exit 0
 	;;
 	t)
 		run "set-sink-volume @DEFAULT_SINK@ toggle" \
 		"${0}: Failed to toggle volume"
-		exit 0
 	;;
 	p)
 		if ! pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null; then
@@ -70,5 +70,4 @@ while getopts "i:d:s:pth" option; do
 	esac
 done
 
-err "${0}: Invalid usage
-Try '$0 -h' for help."
+err "${0}: Invalid usage" "Try '$0 -h' for help."
