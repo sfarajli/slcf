@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Remove empty lines and all the comments starting with "#"
+
+for file in "${@}"; do
+	sed -i "s/\s*#.*//g; /^$/ d" "${file}"
+done
