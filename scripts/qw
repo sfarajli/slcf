@@ -47,7 +47,7 @@ while getopts "cr:h" option ;do
 			-boot menu=on -drive file=Image.img -m 4G" \
 			"${0}: Failed to run image"
 	;;
-	h) help && exit 0;;
+	h) help; exit 0;;
 
 	*) err "Try '${0} -h' for help." ;;
 	esac
