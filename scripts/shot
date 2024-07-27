@@ -31,6 +31,7 @@ run() {
 }
 
 default_dir="${HOME}"/pics/screenshots
+
 s_flg=""
 while getopts "d:sh" option; do
 	case "${option}" in
@@ -46,29 +47,23 @@ done
 
 shift $((OPTIND - 1))
 
-if [ $# != 0 ];then
-	err "${0}: Invalid usage" \
-	    "Try '${0} -h' for help."
-fi
+[ ${#} != 0 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
 
-if [ -n "${input}" ]; then
-	case $(file -b --mime-type "${input}") in
-	image/*) outfile="${input}" ;;
-
-	inode/directory) outdir="${input}" ;;
-
-	*) err "Couldn't read given file" ;;
-	esac
-fi
-
-if [ -z "${outfile}" ]; then
-	if [ -z "${outdir}" ]; then
-	 	[ ! -d "${default_dir}" ] && mkdir -pv "${default_dir}"
-		outdir="${default_dir}"
+if [ -z "${input}" ]; then
+	outfile="${default_dir}"/%b%d::%H%M%S.png
+else
+	if [ -d "${input}" ]; then
+		outfile="${input}"/%b%d::%H%M%S.png
+	else
+		outfile="${input}"
 	fi
-	outfile="${outdir}"/%b%d::%H%M%S.png
 fi
 
+
+if [ ! -e "$(dirname "${outfile}")" ]; then
+	mkdir -pv "$(dirname "${outfile}")" > /dev/null 2>&1 \
+	|| err "${0}: Failed to create directory"
+fi
 
 if [ "${s_flg}" = "1" ]; then
 	run "scrot -zs ${outfile}" "Failed to screenshot"
