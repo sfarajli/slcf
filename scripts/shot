@@ -59,7 +59,6 @@ else
 	fi
 fi
 
-
 if [ ! -e "$(dirname "${outfile}")" ]; then
 	mkdir -pv "$(dirname "${outfile}")" > /dev/null 2>&1 \
 	|| err "${0}: Failed to create directory"
