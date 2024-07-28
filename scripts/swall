@@ -55,6 +55,9 @@ while getopts "hcd:" option; do
 	esac
 done
 
+shift $((OPTIND - 1))
+
+[ ${#} != 0 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
 
 if [ -n "${input}" ]; then
 	case $(file -b --mime-type "${input}") in
