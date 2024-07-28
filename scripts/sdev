@@ -39,10 +39,6 @@ xenable() {
 	fi
 }
 
-if ! command -v xinput > /dev/null 2>&1; then
-	err "${0}: xinput must be installed"
-fi
-
 xdisable() {
 	echo "${id}"
 
@@ -53,6 +49,9 @@ xdisable() {
 	fi
 }
 
+if ! command -v xinput > /dev/null 2>&1; then
+	err "${0}: xinput must be installed"
+fi
 
 while getopts "e:d:t:lh" option; do
 	case "${option}" in
