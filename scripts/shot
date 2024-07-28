@@ -42,6 +42,7 @@ while getopts "d:sh" option; do
 	h) help; exit 0 ;;
 
 	*) err "Try '${0} -h' for help" ;;
+
 	esac
 done
 
