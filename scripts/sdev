@@ -1,0 +1,81 @@
+#!/bin/sh
+
+help() {
+cat << EOF
+${0}: Disable and Enable devices
+
+options:
+ -e [dev] 	Enable dev
+ -d [dev]	Disable dev
+ -t [dev]	Toggle dev
+ -l 		List devices
+ -h 		Print this message and exit
+
+Note: Nondescriptive inputs may disable (or enable) unwanted devices.
+EOF
+}
+
+err() {
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
+	exit 1
+}
+
+get_id() {
+	if ! dev=$(xinput list --name-only | grep -m1 "${1}" ); then
+		err "${0}: Couldn't get device"
+	fi
+	id="${dev#∼ }"
+}
+
+xenable() {
+	echo "${id}"
+
+	if ! xinput enable "${1}" > /dev/null 2>&1; then
+		err "${0}: Failed to enable dev."
+	else
+		exit 0
+	fi
+}
+
+if ! command -v xinput > /dev/null 2>&1; then
+	err "${0}: xinput must be installed"
+fi
+
+xdisable() {
+	echo "${id}"
+
+	if ! xinput disable "${1}" > /dev/null 2>&1; then
+		err "${0}: Failed to disable dev."
+	else
+		exit 0
+	fi
+}
+
+
+while getopts "e:d:t:lh" option; do
+	case "${option}" in
+	e) get_id "${OPTARG}"; xenable "${id}" ;;
+
+	d) get_id "${OPTARG}"; xdisable "${id}" ;;
+
+	t)
+		get_id "${OPTARG}"
+
+		[ "${id}" = "${dev}" ] && xdisable "${id}"
+		xenable "${id}"
+	;;
+	l)
+		if ! xinput list 2 > /dev/null; then
+			err "${0}: Listing Failed"
+		fi
+	;;
+	h) help; exit ;;
+
+	*) err "Try '${0} -h' for help." ;;
+
+	esac
+done
+
+err "${0}: Invalid usage" "Try '${0} -h' for help."
