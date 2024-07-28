@@ -53,3 +53,5 @@ while getopts "cr:h" option ;do
 
 	esac
 done
+
+err "${0}: Invalid usage" "Try '${0} -h' for help."
