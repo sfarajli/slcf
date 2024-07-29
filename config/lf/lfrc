@@ -26,6 +26,7 @@ map <c-c> cd ~/.config
 map <c-r> cd /tmp
 map <c-u> cd /usr/local/bin
 map <c-m> cd ~/music
+map <c-b> cd ~/books
 
 # Colors
 set cursoractivefmt "\033[0;1;7m" #white
