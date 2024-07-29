@@ -1,4 +1,4 @@
-# Suleyman's zsh config at "https://git.farajli.net/slcf"
+# Suleyman's zsh interactive shell config at "https://git.farajli.net/slcf"
 
 PROMPT="%B%F{red}%(?..%? )%B%F{blue}%n%b%f@%m %B%~ %% %b"
 
