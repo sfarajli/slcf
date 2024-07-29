@@ -20,9 +20,10 @@ map zz :{{ set preview; set ratios 1:2:3; }}
 
 # Directory change
 map gp cd ~/proj
-map gt cd ~/testProj
+map gt cd ~/tproj
 map gc cd ~/.config
 map gh cd ~
+map gr cd /tmp
 map gu cd /usr/local/bin
 
 # Colors
