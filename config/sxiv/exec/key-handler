@@ -1,0 +1,74 @@
+#!/bin/sh
+
+# For theme to be applied ~/.Xresource file must be present
+picdir="${HOME}/pics"
+
+while read -r file; do
+	case "$1" in
+	"m")
+		if [ -z "${destdir}" ]; then
+			destdir="$(echo "${picdir}" \
+			| dmenu -p "Move directory: " \
+			| sed "s|~|${HOME}|g")"
+		fi
+
+		if [ ! -d "${destdir}" ]; then
+			nsend "Not a directory"
+			exit 1
+		fi
+
+		if mv "${file}" "${destdir}"; then
+			nsend "${file} moved to ${destdir}" &
+		else
+			nsend "Failed to move ${file} to ${destdir}"
+		fi
+	;;
+	"c")
+
+		if [ -z "${destdir}" ];then
+			destdir="$(echo "${picdir}" \
+			| dmenu -p "Copy directory: " \
+			| sed "s|~|${HOME}|g")"
+		fi
+
+		if [ ! -d "${destdir}" ]; then
+			nsend "Not a directory" &
+			exit 1
+		fi
+
+		if cp "${file}" "${destdir}"; then
+			nsend "${file} copied to ${destdir}" &
+		else
+			nsend "Failed to copy ${file} to ${destdir}" &
+		fi
+	;;
+	"w") swall "$file" ;;
+
+	"d")
+		mkdir -p ~/.trash
+
+		if mv "$file" ~/.trash; then
+			nsend "$file is moved to ~/.trash" &
+		else
+			nsend "Failed to move ${file} to ~/.trash" &
+		fi
+	;;
+	"r") convert -rotate 90 "$file" "$file" ;;
+	"R") convert -rotate -90 "$file" "$file" ;;
+	"f") convert -flop "$file" "$file" ;;
+	"y")
+		if printf "%s" "${file}" | xclip -selection clipboard; then
+			nsend "Copied to clipboard" &
+		else
+			nsend "Failed to copy to clipboard" &
+		fi
+	;;
+	"Y")
+		if readlink -f "$file" | tr -d '\n' | xclip -selection clipboard; then
+			nsend "Copied to clipboard" &
+		else
+			nsend "Failed to copy to clipboard" &
+		fi
+	;;
+		esac
+done
