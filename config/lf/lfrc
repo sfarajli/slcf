@@ -23,7 +23,7 @@ map <c-h> cd ~
 map <c-p> cd ~/proj
 map <c-t> cd ~/tproj
 map <c-c> cd ~/.config
-map <c-r> cd ~/tmp
+map <c-r> cd /tmp
 map <c-u> cd /usr/local/bin
 
 # Colors
