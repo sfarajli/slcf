@@ -1,8 +1,8 @@
-# This config is a fork of Luke Smith's zshrc at "https://github.com/LukeSmithxyz/voidrice"
+# Suleyman's zsh config at "https://git.farajli.net/slcf"
 
 PROMPT="%B%F{red}%(?..%? )%B%F{blue}%n%b%f@%m %B%~ %% %b"
 
-#git integration
+# Git integration
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
@@ -10,24 +10,21 @@ setopt prompt_subst
 RPROMPT='%B${vcs_info_msg_0_}'
 zstyle ':vcs_info:git:*' formats '%b'
 
-# History in cache directory:
+# History file
 HISTSIZE=1000000000
 SAVEHIST=1000000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
-
-# Basic auto/tab complete:
+# Basic tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-
 # vi mode
-bindkey -v
-bindkey '^R' history-incremental-search-backward
-export KEYTIMEOUT=1
+bindkey -v				# Vi mode.
+export KEYTIMEOUT=1			# Set escape delay to 0.01 sec.
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
@@ -37,61 +34,41 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
 
-lfcd () {
-    # `command` is needed in case `lfcd` is aliased to `lf`
-    cd "$(command lf -print-last-dir "$@")"
-}
-
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
-    case $KEYMAP in
+    case "${KEYMAP}" in
         vicmd) echo -ne '\e[1 q';;      # block
+
         viins|main) echo -ne '\e[5 q';; # beam
+
     esac
 }
 
-
 zle -N zle-keymap-select
 zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    zle -K viins
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+echo -ne '\e[5 q' 			# Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} 	# Use beam shape cursor for each new prompt.
 
 
 # Options
-setopt autocd			# Automatically cd into typed directory.
-# stty stop undef		# Disable ctrl-s to freeze terminal.
+setopt autocd				# Automatically cd into typed directory.
+stty stop undef				# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 unsetopt nomatch
-setopt INC_APPEND_HISTORY 	# Adds command to history when they are run
-setopt HIST_FIND_NO_DUPS	# Doesn't show duplicate commands when backward searching
+setopt INC_APPEND_HISTORY 		# Add commands to history when they are run.
+setopt HIST_FIND_NO_DUPS		# Don't show duplicate commands when backward searching.
 
-# Aliases
-[ -f $XINITRC ] && alias startx="startx $XINITRC"
-[ -x "$(command -v nvim)" ] && alias vim="nvim" 
-alias ls="ls -A --color=auto"
-alias ping="ping -c 2"
-alias clear="clear -x"
-alias open="xdg-open"
-alias lf="lfcd"
-alias vim="nvim"
-alias touchOn="synclient TouchpadOff=0"
-alias touchOff="synclient TouchpadOff=1"
+# Custom keybinds
+bindkey '^R' history-incremental-search-backward
+bindkey -s '^o' '^ulfcd\n'
+bindkey -s '^f' '^ucd "$(dirname "$(fzf --reverse)")"\n'
 
-# Systemd and Arch linux specific aliases
-alias pacman="sudo pacman"
-alias systemctl="sudo systemctl"
-alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
-alias is="systemctl stop NetworkManager"
-alias blue="sudo systemctl start bluetooth"
-alias net="sudo systemctl start NetworkManager"	
+# Load other shell configurations
 
-# Directory change aliases
-alias gp="cd ~/proj"
-alias gt="cd ~/testProj"
-alias gc="cd ~/.config"
-alias gu="cd /usr/local/bin"
-
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" ]; then
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile"
+fi
