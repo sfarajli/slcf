@@ -19,12 +19,12 @@ map zb :{{ set sortby natural; set info size; set preview; set ratios 5:2; }}
 map zz :{{ set preview; set ratios 1:2:3; }}
 
 # Directory change
-map gp cd ~/proj
-map gt cd ~/tproj
-map gc cd ~/.config
 map gh cd ~
+map gc cd ~/.config
 map gr cd /tmp
 map gu cd /usr/local/bin
+map gp cd ~/proj
+map gt cd ~/tproj
 
 # Colors
 set cursoractivefmt "\033[0;1;7m" #white
