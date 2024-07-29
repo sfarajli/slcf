@@ -37,17 +37,11 @@ set rulerfmt "\033[32;1;7m"
 
 set promptfmt "\033[48;1;234m %w/%f"
 
-
-#FIXME Doesn't work with multiple files
-cmd trash !{{
-	[ ! -d ~/.trash ] && mkdir -p ~/.trash
-	printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]"
-	read ans
-
-	if [ "${ans}" = "y" ];then
-		mv "${fx}" ~/.trash
-		echo "Trash complete!"
-	else
-		echo "Failed! Use y to trash."
-	fi
+cmd trash ${{
+    mkdir -p ~/.trash
+    if [ -z "$fs" ]; then
+        mv "$f" ~/.trash
+    else
+        IFS="$(printf '\n\t')"; mv $fs ~/.trash
+    fi
 }}
