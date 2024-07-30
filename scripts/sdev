@@ -66,8 +66,10 @@ while getopts "e:d:t:lh" option; do
 		xenable "${id}"
 	;;
 	l)
-		if ! xinput list 2 > /dev/null; then
+		if ! xinput list 2>/dev/null; then
 			err "${0}: Listing Failed"
+		else 
+			exit 0
 		fi
 	;;
 	h) help; exit ;;
