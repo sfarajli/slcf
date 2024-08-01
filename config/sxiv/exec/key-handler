@@ -42,7 +42,7 @@ while read -r file; do
 			nsend "Failed to copy ${file} to ${destdir}" &
 		fi
 	;;
-	"w") swall "$file" ;;
+	"w") swall -d "$file" ;;
 
 	"d")
 		mkdir -p ~/.trash
