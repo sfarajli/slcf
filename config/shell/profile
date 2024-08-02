@@ -1,0 +1,20 @@
+#Directories
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export ZSHRC="$XDG_CONFIG_HOME/zsh/zshrc"
+
+
+# Environment variables
+[ -x "$(command -v vim)" ] && export EDITOR="vim"
+[ -x "$(command -v nvim)" ] && export EDITOR="nvim"
+[ -x "$(command -v st)" ] && export  TERMINAL="st"
+[ -x "$(command -v qutebrowser)" ] && export  BROWSER="qutebrowser"
+
+export MAKEFLAGS="-j8"		# Reduce compile times
+
+lfcd () {
+    cd "$(command lf -print-last-dir "$@")"
+}
