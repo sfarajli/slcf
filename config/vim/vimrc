@@ -1,4 +1,5 @@
 " Suleyman's minimal vim config with no plugin support
+" at https://git.farajli.net/slcf
 
 let mapleader = " "
 set number
@@ -6,7 +7,7 @@ set scrolloff=5 			" Smooth scroll
 set clipboard=unnamedplus		" Use system clipboard
 set shortmess+=I 			" Deactivate intro text
 set fillchars=eob:\  			" Remove "~" for empty lines (must end wit trailing a space)
-set nowrap				" Disable wrapping
+:set nowrap				" Disable wrapping
 autocmd BufwritePost * %s/\s\+$//e 	" Remove useless trailing spaces when saving
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " Disable autocomments
 
@@ -33,4 +34,3 @@ inoremap <C-k> <C-o>gk
 inoremap <C-o> <C-o>o
 
 set background=dark
-colorscheme lunaperche
