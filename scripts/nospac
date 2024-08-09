@@ -20,3 +20,5 @@ for file in ./*; do
 	newfile=$(echo "${file}" | tr ' ' '_')
 	[ "${newfile}" != "${file}" ] && mv -v "${file}" "${newfile}"
 done
+
+exit 0
