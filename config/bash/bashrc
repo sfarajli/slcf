@@ -1,0 +1,7 @@
+# Minimal bash config for servers
+set -o vi
+stty -ixon # Disable ctrl-s and ctrl-q for freezing prompt
+shopt -s autocd # automatically cd into typed directory
+
+alias vi=vim
+alias vi=nvim
