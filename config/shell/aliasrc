@@ -1,0 +1,39 @@
+#!/bin/sh
+
+[ -f $XINITRC ] && alias startx="startx $XINITRC"
+[ -x "$(command -v vim)" ] && alias vi="vim"
+[ -x "$(command -v nvim)" ] && alias vi="nvim"
+
+alias ls="ls -A --color=auto"
+alias grep="grep --color=auto"
+alias ping="ping -c 2"
+alias clear="clear -x"
+alias open="xdg-open"
+alias lf="lfcd"
+
+# Directory change aliases
+alias gp="cd ~/proj"
+alias gt="cd ~/testProj"
+alias gc="cd ~/.config"
+alias gu="cd /usr/local/bin"
+
+# Init system aliases
+if [ -x "$(command -v systemctl)" ]; then
+	alias systemctl="sudo systemctl"
+	alias net="sudo systemctl start NetworkManager"
+	alias is="systemctl stop NetworkManager"
+	alias blue="sudo systemctl start bluetooth"
+	alias red="sudo systemctl stop bluetooth"
+
+elif [ -x "$(command -v rc-service)" ]; then
+	alias rc-service="sudo rc-service"
+	alias net="sudo rc-service NetworkManager start"
+	alias is="sudo rc-service NetworkManager stop"
+	alias blue="sudo rc-service bluetooth start"
+	alias red="sudo rc-service bluetooth stop"
+
+fi
+
+# Systemd and Arch linux specific aliases
+alias pacman="sudo pacman"
+alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
