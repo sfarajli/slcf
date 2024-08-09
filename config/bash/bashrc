@@ -5,3 +5,5 @@ shopt -s autocd # automatically cd into typed directory
 
 alias vi=vim
 alias vi=nvim
+
+PS1='\u@\H \w\[\e[0;$(($?==0?0:91))m\] % \[\e[0m\]'
