@@ -16,7 +16,9 @@ GITCONFIG=$(HOME)/.gitconfig
 COPY=cp -r
 LINK=ln -sf
 
-all: config scripts
+all:
+
+full: config scripts git desktop directory
 
 config:
 	mkdir -p $(CONFDIR)
@@ -37,6 +39,8 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
+desktop: dwm st dmenu
+
 git:
 	$(COPY) config/git/gitconfig 		$(GITCONFIG)
 
@@ -52,6 +56,21 @@ server:
 	$(COPY) config/shell		$(CONFDIR)
 	$(COPY) config/vim		$(CONFDIR)
 
+dwm: clean
+	curl -LO https://farajli.net/software/dwm.tar.gz
+	tar xf dwm.tar.gz
+	cd dwm/; PREFIX="${HOME}"/.local make install
+
+st: clean
+	curl -LO https://farajli.net/software/st.tar.gz
+	tar xf st.tar.gz
+	cd st/; PREFIX="${HOME}"/.local make install
+
+dmenu: clean
+	curl -LO https://farajli.net/software/dmenu.tar.gz
+	tar xf dmenu.tar.gz
+	cd dmenu/; PREFIX="${HOME}"/.local make install
+
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
 
@@ -62,7 +81,7 @@ directory:
 			$(BOOKDIR) \
 			$(TESTPROJDIR) \
 			$(BINDIR)
+clean:
+	rm -rf dwm st dmenu dwm.tar.gz st.tar.gz dmenu.tar.gz
 
-
-
-.PHONY: all config scripts server arch-linux directory
+.PHONY: all config scripts server desktop arch-linux directory dwm st dmenu clean full
