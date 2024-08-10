@@ -8,3 +8,6 @@ alias vi=nvim
 
 PS1='\e[01;31m$(code=${?##0};echo ${code:+[${code}]" "})\e[00m\u@\H \w % '
 
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
+fi
