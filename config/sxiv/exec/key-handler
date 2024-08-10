@@ -43,7 +43,7 @@ while read -r file; do
 		fi
 	;;
 	"w")
-		swall -d "$file" && nsend -s "Wallpaper Set" \
+		swall -d "$file" && nsend -s "Wallpaper ${file}" \
 		|| nsend -s "Couldn't set wallpaper"
 	;;
 	"d")
