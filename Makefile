@@ -38,7 +38,7 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
 git:
-	$(COPY) config/gitconfig 		$(GITCONFIG)
+	$(COPY) config/git/gitconfig 		$(GITCONFIG)
 
 
 scripts:
