@@ -1,4 +1,4 @@
-" Suleyman's minimal vim config with no plugin support
+" Suleyman's minimal vim config for servers
 " at https://git.farajli.net/slcf
 
 let mapleader = " "
