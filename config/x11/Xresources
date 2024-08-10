@@ -30,5 +30,5 @@ XTerm.vt100.foreground: grey
 Sxiv.background: #282828
 Sxiv.foreground: #ebdbb2
 
-Nsxiv.window.foreground: #4E3524
-Nsxiv.window.background: #282828
+Nsxiv.window.foreground: #282828
+Nsxiv.window.background: #ebdbb2
