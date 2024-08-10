@@ -1,0 +1,44 @@
+#!/bin/sh
+
+help() {
+cat << EOF
+${0}: Wrapper script to send notifications 
+
+options:
+ -s [Msg]	Send Msg
+ -h 		Print this message and exit
+EOF
+}
+
+err() {
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
+	exit 1
+}
+
+run() {
+	if ! ${1} > /dev/null 2>&1; then
+		err "${2}"
+	fi
+
+	[ -n "${3}" ] && echo "${3}"
+	exit 0
+}
+
+if ! command -v notify-send > /dev/null 2>&1; then
+	err "${0}: xwallpaper must be installed"
+fi
+
+case "${1}" in
+"-s")	
+	[ ${#} != 2 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
+
+	run "notify-send ${2}" \
+	"${0}: Failed to send notification"
+;;
+"-h") help; exit 0 ;;
+ 
+*) err "${0}: Invalid usage" "Try '${0} -h' for help." ;;
+
+esac
