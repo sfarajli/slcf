@@ -4,12 +4,21 @@
 [ -x "$(command -v vim)" ] && alias vi="vim"
 [ -x "$(command -v nvim)" ] && alias vi="nvim"
 
-alias ls="ls -A --color=auto"
+alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 alias ping="ping -c 2"
 alias clear="clear -x"
 alias open="xdg-open"
 alias lf="lfcd"
+alias py="python3"
+
+# Occasionally mistyped commands
+alias suod="sudo"
+alias maek="make"
+alias meak="make"
+alias sl="ls"
+alias claer="clear -x"
+alias clera="clear -x"
 
 # Directory change aliases
 alias gp="cd ~/proj"
