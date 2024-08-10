@@ -18,8 +18,5 @@ export XDG_BIN_DIR="$HOME/.local/bin"
 
 export MAKEFLAGS="-j8"		# Reduce compile times
 
-lfcd () {
-    cd "$(command lf -print-last-dir "$@")"
-}
-
-[ mkdir -p XDG_BIN_DIR ] && PATH="${XDG_BIN_DIR}":$PATH
+mkdir -p "${XDG_BIN_DIR}"
+PATH="${XDG_BIN_DIR}":$PATH

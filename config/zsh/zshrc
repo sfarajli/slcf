@@ -70,3 +70,7 @@ bindkey -s '^f' '^ucd "$(dirname "$(fzf --reverse)")"\n'
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 fi
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functionrc" ];then
+	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functionrc"
+fi
