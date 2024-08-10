@@ -30,6 +30,10 @@ run() {
 	exit 0
 }
 
+if ! command -v scrot > /dev/null 2>&1; then
+	err "${0}: scrot must be installed"
+fi
+
 default_dir="${HOME}"/pics/screenshots
 
 s_flg=""
