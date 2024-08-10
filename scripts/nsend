@@ -2,7 +2,7 @@
 
 help() {
 cat << EOF
-${0}: Wrapper script to send notifications 
+${0}: Wrapper script to send notifications
 
 options:
  -s [Msg]	Send Msg
@@ -27,18 +27,18 @@ run() {
 }
 
 if ! command -v notify-send > /dev/null 2>&1; then
-	err "${0}: xwallpaper must be installed"
+	err "${0}: dunst must be installed"
 fi
 
 case "${1}" in
-"-s")	
+"-s")
 	[ ${#} != 2 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
 
 	run "notify-send ${2}" \
 	"${0}: Failed to send notification"
 ;;
 "-h") help; exit 0 ;;
- 
+
 *) err "${0}: Invalid usage" "Try '${0} -h' for help." ;;
 
 esac
