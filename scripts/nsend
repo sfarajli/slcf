@@ -5,8 +5,9 @@ cat << EOF
 ${0}: Wrapper script to send notifications
 
 options:
- -s [Msg]	Send Msg
- -h 		Print this message and exit
+ -s [Name] [Msg]	Send Msg with Name
+ -s [Msg]		Send Msg Without Name
+ -h 			Print this message and exit
 EOF
 }
 
@@ -17,25 +18,17 @@ err() {
 	exit 1
 }
 
-run() {
-	if ! ${1} > /dev/null 2>&1; then
-		err "${2}"
-	fi
-
-	[ -n "${3}" ] && echo "${3}"
-	exit 0
-}
-
 if ! command -v notify-send > /dev/null 2>&1; then
 	err "${0}: dunst must be installed"
 fi
 
 case "${1}" in
 "-s")
-	[ ${#} != 2 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
+	[ ${#} -gt 3 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
 
-	run "notify-send ${2}" \
-	"${0}: Failed to send notification"
+	notify-send "${2}" "${3}" > /dev/null 2>&1 || err "${0}: Failed to send notification"
+
+	exit 0
 ;;
 "-h") help; exit 0 ;;
 
