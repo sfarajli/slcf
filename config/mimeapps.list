@@ -7,7 +7,7 @@ image/png=sxiv.desktop
 image/jpg=sxiv.desktop
 
 [Default Applications]
-text/plain=vim.desktop
+text/plain=nvim.desktop
 
 [Default Applications]
 text/html=org.qutebrowser.qutebrowser.desktop
