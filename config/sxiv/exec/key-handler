@@ -13,14 +13,14 @@ while read -r file; do
 		fi
 
 		if [ ! -d "${destdir}" ]; then
-			nsend "Not a directory"
+			nsend -s "Not a directory"
 			exit 1
 		fi
 
 		if mv "${file}" "${destdir}"; then
-			nsend "${file} moved to ${destdir}" &
+			nsend -s "${file} moved to ${destdir}" &
 		else
-			nsend "Failed to move ${file} to ${destdir}"
+			nsend -s "Failed to move ${file} to ${destdir}"
 		fi
 	;;
 	"c")
@@ -32,14 +32,14 @@ while read -r file; do
 		fi
 
 		if [ ! -d "${destdir}" ]; then
-			nsend "Not a directory" &
+			nsend -s "Not a directory" &
 			exit 1
 		fi
 
 		if cp "${file}" "${destdir}"; then
-			nsend "${file} copied to ${destdir}" &
+			nsend -s "${file} copied to ${destdir}" &
 		else
-			nsend "Failed to copy ${file} to ${destdir}" &
+			nsend -s "Failed to copy ${file} to ${destdir}" &
 		fi
 	;;
 	"w") swall -d "$file" ;;
@@ -48,9 +48,9 @@ while read -r file; do
 		mkdir -p ~/.trash
 
 		if mv "$file" ~/.trash; then
-			nsend "$file is moved to ~/.trash" &
+			nsend -s "$file is moved to ~/.trash" &
 		else
-			nsend "Failed to move ${file} to ~/.trash" &
+			nsend -s "Failed to move ${file} to ~/.trash" &
 		fi
 	;;
 	"r") convert -rotate 90 "$file" "$file" ;;
@@ -58,16 +58,16 @@ while read -r file; do
 	"f") convert -flop "$file" "$file" ;;
 	"y")
 		if printf "%s" "${file}" | xclip -selection clipboard; then
-			nsend "Copied to clipboard" &
+			nsend -s "Copied to clipboard" &
 		else
-			nsend "Failed to copy to clipboard" &
+			nsend -s "Failed to copy to clipboard" &
 		fi
 	;;
 	"Y")
 		if readlink -f "$file" | tr -d '\n' | xclip -selection clipboard; then
-			nsend "Copied to clipboard" &
+			nsend -s "Copied to clipboard" &
 		else
-			nsend "Failed to copy to clipboard" &
+			nsend -s "Failed to copy to clipboard" &
 		fi
 	;;
 		esac
