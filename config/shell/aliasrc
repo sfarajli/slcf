@@ -19,6 +19,7 @@ alias meak="make"
 alias sl="ls"
 alias claer="clear -x"
 alias clera="clear -x"
+alias gti="git"
 
 # Directory change aliases
 alias gp="cd ~/proj"
