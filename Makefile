@@ -57,17 +57,17 @@ server:
 	$(COPY) config/vim		$(CONFDIR)
 
 dwm: clean
-	curl -LO https://farajli.net/software/dwm.tar.gz
+	curl -LO https://farajli.net/dwm.tar.gz
 	tar xf dwm.tar.gz
 	cd dwm/; PREFIX="${HOME}"/.local make install
 
 st: clean
-	curl -LO https://farajli.net/software/st.tar.gz
+	curl -LO https://farajli.net/st.tar.gz
 	tar xf st.tar.gz
 	cd st/; PREFIX="${HOME}"/.local make install
 
 dmenu: clean
-	curl -LO https://farajli.net/software/dmenu.tar.gz
+	curl -LO https://farajli.net/dmenu.tar.gz
 	tar xf dmenu.tar.gz
 	cd dmenu/; PREFIX="${HOME}"/.local make install
 
