@@ -27,6 +27,9 @@ run() {
 	fi
 
 	[ -n "${3}" ] && echo "${3}"
+
+	slreload || echo "Warning: Failed to reload slstatus" >&2
+
 	exit 0
 }
 
