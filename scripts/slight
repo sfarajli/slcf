@@ -57,7 +57,7 @@ while getopts "i:d:s:ph" option; do
 		"${0}: Failed to set brightness"
 	;;
 	p)
-		if ! echo $(( `brightnessctl g`  / `brightnessctl m` * 100 )); then
+		if ! echo $(( (`brightnessctl g` * 100)  / `brightnessctl m` )); then
 			err "Failed to get current brightness"
 		else
 			exit 0
