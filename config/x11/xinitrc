@@ -23,4 +23,5 @@ xset s off && xset -dpms	# disable screen blackening
 xgamma -gamma 0.8		# change gamma
 dunst &
 picom &
+slstatus &
 exec dwm
