@@ -39,7 +39,7 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
-desktop: dwm st dmenu
+desktop: dwm st dmenu slstatus
 
 git:
 	$(COPY) config/git/gitconfig 		$(GITCONFIG)
@@ -71,6 +71,11 @@ dmenu: clean
 	tar xf dmenu.tar.gz
 	cd dmenu/; PREFIX="${HOME}"/.local make install
 
+slstatus: clean
+	curl -LO https://farajli.net/slstatus.tar.gz
+	tar xf slstatus.tar.gz
+	cd slstatus/; PREFIX="${HOME}"/.local make install
+
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
 
@@ -82,6 +87,6 @@ directory:
 			$(TESTPROJDIR) \
 			$(BINDIR)
 clean:
-	rm -rf dwm st dmenu dwm.tar.gz st.tar.gz dmenu.tar.gz
+	rm -rf dwm st dmenu dwm.tar.gz st.tar.gz dmenu.tar.gz slstatus slstatus.tar.gz
 
 .PHONY: all config scripts server desktop arch-linux directory dwm st dmenu clean full
