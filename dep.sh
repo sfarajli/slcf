@@ -25,6 +25,7 @@ check_with_msg()
 check \
 	git     	\
 	lf      	\
+	fzf      	\
 	mpv     	\
 	picom   	\
 	qutebrowser 	\
