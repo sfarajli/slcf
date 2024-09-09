@@ -50,3 +50,12 @@ check \
 	xgamma
 
 check_with_msg startx "'xorg-xinit' is missing."
+
+# C X11 dependencies
+
+check_with_msg cc "c compiler is missing"
+check_with_msg ld "linker is missing"
+
+if ! command -v ld -L/usr/X11R6/lib -lX11 -lXinerama -lfontconfig -lXft > /dev/null 2>&1;then
+	echo "Xorg library files missing" 
+fi
