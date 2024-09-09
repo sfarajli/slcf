@@ -5,7 +5,6 @@ check()
 	for program in "${@}"; do
 		if ! command -v "${program}" > /dev/null 2>&1; then
 			echo "'${program}' is missing." >&2 
-			retval=1;
 		fi
 	done;
 }
@@ -19,12 +18,8 @@ check_with_msg()
 {
 	if ! command -v "${1}" > /dev/null 2>&1; then
 			echo "${2}" >&2 
-			retval=1;
 	fi
 }
-
-
-retval=0
 
 # Configurated programs
 check \
@@ -45,7 +40,7 @@ check \
 	scrot		\
 	brightnessctl
 
-check_with_msg pactl "pulseaudio is missing."
+check_with_msg pactl "'pulseaudio' is missing."
 
 # X11 dependencies
 check \
@@ -53,6 +48,4 @@ check \
 	xset		\
 	xgamma
 
-check_with_msg startx "xorg-xinit is missing."
-
-return "${retval}"
+check_with_msg startx "'xorg-xinit' is missing."
