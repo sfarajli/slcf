@@ -86,7 +86,11 @@ directory:
 			$(BOOKDIR) \
 			$(TESTPROJDIR) \
 			$(BINDIR)
+
+depcheck: 
+	@./dep.sh
+
 clean:
 	rm -rf dwm st dmenu dwm.tar.gz st.tar.gz dmenu.tar.gz slstatus slstatus.tar.gz
 
-.PHONY: all config scripts server desktop arch-linux directory dwm st dmenu slstatus clean full
+.PHONY: all config scripts server desktop arch-linux directory dwm st dmenu slstatus clean full depcheck
