@@ -1,0 +1,21 @@
+slcf - Suleyman's linux configuration files
+===========================================
+My xorg dotfiles.
+
+Installing slcf
+---------------
+slcf only makes change to the user running the Makefile and doesn't affect other users,
+so, it is recommended to create a new user and install slcf on the homepage of that user
+and if you like it install on your real user.
+
+Check the dependencies
+> make depcheck
+
+Install config and scripts
+> make config scripts
+
+Install desktop (dwm, st, dmenu, slstatus) (recommended)
+> make desktop scripts config
+
+Install everything
+> make full
