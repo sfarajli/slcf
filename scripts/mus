@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Play a file in $HOME/music directory using mpv
+
+music_name=$(find "${HOME}"/music | fzf)
+
+mpv "${music_name}"
