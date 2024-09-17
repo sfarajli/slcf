@@ -11,6 +11,7 @@ alias clear="clear -x"
 alias open="xdg-open"
 alias lf="lfcd"
 alias py="python3"
+alias makeb="make -C ../"
 
 # Occasionally mistyped commands
 alias suod="sudo"
