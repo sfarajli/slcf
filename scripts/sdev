@@ -23,7 +23,7 @@ err() {
 }
 
 get_id() {
-	if ! dev=$(xinput list --name-only | grep -m1 "${1}" ); then
+	if ! dev=$(xinput list --name-only | grep -i -m1 "${1}" ); then
 		err "${0}: Couldn't get device"
 	fi
 	id="${dev#∼ }"
