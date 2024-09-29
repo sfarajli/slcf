@@ -1,0 +1,34 @@
+#!/bin/sh
+
+help() {
+cat << EOF
+${0}: Open given in the browser.
+options:
+ -l [link]	Open link
+ -h 		Print this message and exit
+EOF
+}
+
+err() {
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
+	exit 1
+}
+
+if ! command -v dmenu > /dev/null 2>&1; then
+	err "${0}: dmenu must be installed"
+fi
+
+if [ "${#}" -eq 0 ]; then
+	
+
+elif [ "${#}" -eq 1 ]; then 
+	[ "${1}" == "-h" ] && help
+	[ "${1}" == "-l" ] 
+
+else
+	err "invalid usage"
+fi
+
+
