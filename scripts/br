@@ -16,19 +16,24 @@ err() {
 	exit 1
 }
 
-if ! command -v dmenu > /dev/null 2>&1; then
-	err "${0}: dmenu must be installed"
-fi
+check_dmenu() {
+	if ! command -v dmenu > /dev/null 2>&1; then
+		err "${0}: dmenu must be installed"
+	fi
+}
+
+#TODO check if browser environmental variable exists
+#TODO check if ~/.config/sites/bookmarks.txt
+browser=$BROWSER
+links_file=~/.config/sites/bookmarks.txt
+
 
 if [ "${#}" -eq 0 ]; then
-	
+	cat "${links_file}" | dmenu | xargs "${browser}"
 
 elif [ "${#}" -eq 1 ]; then 
-	[ "${1}" == "-h" ] && help
-	[ "${1}" == "-l" ] 
-
+	[ "${1}" == "-h" ] && help && exit 0
+	"${browser}" "${1}"
 else
 	err "invalid usage"
 fi
-
-

@@ -4,7 +4,7 @@
 [ -x "$(command -v vim)" ] && alias vi="vim"
 [ -x "$(command -v nvim)" ] && alias vi="nvim"
 
-alias ls="ls --color=auto"
+alias ls="ls --color=auto --group-directories-first -p"
 alias grep="grep --color=auto"
 alias ping="ping -c 2"
 alias clear="clear -x"
