@@ -2,10 +2,12 @@
 
 help() {
 cat << EOF
-${0}: Open given in the browser.
+${0}: Open links from bookmarks through dmenu
 options:
- -l [link]	Open link
+[link]		Open link
  -h 		Print this message and exit
+
+NOTE: bookmarks file is located at ~/.config/sites/bookmarks
 EOF
 }
 
@@ -16,24 +18,26 @@ err() {
 	exit 1
 }
 
-check_dmenu() {
-	if ! command -v dmenu > /dev/null 2>&1; then
-		err "${0}: dmenu must be installed"
-	fi
-}
 
-#TODO check if browser environmental variable exists
-#TODO check if ~/.config/sites/bookmarks.txt
-browser=$BROWSER
-links_file=~/.config/sites/bookmarks.txt
-
+[ -z "${BROWSER}" ] && browser="qutebrowser" || browser="${BROWSER}"
 
 if [ "${#}" -eq 0 ]; then
-	cat "${links_file}" | dmenu | xargs "${browser}"
+
+	link_file="${HOME}/.config"/sites/bookmarks.txt
+
+	[ command -v dmenu > /dev/null 2>&1 ] || err "${0}: dmenu must be installed"
+
+	[ -z "${XDG_HOME_CONFIG}" ] || link_file="${XDG_HOME_CONFIG}"/sites/bookmarks.txt
+	[ -e "${link_file}" ] || err "${0}: Couldn't find bookmarks file"
+
+	link=$(< "${link_file}" dmenu)
+
+	[ -z "${link}" ] || "${browser}" "${link}"
 
 elif [ "${#}" -eq 1 ]; then 
-	[ "${1}" == "-h" ] && help && exit 0
+	[ "${1}" = "-h" ] && help && exit 0
+
 	"${browser}" "${1}"
 else
-	err "invalid usage"
+	err "${0}: Invalid usage" "Try '${0} -h' for help."
 fi
