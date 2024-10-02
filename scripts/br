@@ -18,7 +18,6 @@ err() {
 	exit 1
 }
 
-
 [ -z "${BROWSER}" ] && browser="qutebrowser" || browser="${BROWSER}"
 
 if [ "${#}" -eq 0 ]; then
