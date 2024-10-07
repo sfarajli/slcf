@@ -14,6 +14,7 @@ alias py="python3"
 alias makeb="make -C ../"
 alias fren="trans fr:en"
 alias enfr="trans en:fr"
+alias clip="xclip -selection clipboard"
 
 # Occasionally mistyped commands
 alias suod="sudo"
