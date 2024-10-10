@@ -27,7 +27,7 @@ alias gti="git"
 
 # Directory change aliases
 alias gp="cd ~/proj"
-alias gt="cd ~/testProj"
+alias gt="cd ~/tproj"
 alias gc="cd ~/.config"
 alias gu="cd /usr/local/bin"
 
