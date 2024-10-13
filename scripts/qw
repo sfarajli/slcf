@@ -28,7 +28,7 @@ run() {
 }
 
 if ! command -v qemu-img > /dev/null 2>&1 || \
-     command -v qemu-system-x86_64 > /dev/null 2>&1; then
+   ! command -v qemu-system-x86_64 > /dev/null 2>&1; then
 	err "${0}: qemu must be properly installed"
 fi
 
