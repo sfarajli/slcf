@@ -24,7 +24,7 @@ if [ "${#}" -eq 0 ]; then
 
 	link_file="${HOME}/.config"/sites/bookmarks.txt
 
-	command -v dmenu > /dev/null 2>&1 && err "${0}: dmenu must be installed"
+	command -v dmenu > /dev/null 2>&1 || err "${0}: dmenu must be installed"
 
 	[ -z "${XDG_HOME_CONFIG}" ] || link_file="${XDG_HOME_CONFIG}"/sites/bookmarks.txt
 	[ -e "${link_file}" ] || err "${0}: Couldn't find bookmarks file"
