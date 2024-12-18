@@ -15,6 +15,7 @@ alias makeb="make -C ../"
 alias fren="trans fr:en"
 alias enfr="trans en:fr"
 alias clip="xclip -selection clipboard"
+alias push="git remote show | xargs -I remote git push remote master" # push master branch of all remotes
 
 # Occasionally mistyped commands
 alias suod="sudo"
