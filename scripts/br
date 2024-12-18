@@ -18,6 +18,8 @@ err() {
 	exit 1
 }
 
+alias dmenucmd="dmenu -bw 1 -c -g 1 -l 25"
+
 [ -z "${BROWSER}" ] && browser="qutebrowser" || browser="${BROWSER}"
 
 if [ "${#}" -eq 0 ]; then
@@ -29,7 +31,7 @@ if [ "${#}" -eq 0 ]; then
 	[ -z "${XDG_HOME_CONFIG}" ] || link_file="${XDG_HOME_CONFIG}"/sites/bookmarks.txt
 	[ -e "${link_file}" ] || err "${0}: Couldn't find bookmarks file"
 
-	link=$(< "${link_file}" dmenu)
+	link=$(< "${link_file}" dmenucmd)
 
 	[ -z "${link}" ] || "${browser}" "${link}"
 
