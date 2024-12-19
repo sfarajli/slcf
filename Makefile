@@ -21,7 +21,7 @@ all:
 full: config scripts git desktop directory
 
 config:
-	mkdir -p $(CONFDIR)
+	mkdir -p $(CONFDIR)/sites
 	$(COPY) config/bash/bashrc		$(BASHRC)
 	$(COPY) config/zsh/zshrc		$(ZSHRC)
 	$(COPY) config/lf 			$(CONFDIR)
@@ -35,7 +35,7 @@ config:
 	$(COPY) config/x11 			$(CONFDIR)
 	$(COPY) config/zathura 			$(CONFDIR)
 	$(COPY) config/mimeapps.list 		$(CONFDIR)
-	$(COPY) config/sites/bookmarks.txt 	$(CONFDIR)
+	$(COPY) config/sites/bookmarks.txt 	$(CONFDIR)/sites
 	$(LINK) $(CONFDIR)/shell/profile	$(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
