@@ -67,8 +67,6 @@ bindkey '^R' history-incremental-search-backward
 bindkey -s '^o' '^ulfcd\n'
 bindkey -s '^f' '^ucd "$(dirname "$(fzf --reverse)")"\n'
 bindkey -s '^v' '^uvi "$(fzf --reverse)"\n'
-bindkey -M vicmd 'k' history-search-backward
-bindkey -M vicmd 'j' history-search-forward
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
