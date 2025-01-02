@@ -6,7 +6,7 @@ set number
 set scrolloff=5 			" Smooth scroll
 set clipboard=unnamedplus		" Use system clipboard
 set shortmess+=I 			" Deactivate intro text
-set fillchars=eob:\  			" Remove "~" for empty lines (must end wit trailing a space)
+set fillchars=eob:\  			" Remove "~" for empty lines (must end with trailing a space)
 :set nowrap				" Disable wrapping
 autocmd BufwritePost * %s/\s\+$//e 	" Remove useless trailing spaces when saving
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o " Disable autocomments
