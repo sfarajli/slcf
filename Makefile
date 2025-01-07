@@ -32,6 +32,7 @@ config:
 	$(COPY) config/qutebrowser 		$(CONFDIR)
 	$(COPY) config/shell 			$(CONFDIR)
 	$(COPY) config/vim			$(CONFDIR)
+	$(COPY) config/nvim			$(CONFDIR)
 	$(COPY) config/x11 			$(CONFDIR)
 	$(COPY) config/zathura 			$(CONFDIR)
 	$(COPY) config/mimeapps.list 		$(CONFDIR)
