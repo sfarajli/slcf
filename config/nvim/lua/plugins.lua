@@ -1,4 +1,37 @@
-require('Comment').setup{
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("config").."/lazy/lazy.nvim" -- FIXME: Might be a problem in some systems
+
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Setups
+require("lazy").setup({
+	spec = {
+		"akinsho/toggleterm.nvim",
+		"numToStr/Comment.nvim",
+		"windwp/nvim-autopairs",
+		"EdenEast/nightfox.nvim",
+		"nvim-neo-tree/neo-tree.nvim",
+		-- neo-tree-dependencies
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim"
+	},
+})
+
+require("Comment").setup{
     padding = true,	-- Add a space b/w comment and the line
     sticky = true,	-- Whether the cursor should stay at its position
     ignore = nil,	-- Lines to be ignored while (un)comment
@@ -59,35 +92,9 @@ require("neo-tree").setup({
 
 })
 
-require('nvim-autopairs').setup({
+require("nvim-autopairs").setup({
 	 disable_filetype = { "TelescopePrompt", "spectre_panel", "neo-tree-popup", "conf"},
 	 disable_in_macro = true,
 	 disable_in_visualblock = false,
 	 disable_in_replace_mode = true,
 })
-
---[[ PACKER BOOTSTRAP ]]
-local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-		vim.cmd [[packadd packer.nvim]]
-		return true
-	end
-	return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
-	use "akinsho/toggleterm.nvim"
-	use 'numToStr/Comment.nvim'
-	use 'windwp/nvim-autopairs'
-	use 'EdenEast/nightfox.nvim'
-
-	if packer_bootstrap then
-		require('packer').sync()
-	end
-end)

@@ -1,4 +1,4 @@
-require "plugins"
+require("plugins")
 
 vim.cmd("let mapleader = ' '")
 vim.cmd("set relativenumber")
