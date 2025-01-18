@@ -1,19 +1,19 @@
 .POSIX:
-CONFDIR=$(HOME)/.config
-MUSICDIR=$(HOME)/music
-PROJDIR=$(HOME)/proj
-BOOKDIR=$(HOME)/tproj
-TESTPROJDIR=$(HOME)/tproj
-BINDIR=$(HOME)/.local/bin
+CONFDIR = $(HOME)/.config
+MUSICDIR = $(HOME)/music
+PROJDIR = $(HOME)/proj
+BOOKDIR = $(HOME)/tproj
+TESTPROJDIR = $(HOME)/tproj
+BINDIR = $(HOME)/.local/bin
 
-BASHRC=$(HOME)/.bashrc
-ZSHRC=$(HOME)/.zshrc
-ZPROFILE=$(HOME)/.zprofile
-BASHPROFILE=$(HOME)/.bash_profile
-GITCONFIG=$(HOME)/.gitconfig
+BASHRC = $(HOME)/.bashrc
+ZSHRC = $(HOME)/.zshrc
+ZPROFILE = $(HOME)/.zprofile
+BASHPROFILE = $(HOME)/.bash_profile
+GITCONFIG = $(HOME)/.gitconfig
 
-COPY=cp -r
-LINK=ln -sf
+COPY = cp -r
+LINK = ln -sf
 
 all: config scripts directory depcheck
 
