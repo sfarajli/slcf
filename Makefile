@@ -1,4 +1,4 @@
-# Directories
+.POSIX:
 CONFDIR=$(HOME)/.config
 MUSICDIR=$(HOME)/music
 PROJDIR=$(HOME)/proj
@@ -6,7 +6,6 @@ BOOKDIR=$(HOME)/tproj
 TESTPROJDIR=$(HOME)/tproj
 BINDIR=$(HOME)/.local/bin
 
-# Files
 BASHRC=$(HOME)/.bashrc
 ZSHRC=$(HOME)/.zshrc
 ZPROFILE=$(HOME)/.zprofile
@@ -16,9 +15,9 @@ GITCONFIG=$(HOME)/.gitconfig
 COPY=cp -r
 LINK=ln -sf
 
-all:
+all: config scripts directory depcheck
 
-full: config scripts git desktop directory
+full: config scripts git directory arch-linux
 
 config:
 	mkdir -p $(CONFDIR)/sites
@@ -40,11 +39,8 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
-desktop: dwm st dmenu slstatus
-
 git:
 	$(COPY) config/git/gitconfig 		$(GITCONFIG)
-
 
 scripts:
 	mkdir -p $(BINDIR)
@@ -56,26 +52,6 @@ server:
 	$(COPY) config/lf 		$(CONFDIR)
 	$(COPY) config/shell		$(CONFDIR)
 	$(COPY) config/vim		$(CONFDIR)
-
-dwm: clean
-	curl -LO https://farajli.net/dwm.tar.gz
-	tar xf dwm.tar.gz
-	cd dwm/; PREFIX="${HOME}"/.local make install
-
-st: clean
-	curl -LO https://farajli.net/st.tar.gz
-	tar xf st.tar.gz
-	cd st/; PREFIX="${HOME}"/.local make install
-
-dmenu: clean
-	curl -LO https://farajli.net/dmenu.tar.gz
-	tar xf dmenu.tar.gz
-	cd dmenu/; PREFIX="${HOME}"/.local make install
-
-slstatus: clean
-	curl -LO https://farajli.net/slstatus.tar.gz
-	tar xf slstatus.tar.gz
-	cd slstatus/; PREFIX="${HOME}"/.local make install
 
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
@@ -91,7 +67,4 @@ directory:
 depcheck: 
 	@./dep.sh
 
-clean:
-	rm -rf dwm st dmenu dwm.tar.gz st.tar.gz dmenu.tar.gz slstatus slstatus.tar.gz
-
-.PHONY: all config scripts server desktop arch-linux directory dwm st dmenu slstatus clean full depcheck
+.PHONY: all config scripts server arch-linux directory full depcheck
