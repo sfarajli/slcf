@@ -67,4 +67,13 @@ directory:
 depcheck: 
 	@./dep.sh
 
+dist: clean
+	mkdir -p slcf/
+	cp -R config distros scripts dep.sh Makefile README TODO slcf/
+	tar -czf slcf.tar.gz slcf/
+	rm -rf slcf/
+
+clean:
+	rm -rf slcf/ slcf.tar.gz
+
 .PHONY: all config scripts server arch-linux directory full depcheck
