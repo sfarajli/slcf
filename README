@@ -14,8 +14,5 @@ Check the dependencies
 Install config and scripts
 > make config scripts
 
-Install desktop (dwm, st, dmenu, slstatus) (recommended)
-> make desktop scripts config
-
 Install everything
 > make full
