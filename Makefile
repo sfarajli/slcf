@@ -69,7 +69,7 @@ depcheck:
 
 dist: clean
 	mkdir -p slcf/
-	cp -R config distros scripts dep.sh Makefile README TODO slcf/
+	cp -R config distros scripts dep.sh Makefile README slcf/
 	tar -czf slcf.tar.gz slcf/
 	rm -rf slcf/
 
