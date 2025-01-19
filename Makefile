@@ -1,4 +1,10 @@
 .POSIX:
+
+DWM = dwm-farajli-6.5
+ST = st-farajli-0.9.2
+DMENU = dmenu-farajli-5.3
+SLSTATUS = slstatus-farajli-1.0
+	
 CONFDIR = $(HOME)/.config
 MUSICDIR = $(HOME)/music
 PROJDIR = $(HOME)/proj
@@ -17,7 +23,9 @@ LINK = ln -sf
 
 all: config scripts directory depcheck
 
-full: config scripts git directory arch-linux
+full: config scripts git directory desktop
+
+desktop: $(DWM) $(ST) $(DMENU) $(SLSTATUS)
 
 config:
 	mkdir -p $(CONFDIR)/sites
@@ -64,6 +72,18 @@ directory:
 			$(TESTPROJDIR) \
 			$(BINDIR)
 
+$(DWM).tar.gz $(ST).tar.gz $(DMENU).tar.gz $(SLSTATUS).tar.gz: clean
+	curl -LO https://archive.farajli.net/archive/$@
+
+$(DWM): $(DWM).tar.gz
+$(ST): $(ST).tar.gz
+$(DMENU): $(DMENU).tar.gz
+$(SLSTATUS): $(SLSTATUS).tar.gz
+
+$(DWM) $(ST) $(DMENU) $(SLSTATUS): 
+	tar -xf $<
+	cd $@; PREFIX=~/.local make install
+
 depcheck: 
 	@./dep.sh
 
@@ -74,6 +94,10 @@ dist: clean
 	rm -rf slcf/
 
 clean:
-	rm -rf slcf/ slcf.tar.gz
+	rm -rf slcf/ slcf.tar.gz \
+		$(DWM) $(DWM).tar.gz \
+		$(ST) $(ST).tar.gz \
+		$(DMENU) $(DMENU).tar.gz \
+		$(SLSTATUS) $(SLSTATUS).tar.gz 
 
-.PHONY: all config scripts server arch-linux directory full depcheck
+.PHONY: all config desktop scripts server arch-linux directory full depcheck
