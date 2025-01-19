@@ -4,3 +4,6 @@
 	branch = false
 [alias]
 	pushall = !git remote | xargs -L1 git push --all
+[user]
+	email = suleyman@farajli.net
+	name = Suleyman Farajli
