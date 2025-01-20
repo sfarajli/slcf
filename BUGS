@@ -1,0 +1,1 @@
+- bashrc: prompt gets distorted when the length of the command string exceeds the terminal length
