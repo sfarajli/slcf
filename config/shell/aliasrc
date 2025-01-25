@@ -3,6 +3,7 @@
 [ -f $XINITRC ] && alias startx="startx $XINITRC"
 [ -x "$(command -v vim)" ] && alias vi="vim"
 [ -x "$(command -v nvim)" ] && alias vi="nvim"
+[ -x "$(command -v neomutt)" ] && alias mutt="neomutt"
 
 alias ls="ls --color=auto --group-directories-first -p"
 alias grep="grep --color=auto"
