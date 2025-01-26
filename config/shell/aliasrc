@@ -50,6 +50,6 @@ elif [ -x "$(command -v rc-service)" ]; then
 
 fi
 
-# Systemd and Arch linux specific aliases
+# Arch linux specific aliases
 alias pacman="sudo pacman --color=always"
 alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
