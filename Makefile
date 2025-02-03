@@ -73,7 +73,7 @@ directory:
 			$(BINDIR)
 
 $(DWM).tar.gz $(ST).tar.gz $(DMENU).tar.gz $(SLSTATUS).tar.gz: clean
-	curl -LO https://archive.farajli.net/archive/$@
+	curl -LO https://farajli.net/archive/$@
 
 $(DWM): $(DWM).tar.gz
 $(ST): $(ST).tar.gz
