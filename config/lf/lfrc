@@ -13,7 +13,7 @@ map m push $mkdir<space>
 map t push $touch<space>
 map D trash
 map <c-f> $lf -remote "send $id select \"$(fzf --reverse)\""
-map x $setsid mpv "$f" # execute current file (must be executable)
+map x $$f # execute current file (must be executable)
 
 map zb :{{ set sortby natural; set info size; set preview; set ratios 5:2; }}
 map zz :{{ set preview; set ratios 1:2:3; }}
