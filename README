@@ -1,12 +1,12 @@
 slcf - Suleyman's linux configuration files
 ===========================================
-My xorg dotfiles.
+My personal dotfiles.
 
 Installing slcf
 ---------------
-slcf only makes change to the user running the Makefile and doesn't affect other users,
-so, it is recommended to create a new user and install slcf on the homepage of that user
-and if you like it, install it on your real user.
+slcf only installs dotfiles to the home directory of the user running the Makefile
+and doesn't affect other users. Therefore, it's recommended to create a new user
+and run make as that user. If you like the setup then you can install it for your main user.
 
 Check the dependencies
 > make depcheck
