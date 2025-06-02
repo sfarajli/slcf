@@ -7,6 +7,7 @@
 
 alias ls="ls --color=auto --group-directories-first -p"
 alias ip="ip -color=auto"
+alias diff="diff --color=auto"
 alias grep="grep --color=auto"
 alias ping="ping -c 2"
 alias clear="clear -x"
