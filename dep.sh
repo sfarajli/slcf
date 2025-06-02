@@ -4,7 +4,7 @@
 # `alternative_program` and `message` are optional
 check() {
     retval=0
-    [ "$1" = "-l" ] && { ISLIB=1; shift;} || ISLIB=0
+    [ "${1}" = "-l" ] && { ISLIB=1; shift;} || ISLIB=0
     for entry in "${@}"; do
         fail=0
         program_part=${entry%%:*}
@@ -28,44 +28,44 @@ check() {
 
 # Programs
 check \
-    git         \
-    lf          \
-    fzf         \
-    mpv         \
-    picom       \
-    qutebrowser \
-    zathura     \
-    vim,nvim    \
-    sxiv,nsxiv  \
-    zsh,bash    \
-    dunst       \
-    scrot       \
-    startx:"xorg-xinit is missing"
+    dunst                          \
+    fzf                            \
+    git                            \
+    lf                             \
+    mpv                            \
+    picom                          \
+    qutebrowser                    \
+    scrot                          \
+    startx:"xorg-xinit is missing" \
+    sxiv,nsxiv                     \
+    vim,nvim                       \
+    zathura                        \
+    zsh,bash                       \
 # TODO: check for xorg-server
 
 # Script dependencies
 check \
     brightnessctl                 \
     pactl:"pulseaudio is missing" \
+    xgamma                        \
     xinput                        \
     xset                          \
-    xwallpaper                    \
-    xgamma
+    xwallpaper
 
 # Build dependencies
 check \
-    curl                        \
-    tar                         \
-    make                        \
     cc:"c compiler is missing"  \
-    ld:"linker is missing"
+    curl                        \
+    ld:"linker is missing"      \
+    make                        \
+    tar
 
 # Libraries
 if check pkg-config; then
     check -l \
-        xinerama \
+        x11      \
         xft      \
-        x11
+        xinerama
 else
     echo "Warning: Skipping library check since 'pkg-config' is missing" >&2
 fi
