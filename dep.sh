@@ -30,6 +30,7 @@ retval=0
 
 # Programs
 check \
+    Xorg                           \
     dunst                          \
     fzf                            \
     git                            \
@@ -43,7 +44,6 @@ check \
     vim,nvim                       \
     zathura                        \
     zsh,bash || retval=1
-# TODO: check for xorg-server
 
 # Script dependencies
 check \
@@ -66,7 +66,7 @@ check \
 if check pkg-config; then
     check -l \
         x11:"libX11 is missing"  \
-        xft:"libXft is missing "  \
+        xft:"libXft is missing " \
         xinerama:"libXinerama is missing" || retval=1
 else
     echo "Warning: Skipping library check since 'pkg-config' is missing" >&2
