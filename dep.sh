@@ -44,6 +44,7 @@ check \
 
 # Build dependencies
 check \
+	pkg-config			\
 	curl				\
 	tar				\
 	make				\
