@@ -32,6 +32,7 @@ check \
 	dunst				\
 	scrot				\
 	startx:"xorg-xinit is missing"
+# TODO: check for xorg-server
 
 # Script dependencies
 check \
