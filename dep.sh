@@ -65,9 +65,9 @@ check \
 # Libraries
 if check pkg-config; then
     check -l \
-        x11  \
-        xft  \
-        xinerama || retval=1
+        x11:"libX11 is missing"  \
+        xft:"libXft is missing "  \
+        xinerama:"libXinerama is missing" || retval=1
 else
     echo "Warning: Skipping library check since 'pkg-config' is missing" >&2
     retval=1
