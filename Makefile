@@ -85,7 +85,7 @@ $(DWM) $(ST) $(DMENU) $(SLSTATUS):
 	cd $@; PREFIX=~/.local make install
 
 depcheck: 
-	@./dep.sh
+	@-./dep.sh
 
 dist: clean
 	mkdir -p slcf/

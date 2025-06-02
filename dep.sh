@@ -3,10 +3,10 @@
 # Format for entries `program,alternative_program:output_message`
 # `alternative_program` and `message` are optional
 check() {
-    retval=0
+    fail=0
     [ "${1}" = "-l" ] && { ISLIB=1; shift;} || ISLIB=0
     for entry in "${@}"; do
-        fail=0
+        missing=0
         program_part=${entry%%:*}
         program=${program_part%%,*}
         alt_program=${program_part#*,}
@@ -15,16 +15,18 @@ check() {
         [ "${msg}" = "${entry}" ] && msg="${program} is missing"
 
         if [ "${ISLIB}" -eq 1 ]; then
-            pkg-config --exists "${program}" || fail=1
+            pkg-config --exists "${program}" || missing=1
         elif ! command -v "${program}" > /dev/null 2>&1 &&
                 ! command -v "${alt_program}" > /dev/null 2>&1; then
-        fail=1
+        missing=1
         fi
 
-        [ "${fail}" -eq 1 ] && { echo "$msg" >&2; retval=1; }
+        [ "${missing}" -eq 1 ] && { echo "$msg" >&2; fail=1; }
     done
-    return "${retval}"
+    return "${fail}"
 }
+
+retval=0
 
 # Programs
 check \
@@ -40,7 +42,7 @@ check \
     sxiv,nsxiv                     \
     vim,nvim                       \
     zathura                        \
-    zsh,bash                       \
+    zsh,bash || retval=1
 # TODO: check for xorg-server
 
 # Script dependencies
@@ -50,7 +52,7 @@ check \
     xgamma                        \
     xinput                        \
     xset                          \
-    xwallpaper
+    xwallpaper || retval=1
 
 # Build dependencies
 check \
@@ -58,14 +60,17 @@ check \
     curl                        \
     ld:"linker is missing"      \
     make                        \
-    tar
+    tar || retval=1
 
 # Libraries
 if check pkg-config; then
     check -l \
-        x11      \
-        xft      \
-        xinerama
+        x11  \
+        xft  \
+        xinerama || retval=1
 else
     echo "Warning: Skipping library check since 'pkg-config' is missing" >&2
+    retval=1
 fi
+
+exit "${retval}"
