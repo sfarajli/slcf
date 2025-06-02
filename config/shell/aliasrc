@@ -6,6 +6,7 @@
 [ -x "$(command -v neomutt)" ] && alias mutt="neomutt"
 
 alias ls="ls --color=auto --group-directories-first -p"
+alias ip="ip -color=auto"
 alias grep="grep --color=auto"
 alias ping="ping -c 2"
 alias clear="clear -x"
@@ -22,7 +23,7 @@ alias push="git remote show | xargs -I remote git push remote master" # push mas
 alias suod="sudo"
 alias maek="make"
 alias meak="make"
-alias sl="ls"
+alias sl="ls --color=auto --group-directories-first -p"
 alias claer="clear -x"
 alias clera="clear -x"
 alias gti="git"
