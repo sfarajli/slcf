@@ -1,7 +1,13 @@
 #!/bin/sh
 
+argv0=$(basename "${0}")
+
 err() {
-	[ "${1}" != "-x" ] && printf "${0}: " || shift
+	if [ "${1}" != "-x" ]; then
+		printf "%s: " "${argv0}"
+	else
+		shift
+	fi
 
 	for line in "${@}"; do
 		echo "${line}" >&2
@@ -10,8 +16,8 @@ err() {
 }
 
 invalid_use() {
-	[ "${1}" == "-h" ] && err -x "Try '${0} -h' for help."
-	err "Invalid usage" "Try '$0 -h' for help."
+	[ "${1}" = "-h" ] && err -x "Try '${argv0} -h' for help."
+	err "Invalid usage" "Try '${argv0} -h' for help."
 }
 
 check_program() {

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. slib
+
 help() {
 cat << EOF
 ${0}: Wrapper script to set wallpapers
@@ -11,53 +13,35 @@ options:
 
 NOTE: default directory is ~/.config/wallpapers
 EOF
+
+exit 0
 }
 
-err() {
-	for line in "${@}"; do
-		echo "${line}" >&2
-	done
-	exit 1
-}
+check_program "xwallpaper"
 
-run() {
-	if ! ${1} > /dev/null 2>&1; then
-		err "${2}"
-	fi
-
-	[ -n "${3}" ] && echo "${3}"
-	exit 0
-}
-
-if ! command -v xwallpaper > /dev/null 2>&1; then
-	err "${0}: xwallpaper must be installed"
-fi
-
-if [ ${#} = 0 ]; then
+if [ "${#}" = 0 ]; then
+	#FIXME: use XDG_CONFIG
 	input="${HOME}/.config/wallpapers"
-elif [ ${#} != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage" \
-	    "Try '$0 -h' for help."
+elif [ "${#}" != 1 ] && [ "${#}" != 2 ]; then
+	invalid_use
 fi
 
 while getopts "hcd:" option; do
 	case "${option}" in
-	c)
-		run "xwallpaper --clear" \
-		"${0}: Failed to clear wallpaper"
-	;;
+	c) run "xwallpaper --clear" ;;
+
 	d) input="${OPTARG}" ;;
 
-	h) help; exit 0 ;;
+	h) help ;;
 
-	*) err "Try '${0} -h' for help" ;;
+	*) invalid_use -h ;;
 
 	esac
 done
 
 shift $((OPTIND - 1))
 
-[ ${#} != 0 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
+[ "${#}" != 0 ] && invalid_use
 
 if [ -n "${input}" ]; then
 	case $(file -L -b --mime-type "${input}") in
@@ -65,7 +49,7 @@ if [ -n "${input}" ]; then
 
 	inode/directory) waldir="${input}" ;;
 
-	*) err "${0}: Couldn't read given file" ;;
+	*) err "Couldn't read given file" ;;
 	esac
 fi
 
@@ -74,6 +58,6 @@ if [ -n "${waldir}" ]; then
 	| shuf -n 1 )
 fi
 
-[ -z "${image}" ] && err "${0}: No image file found"
+[ -z "${image}" ] && err "No image file found"
 
-run "xwallpaper --zoom ${image}" "${0}: Failed to set wallpaper" "${image}"
+run "xwallpaper --zoom ${image}" "${image}"
