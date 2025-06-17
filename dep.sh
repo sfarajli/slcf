@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# Format for entries `program,alternative_program:output_message`
-# `alternative_program` and `message` are optional
+# Check if programs are installed on the system.
+# Format for entries `program,alternative_program:output_message`,
+# `alternative_program` and `message` are optional.
 check() {
     fail=0
     [ "${1}" = "-l" ] && { ISLIB=1; shift;} || ISLIB=0
