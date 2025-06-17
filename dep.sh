@@ -40,6 +40,7 @@ check \
     picom                          \
     qutebrowser                    \
     scrot                          \
+    setxkbmap                      \
     startx:"xorg-xinit is missing" \
     sxiv,nsxiv                     \
     vim,nvim                       \
