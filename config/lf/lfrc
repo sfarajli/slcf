@@ -40,6 +40,7 @@ set rulerfmt "\033[32;1;7m"
 
 set promptfmt "\033[48;1;234m %w/%f"
 
+#FIXME: Doesn't overwrite some files
 cmd trash ${{
     mkdir -p ~/.trash
     if [ -z "$fs" ]; then
