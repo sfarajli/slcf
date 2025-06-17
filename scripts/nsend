@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. slib
+
 help() {
 cat << EOF
 ${0}: Wrapper script to send notifications
@@ -9,29 +11,22 @@ options:
  -s [Msg]		Send Msg Without Name
  -h 			Print this message and exit
 EOF
+
+exit 0
 }
 
-err() {
-	for line in "${@}"; do
-		echo "${line}" >&2
-	done
-	exit 1
-}
-
-if ! command -v notify-send > /dev/null 2>&1; then
-	err "${0}: dunst must be installed"
-fi
+check_program "notify-send" "dunst must be installed"
 
 case "${1}" in
 "-s")
-	[ ${#} -gt 3 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
+	[ "${#}" -gt 3 ] && invalid_use
 
-	notify-send "${2}" "${3}" > /dev/null 2>&1 || err "${0}: Failed to send notification"
+	run "notify-send ${2} ${3}"
 
 	exit 0
 ;;
-"-h") help; exit 0 ;;
+"-h") help ;;
 
-*) err "${0}: Invalid usage" "Try '${0} -h' for help." ;;
+*) invalid_use ;;
 
 esac

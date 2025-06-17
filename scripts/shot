@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. slib
+
 help() {
 cat << EOF
 ${0}: Wrapper script to take screenshots
@@ -9,30 +11,13 @@ options:
  -s 		Select the area with the cursor
  -h 		Print this message and exit
 
-NOTE: save directory is ~/pic/screenshots
+NOTE: save directory is ~/pics/screenshots
 EOF
+
+exit 0
 }
 
-err() {
-	for line in "$@"; do
-		echo "${line}" >&2
-	done
-
-	exit 1
-}
-
-run() {
-	if ! ${1} > /dev/null 2>&1; then
-		err "${2}"
-	fi
-
-	[ -n "${3}" ] && echo "${3}"
-	exit 0
-}
-
-if ! command -v scrot > /dev/null 2>&1; then
-	err "${0}: scrot must be installed"
-fi
+check_program "scrot"
 
 default_dir="${HOME}"/pics/screenshots
 
@@ -43,34 +28,30 @@ while getopts "d:sh" option; do
 
 	s) s_flg="1" ;;
 
-	h) help; exit 0 ;;
+	h) help ;;
 
-	*) err "Try '${0} -h' for help" ;;
+	*) invalid_use -h ;;
 
 	esac
 done
 
 shift $((OPTIND - 1))
 
-[ ${#} != 0 ] && err "${0}: Invalid usage" "Try '${0} -h' for help."
+[ ${#} != 0 ] && invalid_use
 
-if [ -z "${input}" ]; then
-	outfile="${default_dir}"/%b%d::%H%M%S.png
-else
-	if [ -d "${input}" ]; then
-		outfile="${input}"/%b%d::%H%M%S.png
-	else
-		outfile="${input}"
-	fi
-fi
+[ -z "${input}" ] && input="${default_dir}"
+
+outfile="${input}"
+
+[ -d "${input}" ] && outfile="${input}/$(date '+%b%d::%H%M%S')"
 
 if [ ! -e "$(dirname "${outfile}")" ]; then
-	mkdir -pv "$(dirname "${outfile}")" > /dev/null 2>&1 \
-	|| err "${0}: Failed to create directory"
+	mkdir -p "$(dirname "${outfile}")" > /dev/null 2>&1 \
+	|| err "Failed to create directory"
 fi
 
 if [ "${s_flg}" = "1" ]; then
-	run "scrot -zs ${outfile}" "Failed to screenshot"
+	run "scrot -zs ${outfile}" "${outfile}"
 else
-	run "scrot -z ${outfile}" "Failed to screenshot"
+	run "scrot -z ${outfile}" "${outfile}"
 fi

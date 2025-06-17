@@ -1,0 +1,99 @@
+#!/bin/sh
+
+# Avoid using full paths instead only use the program names.
+argv0=$(basename "${0}")
+
+# @FUNCTION: err
+# @USAGE: [-x] <message> ...
+# @DESCRIPTION:
+# Print given messages to stderr line by line and exit with status 1.
+#
+# If "-x" is specified, suppress the program prefix (`program: `)
+# from the output. Otherwise, the first line is prefixed with "program: ".
+#
+# This function is intended for fatal errors; it always exits the script.
+# @EXAMPLE:
+# err "Invalid usage" "Try '${argv0} -h' for help."
+
+
+err() {
+	if [ "${1}" != "-x" ]; then
+		printf "%s: " "${argv0}"
+	else
+		shift
+	fi
+
+	for line in "${@}"; do
+		echo "${line}" >&2
+	done
+	exit 1
+}
+
+# @FUNCTION: invalid_use
+# USAGE: [-h]
+# @DESCRIPTION:
+# Output a usage error message. If `-h` is not specified output: 
+# 	"<program>: Invalid usage "
+# 	"Try 'program -h' for help."
+# else output only:
+# 	"Try 'program -h' for help."
+
+invalid_use() {
+	[ "${1}" = "-h" ] && err -x "Try '${argv0} -h' for help."
+	err "Invalid usage" "Try '${argv0} -h' for help."
+}
+
+# @FUNCTION: check_program
+# USAGE: <command> [error-msg]
+# @DESCRIPTION:
+# Check if command exists on the system.
+# If not, print an error message to stderr and exit with status 1.
+# The default error message is "`command` must be installed"
+# but can optionally be overwritten.
+#
+# @EXAMPLE:
+# Check if pulseaudio is installed.
+#
+# check_program "pactl" "pulseaudio must be installed"
+
+check_program() {
+	command -v "${1}" > /dev/null 2>&1 && return 0
+	[ -n "${2}" ] && err "${2}"
+	err "${1} must be installed"
+}
+
+# @FUNCTION: run
+# USAGE: [--reload-status] <command> [success-msg] [failure-msg]
+# @DESCRIPTION:
+# Run the specified command and output success/failure message if provided.
+# Optionally reload the status bar.
+#
+# Success messages are printed to stdout, failure messages are printed to stderr.
+# To add a failure message a success message must also be present.
+# The output of the command is not suppressed.
+#
+# @EXAMPLE:
+# Run xwallpaper command if success print out ${image}:
+#
+# run "xwallpaper --zoom ${image}" "${image}"
+
+run() {
+	relstat=0
+	if [ "${1}" = "--reload-status" ];then
+		relstat=1
+		shift
+	fi
+
+	if ${1}; then
+		[ -n "${2}" ] && echo "${2}"
+	else
+		[ -n "${3}" ] && err "${3}"
+		exit 1
+	fi
+
+	if [ "${relstat}" -eq 1 ]; then
+		slreload || echo "Warning: Failed to reload slstatus" >&2
+	fi
+
+	exit 0
+}

@@ -21,7 +21,7 @@ GITCONFIG = $(HOME)/.gitconfig
 COPY = cp -r
 LINK = ln -sf
 
-all: config scripts directory depcheck
+all: config scripts directory check
 
 full: config scripts git directory desktop
 
@@ -84,7 +84,7 @@ $(DWM) $(ST) $(DMENU) $(SLSTATUS):
 	tar -xf $<
 	cd $@; PREFIX=~/.local make install
 
-depcheck: 
+check: 
 	@-./dep.sh
 
 dist: clean
@@ -100,4 +100,4 @@ clean:
 		$(DMENU) $(DMENU).tar.gz \
 		$(SLSTATUS) $(SLSTATUS).tar.gz 
 
-.PHONY: all config desktop scripts server arch-linux directory full depcheck
+.PHONY: all config desktop scripts server arch-linux directory full check

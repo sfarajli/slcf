@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. slib
+
 help() {
 cat << EOF
 ${0}: Wrapper script to change volume
@@ -12,53 +14,24 @@ options:
  -t		Toggle between mute and unmute
  -h 		Print this message and exit
 EOF
+
+exit 0
 }
 
-err() {
-	for line in "${@}"; do
-		echo "${line}" >&2
-	done
-	exit 1
-}
+check_program "pactl" "pulseaudio must be installed"
 
-run() {
-	if ! ${1} > /dev/null 2>&1; then
-		err "${2}"
-	fi
-
-	[ -n "${3}" ] && echo "${3}"
-
-	slreload || echo "Warning: Failed to reload slstatus" >&2
-
-	exit 0
-}
-
-if ! command -v pactl > /dev/null 2>&1; then
-	err "${0}: pulseaudio must be installed"
-fi
-
-if [ $# != 1 ] && [ $# != 2 ]; then
-	err "${0}: Invalid usage" "Try '$0 -h' for help."
-fi
+[ $# != 1 ] && [ $# != 2 ] && invalid_use
 
 while getopts "i:d:s:pth" option; do
 	case "${option}" in
-	i)
-		run "pactl set-sink-volume @DEFAULT_SINK@ +${OPTARG}%" \
-		"${0}: Failed to increase volume"
-	;;
-	d)
-		run "pactl set-sink-volume @DEFAULT_SINK@ -${OPTARG}%" \
-		"${0}: Failed to decrease volume"
-	;;
-	s)
-		run "pactl set-sink-volume @DEFAULT_SINK@ ${OPTARG}%" \
-		"${0}: Failed to set volume"
-	;;
-	t)
-		run "pactl set-sink-mute @DEFAULT_SINK@ toggle" \
-		"${0}: Failed to toggle volume"
-	;;
+	i) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ +${OPTARG}%" ;;
+
+	d) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ -${OPTARG}%" ;;
+
+	s) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ ${OPTARG}%" ;;
+
+	t) run --reload-status "pactl set-sink-mute @DEFAULT_SINK@ toggle" ;;
+
 	p)
 		if ! pactl get-sink-volume @DEFAULT_SINK@ \
 			| sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n1 2>/dev/null; then
@@ -67,11 +40,12 @@ while getopts "i:d:s:pth" option; do
 			exit 0
 		fi
 	;;
-	h) help; exit 0 ;;
+	h) help ;;
 
-	*) err "Try '${0} -h' for help" ;;
+	*) invalid_use -h ;;
 
 	esac
 done
 
-err "${0}: Invalid usage" "Try '$0 -h' for help."
+# Unreachable
+invalid_use
