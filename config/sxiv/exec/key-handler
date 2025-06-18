@@ -1,76 +1,91 @@
 #!/bin/sh
 
 # For theme to be applied ~/.Xresource file must be present
-picdir="${HOME}/pics"
+set -f
 
 while read -r file; do
 	case "$1" in
 	"m")
+		# FIXME: Providing directory selections to dmenu limits choices;
+		# e.g., if `/home/user/pics` is given, `/` can't be selected.
+
 		if [ -z "${destdir}" ]; then
-			destdir="$(echo "${picdir}" \
-			| dmenu -p "Move directory: " \
+			destdir="$(printf '' \
+			| dmenu -c -bw 2 -p "Copy directory: " \
 			| sed "s|~|${HOME}|g")"
 		fi
 
+		# Skip non-directories to prevent overwriting files during loop processing
 		if [ ! -d "${destdir}" ]; then
-			nsend -s "Not a directory"
+			nsend -s "Failed to move" "Not a directory: ${destdir}"
 			exit 1
 		fi
 
-		if mv "${file}" "${destdir}"; then
-			nsend -s "${file} moved to ${destdir}" &
+		if output=$(mv -- "${file}" "${destdir}" 2>&1); then
+			nsend -s "Moved" "${file} to ${destdir}" &
 		else
-			nsend -s "Failed to move ${file} to ${destdir}"
+			nsend -s "Failed to Move" "$output" &
 		fi
 	;;
 	"c")
-
-		if [ -z "${destdir}" ];then
-			destdir="$(echo "${picdir}" \
-			| dmenu -p "Copy directory: " \
+		if [ -z "${destdir}" ]; then
+			destdir="$(printf '' \
+			| dmenu -c -bw 2 -p "Copy directory: " \
 			| sed "s|~|${HOME}|g")"
 		fi
 
 		if [ ! -d "${destdir}" ]; then
-			nsend -s "Not a directory" &
+			nsend -s "Failed to copy" "Not a directory: ${destdir}"
 			exit 1
 		fi
 
-		if cp "${file}" "${destdir}"; then
-			nsend -s "${file} copied to ${destdir}" &
+		if output=$(cp -- "${file}" "${destdir}" 2>&1); then
+			nsend -s "Copied" "${file} to ${destdir}" &
 		else
-			nsend -s "Failed to copy ${file} to ${destdir}" &
+			nsend -s "Failed to copy" "$output" &
 		fi
-	;;
-	"w")
-		swall -d "$file" && nsend -s "Wallpaper ${file}" \
-		|| nsend -s "Couldn't set wallpaper"
 	;;
 	"d")
-		mkdir -p ~/.trash
-
-		if mv "$file" ~/.trash; then
-			nsend -s "$file is moved to ~/.trash" &
-		else
-			nsend -s "Failed to move ${file} to ~/.trash" &
+		mkdir -p "${HOME}/.trash"
+		trash_path="$HOME/.trash/$(basename -- "${file}")"
+		if [ -e "${trash_path}" ]; then
+			rand=$(od -An -N2 -tu2 /dev/urandom | tr -d ' ')
+			trash_path="${trash_path}_$(date +%Y%m%d%H%M%S)_${rand}"
 		fi
+
+		if output=$(mv -- "${file}" "${trash_path}" 2>&1); then
+			nsend -s "Deleted" "${file} to ${trash_path}" &
+		else
+			nsend -s "Failed to delete" "$output" &
+		fi
+
 	;;
-	"r") convert -rotate 90 "$file" "$file" ;;
-	"R") convert -rotate -90 "$file" "$file" ;;
-	"f") convert -flop "$file" "$file" ;;
 	"y")
 		if printf "%s" "${file}" | xclip -selection clipboard; then
-			nsend -s "Copied to clipboard" &
+			nsend -s "Relative path copied to clipboard." &
 		else
-			nsend -s "Failed to copy to clipboard" &
+			nsend -s "Failed to copy relative path to clipboard." &
 		fi
 	;;
 	"Y")
-		if readlink -f "$file" | tr -d '\n' | xclip -selection clipboard; then
-			nsend -s "Copied to clipboard" &
+		if readlink -f "${file}" | tr -d '\n' | xclip -selection clipboard; then
+			nsend -s "Full path copied to clipboard." &
 		else
-			nsend -s "Failed to copy to clipboard" &
+			nsend -s "Failed to copy full path to clipboard." &
 		fi
 	;;
-		esac
+	"w")
+
+		if output=$(swall -d "${file}" 2>&1); then
+			nsend -s "Set as wallpaper" "${file}" &
+		else
+			nsend -s "Failed to set as wallpaper" "$output" &
+		fi
+	;;
+	# No need for nsend since whether the photo has rotated or not is obvious
+	# FIXME: convert is depricated use magick instead
+	"r") convert -rotate 90 "${file}" "${file}" ;;
+	"R") convert -rotate -90 "${file}" "${file}" ;;
+	"f") convert -flop "${file}" "${file}" ;;
+	esac
 done
