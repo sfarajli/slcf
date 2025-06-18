@@ -1,51 +1,48 @@
-# Suleyman's gruvbox themed lf config at "https://git.farajli.net/slcf.git"
-
-# Due to the facts that ueberzug is no longer maintained and adds extra \
-# complexity it is not included in the config
+# Due to the fact that ueberzug is no longer maintained and
+# adds extra complexity, it is not included in the configuration."
 
 # Options
 set incsearch
-set scrolloff 4 #smooth scrolling
+set scrolloff 4 # Smooth scrolling
 
-# Key-maps
+# Bindings
 map <enter> shell
 map m push $mkdir<space>
 map t push $touch<space>
 map D trash
 map <c-f> $lf -remote "send $id select \"$(fzf --reverse)\""
-map x $$f # execute current file (must be executable)
+map x $$f # Execute current file (must be executable)
 
 map zb :{{ set sortby natural; set info size; set preview; set ratios 5:2; }}
 map zz :{{ set preview; set ratios 1:2:3; }}
 
-# Directory change
-map <c-h> cd ~
+# Directory change keybinds (some overwrite default ones)
+# <c-h> and <c-k> might fail on some terminal emulators
+map <c-h> cd ~/
 map <c-p> cd ~/proj
 map <c-t> cd ~/tproj
-map <c-c> cd ~/.config
-map <c-r> cd /tmp
-map <c-u> cd /usr/local/bin
-map <c-m> cd ~/music
-map <c-b> cd ~/books
+map <c-k> cd /tmp
+map <c-w> cd ~/work
 
-# Colors
-set cursoractivefmt "\033[0;1;7m" #white
-# set cursoractivefmt "\033[32;1;7m" #yellowish green
-# set cursoractivefmt "\033[33;1;7m" #orange
-# set cursoractivefmt "\033[36;1;7m" #green
-
+# Theme
+set cursoractivefmt "\033[0;1;7m"
 set cursorparentfmt "\033[0;1;7m"
 set tagfmt "\033[32;1;7m"
 set rulerfmt "\033[32;1;7m"
 
 set promptfmt "\033[48;1;234m %w/%f"
 
-#FIXME: Doesn't overwrite some files
 cmd trash ${{
-    mkdir -p ~/.trash
-    if [ -z "$fs" ]; then
-        mv "$f" ~/.trash
-    else
-        IFS="$(printf '\n\t')"; mv $fs ~/.trash
-    fi
+	set -f
+	mkdir -p ~/.trash
+	for entry in $fx; do
+		trash_path=~/.trash/$(basename -- "${entry}")
+		if [ -e "${trash_path}" ]; then
+			printf '%s exists\n' "${trash_path}" >&2
+			trash_path="${trash_path}_$(date +%s)_$RANDOM"
+			printf 'moving to %s\n' "${trash_path}" >&2
+		fi
+
+		mv -- "${entry}" "${trash_path}"
+	done
 }}

@@ -50,13 +50,13 @@ check_program "xinput"
 
 while getopts "e:d:t:lh" option; do
 	case "${option}" in
-	e) 
+	e)
 		get_id "${OPTARG}"
 		xenable "${id}"
 	;;
-	d) 
+	d)
 		get_id "${OPTARG}"
-		xdisable "${id}" 
+		xdisable "${id}"
 	;;
 	t)
 		get_id "${OPTARG}"
@@ -67,7 +67,7 @@ while getopts "e:d:t:lh" option; do
 	l)
 		if ! xinput list 2>/dev/null; then
 			err "Listing Failed"
-		else 
+		else
 			exit 0
 		fi
 	;;

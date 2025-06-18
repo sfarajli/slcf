@@ -48,7 +48,11 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
 git:
-	$(COPY) config/git/gitconfig 		$(GITCONFIG)
+	sed '/^# signingkey =/d' config/git/gitconfig > $(GITCONFIG)
+	@echo "Warning: Git commit/tag signing is enabled but signingKey is not set." >&2
+	@echo "Configure it manually using:" >&2
+	@echo "    gpg --list-secret-keys --keyid-format=long" >&2
+	@echo "    git config --global user.signingkey <YOUR_KEY_ID>" >&2
 
 scripts:
 	mkdir -p $(BINDIR)
