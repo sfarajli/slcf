@@ -15,7 +15,6 @@ argv0=$(basename "${0}")
 # @EXAMPLE:
 # err "Invalid usage" "Try '${argv0} -h' for help."
 
-
 err() {
 	if [ "${1}" != "-x" ]; then
 		printf "%s: " "${argv0}"
@@ -32,7 +31,7 @@ err() {
 # @FUNCTION: invalid_use
 # USAGE: [-h]
 # @DESCRIPTION:
-# Output a usage error message. If `-h` is not specified output: 
+# Output a usage error message. If `-h` is not specified output:
 # 	"<program>: Invalid usage "
 # 	"Try 'program -h' for help."
 # else output only:
@@ -71,6 +70,10 @@ check_program() {
 # Success messages are printed to stdout, failure messages are printed to stderr.
 # To add a failure message a success message must also be present.
 # The output of the command is not suppressed.
+#
+# This implementation does **not** use `eval`. Only simple commands and arguments are supported.
+# Shell control operators like `&&`, `||`, pipes (`|`), or redirection (`>`, `>>`, etc.) will not work.
+# This prevents unintended execution and makes it safe for use in scripts.
 #
 # @EXAMPLE:
 # Run xwallpaper command if success print out ${image}:
