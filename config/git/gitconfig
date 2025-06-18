@@ -1,9 +1,26 @@
 [init]
 	defaultBranch = master
+
 [pager]
 	branch = false
+
 [alias]
-	pushall = !git remote | xargs -L1 git push --all
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	pushall = "!for r in $(git remote); do git push --all \"$r\"; done"
+
 [user]
 	email = suleyman@farajli.net
 	name = Suleyman Farajli
+	# signingkey = <to be set manually>
+
+[commit]
+	gpgSign = true
+
+[tag]
+	gpgSign = true
+
+[gpg]
+	format = openpgp
