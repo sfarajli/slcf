@@ -33,18 +33,18 @@ require("lazy").setup({
 })
 
 require("Comment").setup{
-    padding = true,	-- Add a space b/w comment and the line
-    sticky = true,	-- Whether the cursor should stay at its position
-    ignore = nil,	-- Lines to be ignored while (un)comment
+    padding = true,   -- Add a space b/w comment and the line
+    sticky = true,    -- Whether the cursor should stay at its position
+    ignore = nil,     -- Lines to be ignored while (un)comment
     -- LHS of toggle mappings in NORMAL mode
     toggler = {
-        line = 'cc', 	--Line-comment toggle keymap
-        block = 'cb', 	-- Block-comment toggle keymap
+        line = 'cc',  --Line-comment toggle keymap
+        block = 'cb', -- Block-comment toggle keymap
     },
     -- LHS of operator-pending mappings in NORMAL and VISUAL mode
     opleader = {
-        line = 'cc', 	--Line-comment keymap
-        block = 'cb',	--Block-comment keymap
+        line = 'cc',  --Line-comment keymap
+        block = 'cb', --Block-comment keymap
     },
 }
 
@@ -72,25 +72,21 @@ require("neo-tree").setup({
 			}
 		}
 	},
-	--Indent Markers
 	default_component_configs = {
 		indent = {
+			--Indent Markers
 			with_markers = true,
 			indent_marker = "│",
 			last_indent_marker = "└",
 			indent_size = 2,
-		},
-	},
-	--Expanders
-	default_component_configs = {
-		indent = {
+			-- Expanders
 			with_expanders = false, --Not active
 			expander_collapsed = ">",
 			expander_expanded = "",
 			expander_highlight = "NeoTreeExpander",
+
 		},
 	},
-
 })
 
 require("nvim-autopairs").setup({
