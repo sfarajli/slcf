@@ -1,18 +1,28 @@
-# Minimal bash config for servers
-
 set -o vi
-stty -ixon # Disable ctrl-s and ctrl-q for freezing prompt
-shopt -s autocd # automatically cd into typed directory
+# `set show-mode-in-prompt on` is not set,
+# indicating vi mode in bash is too slow
 
-alias vi=vim
-alias vi=nvim
+# Ctrl-l is disabled in vi mode, bind it manually
+bind -m vi-command '"\C-l": clear-screen'
+bind -m vi-insert  '"\C-l": clear-screen'
 
-PS1='\e[01;31m$(code=${?##0};echo ${code:+[${code}]" "})\e[00m\u@\H \w % '
+stty -ixon        # Disable ctrl-s and ctrl-q for freezing prompt
+shopt -s autocd   # Automatically cd into typed directory
+
+PS1='\[\e[01;31m\]$(code=$?; [ "$code" -ne 0 ] && echo "[${code}] ")\[\e[00m\]\[\e[01;34m\]\u\[\e[00m\]@\H \w % '
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
+else 
+	# Fallback aliases where aliasrc isn't present (e.g., on servers)
+	alias \
+		vi="vim"         \
+		vi="nvim"        \
+		clear="clear -x"
+
 fi
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functionrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functionrc"
+	bind '"\C-o": "\C-ulfcd\n"'
 fi
