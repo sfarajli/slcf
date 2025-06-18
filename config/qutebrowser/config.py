@@ -1,4 +1,4 @@
-from gruvbox import *
+from current_theme import *
 
 # Text color of the completion widget. May be a single color to use for
 # all columns or a list of three colors, one for each column.
