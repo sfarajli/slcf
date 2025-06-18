@@ -21,7 +21,7 @@ case "${1}" in
 "-s")
 	[ "${#}" -gt 3 ] && invalid_use
 
-	run "notify-send ${2} ${3}"
+	echo $(printf 'notify-send "%s" "%s"' "${1}" "${2}")
 
 	exit 0
 ;;
