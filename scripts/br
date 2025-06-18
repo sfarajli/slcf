@@ -33,8 +33,8 @@ if [ "${#}" -eq 0 ]; then
 
 	[ -z "${link}" ] || "${browser}" "${link}"
 
-elif [ "${#}" -eq 1 ]; then 
-	[ "${1}" = "-h" ] && help 
+elif [ "${#}" -eq 1 ]; then
+	[ "${1}" = "-h" ] && help
 
 	"${browser}" "${1}"
 else
