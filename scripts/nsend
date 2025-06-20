@@ -5,11 +5,10 @@
 help() {
 cat << EOF
 ${0}: Wrapper script to send notifications
-
 options:
- -s [Name] [Msg]	Send Msg with Name
- -s [Msg]		Send Msg Without Name
- -h 			Print this message and exit
+ -s [Name] [Msg] Send Msg with Name
+ -s [Msg]        Send Msg Without Name
+ -h              Print this message and exit
 EOF
 
 exit 0

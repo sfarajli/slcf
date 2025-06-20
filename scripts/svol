@@ -5,14 +5,13 @@
 help() {
 cat << EOF
 ${0}: Wrapper script to change volume
-
 options:
- -i [Vol]	Increase volume by Vol
- -d [Vol]	Decrease volume by Vol
- -s [Vol] 	Set volume to Vol
- -p		Show the current volume
- -t		Toggle between mute and unmute
- -h 		Print this message and exit
+ -i [Vol]        Increase volume by Vol
+ -d [Vol]        Decrease volume by Vol
+ -s [Vol]        Set volume to Vol
+ -p              Show the current volume
+ -t              Toggle between mute and unmute
+ -h              Print this message and exit
 EOF
 
 exit 0
