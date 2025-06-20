@@ -6,11 +6,10 @@ help() {
 cat << EOF
 ${0}: Qemu Wrapper, very simple script for abriviating \
 verbose qemu commands and options
-
 options:
- -c			create an Image.img with 10G space
- -r [input.iso]		run input.iso
- -x [input.qcow2]	run input.qcow2
+ -c               create an Image.img with 10G space
+ -r [input.iso]   run input.iso
+ -x [input.qcow2] run input.qcow2
 EOF
 
 exit 0

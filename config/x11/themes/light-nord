@@ -1,0 +1,28 @@
+! Light Nord Theme
+
+*color0:  #d8dee9   ! nord4 - light background base
+*color1:  #bf616a   ! nord11 - red
+*color2:  #a3be8c   ! nord14 - green
+*color3:  #ebcb8b   ! nord13 - yellow
+*color4:  #81a1c1   ! nord10 - blue
+*color5:  #b48ead   ! nord15 - magenta
+*color6:  #88c0d0   ! nord8  - cyan
+*color7:  #434c5e   ! nord1  - dark gray (text)
+*color8:  #e5e9f0   ! nord6  - bright background (lighter)
+*color9:  #bf616a   ! nord11 - bright red
+*color10: #a3be8c   ! nord14 - bright green
+*color11: #ebcb8b   ! nord13 - bright yellow
+*color12: #81a1c1   ! nord10 - bright blue
+*color13: #b48ead   ! nord15 - bright magenta
+*color14: #8fbcbb   ! nord7  - bright cyan
+*color15: #2e3440   ! nord0  - dark text for contrast
+
+! Background and foreground for terminal and apps
+XTerm.vt100.background:  #d8dee9  ! light background
+XTerm.vt100.foreground:  #434c5e  ! dark text
+
+Sxiv.background:          #d8dee9
+Sxiv.foreground:          #434c5e
+
+Nsxiv.window.background:  #d8dee9
+Nsxiv.window.foreground:  #434c5e

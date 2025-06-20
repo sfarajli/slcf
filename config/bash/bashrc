@@ -13,7 +13,7 @@ PS1='\[\e[01;31m\]$(code=$?; [ "$code" -ne 0 ] && echo "[${code}] ")\[\e[00m\]\[
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
-else 
+else
 	# Fallback aliases where aliasrc isn't present (e.g., on servers)
 	alias \
 		vi="vim"         \

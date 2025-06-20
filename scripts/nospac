@@ -4,9 +4,8 @@ help() {
 cat << EOF
 ${0}: Replace all the spaces in file and directory
 names with "_" in in the current directory.
-
 options:
- -h 		Print this message and exit
+ -h              Print this message and exit
 EOF
 }
 

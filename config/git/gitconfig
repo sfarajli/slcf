@@ -5,9 +5,12 @@
 	branch = false
 
 [alias]
-	co = checkout
+	a = add
 	br = branch
 	ci = commit
+	co = checkout
+	df = diff
+	ds = diff --staged
 	st = status
 	pushall = "!for r in $(git remote); do git push --all \"$r\"; done"
 

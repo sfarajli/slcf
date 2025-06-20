@@ -1,17 +1,36 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura.desktop
 
-[Default Applications]
-image/jpeg=sxiv.desktop
-image/png=sxiv.desktop
-image/jpg=sxiv.desktop
+image/jpeg=nsxiv.desktop;sxiv.desktop;
+image/png=nsxiv.desktop;sxiv.desktop;
+image/gif=nsxiv.desktop;sxiv.desktop;
+image/svg+xml=nsxiv.desktop;sxiv.desktop;
+image/jxl=nsxiv.desktop;sxiv.desktop;
+image/webp=nsxiv.desktop;sxiv.desktop;
+image/tiff=nsxiv.desktop;sxiv.desktop;
+image/heif=nsxiv.desktop;sxiv.desktop;
+image/heic=nsxiv.desktop;sxiv.desktop;
+image/avif=nsxiv.desktop;sxiv.desktop;
+image/x-icon=nsxiv.desktop;sxiv.desktop;
+image/bmp=nsxiv.desktop;sxiv.desktop;
+image/x-portable-anymap=nsxiv.desktop;sxiv.desktop;
+image/x-portable-bitmap=nsxiv.desktop;sxiv.desktop;
+image/x-portable-pixmap=nsxiv.desktop;sxiv.desktop;
+image/x-tga=nsxiv.desktop;sxiv.desktop;
+image/qoi=nsxiv.desktop;sxiv.desktop;
+image/ff=nsxiv.desktop;sxiv.desktop;
 
-[Default Applications]
-text/plain=nvim.desktop
+text/plain=nvim.desktop;vim.desktop;
 
-[Default Applications]
-text/html=org.qutebrowser.qutebrowser.desktop
-
-[Default Application]
-x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
-x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
+video/mp4=mpv.desktop;
+video/webm=mpv.desktop;
+video/x-matroska=mpv.desktop;
+video/x-msvideo=mpv.desktop;
+video/ogg=mpv.desktop;
+video/mpeg=mpv.desktop;
+video/3gpp=mpv.desktop;
+video/quicktime=mpv.desktop;
+video/x-flv=mpv.desktop;
+video/x-ms-wmv=mpv.desktop;
+video/x-ms-asf=mpv.desktop;
+video/x-ms-dvr=mpv.desktop;

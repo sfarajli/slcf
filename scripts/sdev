@@ -5,15 +5,14 @@
 help() {
 cat << EOF
 ${0}: Disable and Enable devices
-
 options:
- -e [dev] 	Enable dev
- -d [dev]	Disable dev
- -t [dev]	Toggle dev
- -l 		List devices
- -h 		Print this message and exit
+ -e [dev]        Enable dev
+ -d [dev]        Disable dev
+ -t [dev]        Toggle dev
+ -l              List devices
+ -h              Print this message and exit
 
-Note: Nondescriptive inputs may disable (or enable) unwanted devices.
+Note: Nondescriptive inputs may disable/enable unwanted devices.
 EOF
 
 exit 0

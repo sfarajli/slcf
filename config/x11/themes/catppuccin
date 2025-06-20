@@ -1,0 +1,28 @@
+! Catppuccin Macchiato Palette (soft pastel/dark)
+
+*color0:  #1e1e2e  ! background dark purple-gray
+*color1:  #f38ba8  ! pink (red)
+*color2:  #a6e3a1  ! green
+*color3:  #f9e2af  ! yellow
+*color4:  #89b4fa  ! blue
+*color5:  #f5c2e7  ! magenta
+*color6:  #94e2d5  ! cyan
+*color7:  #cdd6f4  ! light text
+
+*color8:  #585b70  ! dark gray (bright black)
+*color9:  #f38ba8  ! bright pink (red)
+*color10: #a6e3a1  ! bright green
+*color11: #f9e2af  ! bright yellow
+*color12: #89b4fa  ! bright blue
+*color13: #f5c2e7  ! bright magenta
+*color14: #94e2d5  ! bright cyan
+*color15: #f7faff  ! bright white
+
+XTerm.vt100.background:  #1e1e2e
+XTerm.vt100.foreground:  #cdd6f4
+
+Sxiv.background:          #1e1e2e
+Sxiv.foreground:          #cdd6f4
+
+Nsxiv.window.background:  #1e1e2e
+Nsxiv.window.foreground:  #cdd6f4

@@ -5,11 +5,10 @@
 help() {
 cat << EOF
 ${0}: Wrapper script to take screenshots
-
 options:
- -d [File] 	Write to File
- -s 		Select the area with the cursor
- -h 		Print this message and exit
+ -d [File]       Write to File
+ -s              Select the area with the cursor
+ -h              Print this message and exit
 
 NOTE: save directory is ~/pics/screenshots
 EOF

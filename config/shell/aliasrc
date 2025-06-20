@@ -1,57 +1,63 @@
 #!/bin/sh
 
-[ -f $XINITRC ] && alias startx="startx $XINITRC"
+[ -f "${XINITRC}" ] && alias startx='startx ${XINITRC}'
 [ -x "$(command -v vim)" ] && alias vi="vim"
 [ -x "$(command -v nvim)" ] && alias vi="nvim"
 [ -x "$(command -v neomutt)" ] && alias mutt="neomutt"
 
-alias ls="ls --color=auto --group-directories-first -p"
-alias ip="ip -color=auto"
-alias diff="diff --color=auto"
-alias grep="grep --color=auto"
-alias ping="ping -c 2"
-alias clear="clear -x"
-alias open="xdg-open"
-alias lf="lfcd"
-alias py="python3"
-alias makeb="make -C ../"
-alias fren="trans fr:en"
-alias enfr="trans en:fr"
-alias clip="xclip -selection clipboard"
-alias push="git remote show | xargs -I remote git push remote master" # push master branch of all remotes
+# TODO: Deal with the flags that are not supported on BSD
+# Older versions of ip doesn't support -color flg, so don't use it
+alias \
+	clear="clear -x"                                  \
+	clip="xclip -selection clipboard"                 \
+	diff="diff --color=auto"                          \
+	enfr="trans en:fr"                                \
+	fren="trans fr:en"                                \
+	g="git"                                           \
+	grep="grep --color=auto"                          \
+	lf="lfcd"                                         \
+	ls="ls --color=auto --group-directories-first -p" \
+	makeb="make -C ../"                               \
+	open="xdg-open"                                   \
+	ping="ping -c 2"                                  \
+	py="python3"                                      \
+	push="git remote show | xargs -I remote git push remote master" # push master branch of all remotes
 
 # Occasionally mistyped commands
-alias suod="sudo"
-alias maek="make"
-alias meak="make"
-alias sl="ls --color=auto --group-directories-first -p"
-alias claer="clear -x"
-alias clera="clear -x"
-alias gti="git"
+alias \
+	claer="clear -x" \
+	clera="clear -x" \
+	gti="git"        \
+	maek="make"      \
+	meak="make"      \
+	suod="sudo"      \
+	sl="ls --color=auto --group-directories-first -p"
 
 # Directory change aliases
-alias gp="cd ~/proj"
-alias gt="cd ~/tproj"
-alias gc="cd ~/.config"
-alias gu="cd /usr/local/bin"
+alias \
+	gk="cd /tmp"    \
+	gp="cd ~/proj"  \
+	gt="cd ~/tproj" \
+	gw="cd ~/work"
 
 # Init system aliases
 if [ -x "$(command -v systemctl)" ]; then
-	alias systemctl="sudo systemctl"
-	alias net="sudo systemctl start NetworkManager"
-	alias is="systemctl stop NetworkManager"
-	alias blue="sudo systemctl start bluetooth"
-	alias red="sudo systemctl stop bluetooth"
-
+	alias \
+	blue="sudo systemctl start bluetooth"      \
+	net="sudo systemctl start NetworkManager"  \
+	netstop="systemctl stop NetworkManager"         \
+	red="sudo systemctl stop bluetooth"        \
+	systemctl="sudo systemctl"
 elif [ -x "$(command -v rc-service)" ]; then
-	alias rc-service="sudo rc-service"
-	alias net="sudo rc-service NetworkManager start"
-	alias is="sudo rc-service NetworkManager stop"
-	alias blue="sudo rc-service bluetooth start"
-	alias red="sudo rc-service bluetooth stop"
-
+	alias \
+	blue="sudo rc-service bluetooth start"     \
+	net="sudo rc-service NetworkManager start" \
+	netstop="sudo rc-service NetworkManager stop"   \
+	rc-service="sudo rc-service"               \
+	red="sudo rc-service bluetooth stop"
 fi
 
 # Arch linux specific aliases
-alias pacman="sudo pacman --color=always"
-alias arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"
+alias \
+	pacman="sudo pacman --color=always" \
+	arch-wiki="cd /usr/share/doc/arch-wiki/html/en/"

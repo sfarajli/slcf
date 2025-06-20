@@ -6,8 +6,8 @@ help() {
 cat << EOF
 ${0}: Open links from bookmarks through dmenu
 options:
-[link]		Open link
- -h 		Print this message and exit
+[link]           Open link
+ -h              Print this message and exit
 
 NOTE: bookmarks file is located at ~/.config/sites/bookmarks
 EOF

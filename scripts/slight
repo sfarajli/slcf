@@ -5,16 +5,17 @@
 help() {
 cat << EOF
 ${0}: Wrapper script to change backlight
-
 options:
- -i [Brg]	Increase backlight by Brg
- -d [Brg]	Decrease backlight by Brg
- -s [Brg] 	Set backlight to Brg
- -p		Show the current backlight
- -h 		Print this message and exit
+ -i [Brg]        Increase backlight by Brg
+ -d [Brg]        Decrease backlight by Brg
+ -s [Brg]        Set backlight to Brg
+ -p              Show the current backlight
+ -h              Print this message and exit
 
 NOTE: Script interprets values as percentages
 EOF
+
+help
 
 exit 0
 }
