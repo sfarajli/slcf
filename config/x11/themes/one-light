@@ -1,0 +1,27 @@
+! One Light Theme (light)
+
+*color0:  #fafafa   ! background
+*color1:  #e45649   ! red
+*color2:  #50a14f   ! green
+*color3:  #c18401   ! yellow
+*color4:  #0184bc   ! blue
+*color5:  #a626a4   ! magenta
+*color6:  #0997b3   ! cyan
+*color7:  #383a42   ! dark gray (foreground)
+*color8:  #a0a1a7   ! light gray
+*color9:  #e45649   ! bright red
+*color10: #50a14f   ! bright green
+*color11: #c18401   ! bright yellow
+*color12: #0184bc   ! bright blue
+*color13: #a626a4   ! bright magenta
+*color14: #0997b3   ! bright cyan
+*color15: #fafafa   ! white
+
+XTerm.vt100.background:  #fafafa
+XTerm.vt100.foreground:  #383a42
+
+Sxiv.background:          #fafafa
+Sxiv.foreground:          #383a42
+
+Nsxiv.window.background:  #fafafa
+Nsxiv.window.foreground:  #383a42

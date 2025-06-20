@@ -1,0 +1,28 @@
+! Material Theme (default/dark variant)
+
+*color0:  #263238  ! background dark blue-gray
+*color1:  #e06c75  ! red (error)
+*color2:  #98c379  ! green (success)
+*color3:  #e5c07b  ! yellow (warning)
+*color4:  #61afef  ! blue (info)
+*color5:  #c678dd  ! magenta (purple)
+*color6:  #56b6c2  ! cyan
+*color7:  #abb2bf  ! light gray (foreground)
+
+*color8:  #5c6370  ! dark gray (bright black)
+*color9:  #e06c75  ! bright red
+*color10: #98c379  ! bright green
+*color11: #e5c07b  ! bright yellow
+*color12: #61afef  ! bright blue
+*color13: #c678dd  ! bright magenta
+*color14: #56b6c2  ! bright cyan
+*color15: #ffffff  ! white
+
+XTerm.vt100.background:  #263238
+XTerm.vt100.foreground:  #abb2bf
+
+Sxiv.background:          #263238
+Sxiv.foreground:          #abb2bf
+
+Nsxiv.window.background:  #263238
+Nsxiv.window.foreground:  #abb2bf
