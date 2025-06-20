@@ -4,6 +4,12 @@ DWM = dwm-farajli-6.5
 ST = st-farajli-0.9.2
 DMENU = dmenu-farajli-5.3
 SLSTATUS = slstatus-farajli-1.0
+FONT1 = LiberationMono
+FONT2 = JetBrainsMono
+
+SOFTWARE = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
+FONTS = $(FONT1) $(FONT2)
+ARCHIVE = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
 
 CONFDIR = $(HOME)/.config
 MUSICDIR = $(HOME)/music
@@ -11,6 +17,7 @@ PROJDIR = $(HOME)/proj
 BOOKDIR = $(HOME)/tproj
 TESTPROJDIR = $(HOME)/tproj
 BINDIR = $(HOME)/.local/bin
+FONTDIR = $(HOME)/.local/share/fonts/
 
 BASHRC = $(HOME)/.bashrc
 ZSHRC = $(HOME)/.zshrc
@@ -23,9 +30,9 @@ LINK = ln -sf
 
 all: config scripts directory check
 
-full: config scripts git directory desktop
+full: config scripts directory desktop
 
-desktop: $(DWM) $(ST) $(DMENU) $(SLSTATUS)
+desktop: dmenu-install dwm-install slstatus-install st-install font1-install font2-install
 
 config:
 	mkdir -p $(CONFDIR)/sites
@@ -78,32 +85,32 @@ directory:
 			$(TESTPROJDIR) \
 			$(BINDIR)
 
-$(DWM).tar.gz $(ST).tar.gz $(DMENU).tar.gz $(SLSTATUS).tar.gz: clean
+include Sourcedeps
+
+$(ARCHIVE):
 	curl -LO https://farajli.net/archive/$@
 
-$(DWM): $(DWM).tar.gz
-$(ST): $(ST).tar.gz
-$(DMENU): $(DMENU).tar.gz
-$(SLSTATUS): $(SLSTATUS).tar.gz
-
-$(DWM) $(ST) $(DMENU) $(SLSTATUS):
+$(SOFTWARE) $(FONTS):
 	tar -xf $<
-	cd $@; PREFIX=~/.local make install
+
+dmenu-install dwm-install slstatus-install st-install:
+	PREFIX=~/.local make -C $$(basename $< .tar.gz) install
+
+font1-install font2-install:
+	$(COPY) $< $(FONTDIR)
 
 check:
 	@-./dep.sh
 
 dist: clean
 	mkdir -p slcf/
-	cp -R config distros scripts dep.sh Makefile README slcf/
+	cp -R config distros scripts dep.sh Makefile README Sourcedeps slcf/
 	tar -czf slcf.tar.gz slcf/
 	rm -rf slcf/
 
 clean:
-	rm -rf slcf/ slcf.tar.gz \
-		$(DWM) $(DWM).tar.gz \
-		$(ST) $(ST).tar.gz \
-		$(DMENU) $(DMENU).tar.gz \
-		$(SLSTATUS) $(SLSTATUS).tar.gz
+	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(SOFTWARE) $(FONTS)
 
-.PHONY: all config desktop scripts server arch-linux directory full check
+.PHONY: all arch-linux check config desktop directory dist \
+	dmenu-install dwm-install font1-install font2-install \
+	fonts full git scripts server slstatus-install st-install

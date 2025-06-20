@@ -1,0 +1,13 @@
+$(DMENU): $(DMENU).tar.gz
+$(DWM): $(DWM).tar.gz
+$(SLSTATUS): $(SLSTATUS).tar.gz
+$(ST): $(ST).tar.gz
+$(FONT1): $(FONT1).tar.gz
+$(FONT2): $(FONT2).tar.gz
+
+dmenu-install: $(DMENU)
+dwm-install: $(DWM)
+slstatus-install: $(SLSTATUS)
+st-install: $(ST)
+font1-install: $(FONT1)
+font2-install: $(FONT2)
