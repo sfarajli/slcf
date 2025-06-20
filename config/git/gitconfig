@@ -5,6 +5,7 @@
 	branch = false
 
 [alias]
+	a = add
 	br = branch
 	ci = commit
 	co = checkout
