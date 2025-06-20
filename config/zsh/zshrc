@@ -1,5 +1,3 @@
-# Suleyman's zsh interactive shell config at "https://git.farajli.net/slcf"
-
 PROMPT="%B%F{red}%(?..%? )%B%F{blue}%n%b%f@%m %B%~ %% %b"
 
 # Git integration
@@ -20,11 +18,11 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
 compinit
-_comp_options+=(globdots)		# Include hidden files.
+_comp_options+=(globdots) # Include hidden files.
 
 # vi mode
-bindkey -v				# Vi mode.
-export KEYTIMEOUT=1			# Set escape delay to 0.01 sec.
+bindkey -v            # Vi mode.
+export KEYTIMEOUT=0  # Set escape delay to 0.01 sec.
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
@@ -49,17 +47,16 @@ zle-line-init() {
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
-echo -ne '\e[5 q' 			# Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} 	# Use beam shape cursor for each new prompt.
-
+echo -ne '\e[5 q'                # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # Options
-setopt autocd				# Automatically cd into typed directory.
-stty stop undef				# Disable ctrl-s to freeze terminal.
-setopt interactive_comments
-unsetopt nomatch
-setopt INC_APPEND_HISTORY 		# Add commands to history when they are run.
-setopt HIST_FIND_NO_DUPS		# Don't show duplicate commands when backward searching.
+setopt autocd                # Automatically cd into typed directory.
+stty stop undef              # Disable ctrl-s to freeze terminal.
+setopt interactive_comments  # Write comments in interactive shell
+unsetopt nomatch             # Allow unmatched globs without error (leave pattern as-is)
+setopt INC_APPEND_HISTORY    # Add commands to history when they are run.
+setopt HIST_FIND_NO_DUPS     # Don't show duplicate commands when backward searching.
 
 # Custom keybinds
 bindkey '^R' history-incremental-search-backward
