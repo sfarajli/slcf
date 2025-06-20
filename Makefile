@@ -4,7 +4,7 @@ DWM = dwm-farajli-6.5
 ST = st-farajli-0.9.2
 DMENU = dmenu-farajli-5.3
 SLSTATUS = slstatus-farajli-1.0
-	
+
 CONFDIR = $(HOME)/.config
 MUSICDIR = $(HOME)/music
 PROJDIR = $(HOME)/proj
@@ -48,8 +48,10 @@ config:
 	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
 
 git:
-	sed '/^# signingkey =/d' config/git/gitconfig > $(GITCONFIG)
+	sed '/# signingkey = <to be set manually>/d' config/git/gitconfig > $(GITCONFIG)
+	@echo "#####################################################################"
 	@echo "Warning: Git commit/tag signing is enabled but signingKey is not set." >&2
+	@echo "#####################################################################"
 	@echo "Configure it manually using:" >&2
 	@echo "    gpg --list-secret-keys --keyid-format=long" >&2
 	@echo "    git config --global user.signingkey <YOUR_KEY_ID>" >&2
@@ -84,11 +86,11 @@ $(ST): $(ST).tar.gz
 $(DMENU): $(DMENU).tar.gz
 $(SLSTATUS): $(SLSTATUS).tar.gz
 
-$(DWM) $(ST) $(DMENU) $(SLSTATUS): 
+$(DWM) $(ST) $(DMENU) $(SLSTATUS):
 	tar -xf $<
 	cd $@; PREFIX=~/.local make install
 
-check: 
+check:
 	@-./dep.sh
 
 dist: clean
@@ -102,6 +104,6 @@ clean:
 		$(DWM) $(DWM).tar.gz \
 		$(ST) $(ST).tar.gz \
 		$(DMENU) $(DMENU).tar.gz \
-		$(SLSTATUS) $(SLSTATUS).tar.gz 
+		$(SLSTATUS) $(SLSTATUS).tar.gz
 
 .PHONY: all config desktop scripts server arch-linux directory full check
