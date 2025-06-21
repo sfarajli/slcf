@@ -34,6 +34,7 @@ retval=0
 	cmus                                    \
 	latex,pdflatex:"Latex is missing"       \
 	mutt,neomutt                            \
+	pamus                                   \
 	pandoc                                  \
 	shellcheck                              \
 	trans:"Translate shell is missing"      \
@@ -51,7 +52,6 @@ retval=0
         tldr,"A tldr implementation is missing" \
         unclutter,"unclutter-xfixes is missing" \
         yt-dlp
-
 
 # Programs
 check \
