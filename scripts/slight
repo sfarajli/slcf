@@ -15,8 +15,6 @@ options:
 NOTE: Script interprets values as percentages
 EOF
 
-help
-
 exit 0
 }
 
