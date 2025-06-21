@@ -1,56 +1,59 @@
 .POSIX:
 
-DWM         = dwm-farajli-6.5
-ST          = st-farajli-0.9.2
 DMENU       = dmenu-farajli-5.3
-SLSTATUS    = slstatus-farajli-1.0
+DWM         = dwm-farajli-6.5
 FONT1       = LiberationMono
 FONT2       = JetBrainsMono
+SLSTATUS    = slstatus-farajli-1.0
+ST          = st-farajli-0.9.2
 
-SOFTWARE    = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
 FONTS       = $(FONT1) $(FONT2)
+SOFTWARE    = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
 ARCHIVE     = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
 
+BINDIR      = $(HOME)/.local/bin
+BOOKDIR     = $(HOME)/tproj
 CONFDIR     = $(HOME)/.config
+FONTDIR     = $(HOME)/.local/share/fonts/
 MUSICDIR    = $(HOME)/music
 PROJDIR     = $(HOME)/proj
-BOOKDIR     = $(HOME)/tproj
 TESTPROJDIR = $(HOME)/tproj
-BINDIR      = $(HOME)/.local/bin
-FONTDIR     = $(HOME)/.local/share/fonts/
 
-BASHRC      = $(HOME)/.bashrc
-ZSHRC       = $(HOME)/.zshrc
-ZPROFILE    = $(HOME)/.zprofile
 BASHPROFILE = $(HOME)/.bash_profile
+BASHRC      = $(HOME)/.bashrc
 GITCONFIG   = $(HOME)/.gitconfig
+ZCACHE      = $(HOME)/.cache/zsh/history
+ZPROFILE    = $(HOME)/.zprofile
+ZSHRC       = $(HOME)/.zshrc
 
 COPY        = cp -r
 LINK        = ln -sf
 
-all: config scripts directory
+all: config directory scripts
 
-full: config scripts directory desktop
+full: config desktop directory scripts
 
-desktop: dmenu-install dwm-install slstatus-install st-install font1-install font2-install check
+desktop: dmenu-install dwm-install font1-install font2-install check slstatus-install st-install
 
 config:
-	mkdir -p $(CONFDIR)/sites
+	mkdir -p                                $$(dirname $(ZCACHE))
+	mkdir -p                                $(CONFDIR)/sites
+	touch                                   $(ZCACHE)
 	$(COPY) config/bash/bashrc              $(BASHRC)
-	$(COPY) config/zsh/zshrc                $(ZSHRC)
 	$(COPY) config/lf                       $(CONFDIR)
+	$(COPY) config/mimeapps.list            $(CONFDIR)
 	$(COPY) config/mpv                      $(CONFDIR)
-	$(COPY) config/sxiv                     $(CONFDIR)
 	$(COPY) config/nsxiv                    $(CONFDIR)
+	$(COPY) config/nvim                     $(CONFDIR)
 	$(COPY) config/picom                    $(CONFDIR)
 	$(COPY) config/qutebrowser              $(CONFDIR)
 	$(COPY) config/shell                    $(CONFDIR)
+	$(COPY) config/sites/bookmarks.txt      $(CONFDIR)/sites
+	$(COPY) config/sxiv                     $(CONFDIR)
 	$(COPY) config/vim                      $(CONFDIR)
-	$(COPY) config/nvim                     $(CONFDIR)
 	$(COPY) config/x11                      $(CONFDIR)
 	$(COPY) config/zathura                  $(CONFDIR)
-	$(COPY) config/mimeapps.list            $(CONFDIR)
-	$(COPY) config/sites/bookmarks.txt      $(CONFDIR)/sites
+	$(COPY) config/zsh/zshrc                $(ZSHRC)
 	$(LINK) $(CONFDIR)/shell/profile        $(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile        $(ZPROFILE)
 
@@ -69,10 +72,10 @@ scripts:
 
 server:
 	$(COPY) config/bash/bashrc $(BASHRC)
-	$(COPY) config/zsh/zshrc   $(ZSHRC)
 	$(COPY) config/lf          $(CONFDIR)
 	$(COPY) config/shell       $(CONFDIR)
 	$(COPY) config/vim         $(CONFDIR)
+	$(COPY) config/zsh/zshrc   $(ZSHRC)
 	$(COPY) scripts/noc
 
 arch-linux:

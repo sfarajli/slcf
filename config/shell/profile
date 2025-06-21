@@ -1,25 +1,25 @@
 # Directories and Files
-export XDG_BIN_DIR="$HOME/.local/bin"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
-export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
-export ZSHRC="$XDG_CONFIG_HOME/zsh/zshrc"
-export BASHRC="$HOME/.bashrc"
+export BASHRC="${HOME}/.bashrc"
+export ZSHRC="${HOME}/.zshrc"
+export XINITRC="${XDG_CONFIG_HOME}/x11/xinitrc"
+export XDG_BIN_DIR="${HOME}/.local/bin"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
 
 mkdir -p "${XDG_BIN_DIR}"
-PATH="${XDG_BIN_DIR}":$PATH
+export PATH="${XDG_BIN_DIR}:${PATH}"
 
 # Environment variables
 [ -x "$(command -v vim)" ] && export EDITOR="vim"
 [ -x "$(command -v nvim)" ] && export EDITOR="nvim"
-[ -x "$(command -v alacritty)" ] && export  TERMINAL="alacritty"
-[ -x "$(command -v st)" ] && export  TERMINAL="st"
+[ -x "$(command -v alacritty)" ] && export  TERM="alacritty"
+[ -x "$(command -v st)" ] && export  TERM="st"
 [ -x "$(command -v qutebrowser)" ] && export  BROWSER="qutebrowser"
 [ -x "$(command -v firefox)" ] && export  BROWSER="firefox"
 
-export MAKEFLAGS="-j8"		# Reduce compile times
+export MAKEFLAGS="-j8" # Reduce compile times
 
 # Source bashrc for tty
-[ -n "$BASH_VERSION" ] && [ -f "${BASHRC}" ] && . "${BASHRC}"
+[ -n "${BASH_VERSION}" ] && [ -f "${BASHRC}" ] && . "${BASHRC}"
