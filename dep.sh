@@ -29,6 +29,31 @@ check() {
 
 retval=0
 
+# Optional Dependencies, skip QEMU and lualatex check
+[ "${1}" = "--optional" ] && check \
+	cmus                                    \
+	latex,pdflatex:"Latex is missing"       \
+	mutt,neomutt                            \
+	pandoc                                  \
+	shellcheck                              \
+	trans:"Translate shell is missing"      \
+        abook                                   \
+        acpi                                    \
+        cmus                                    \
+        dash                                    \
+        docker                                  \
+        ffmpeg                                  \
+        less                                    \
+        pass                                    \
+        python3                                 \
+        rsync                                   \
+        sudo                                    \
+        tldr,"A tldr implementation is missing" \
+        unclutter,"unclutter-xfixes is missing" \
+        xclip                                   \
+        yt-dlp
+
+
 # Programs
 check \
     Xorg                           \
