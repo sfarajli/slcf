@@ -112,7 +112,7 @@ set default-bg "#282c34"
 
 set recolor-keephue
 set font "Liberation Mono 9"
-map n toggle_statusbar
+map t toggle_statusbar
 map i recolor
 map J zoom in
 map K zoom out
