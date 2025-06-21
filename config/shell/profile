@@ -17,8 +17,8 @@ export PATH="${XDG_BIN_DIR}:${PATH}"
 [ -x "$(command -v nvim)" ] && export EDITOR="nvim"
 [ -x "$(command -v alacritty)" ] && export  TERM="alacritty"
 [ -x "$(command -v st)" ] && export  TERM="st"
-[ -x "$(command -v qutebrowser)" ] && export  BROWSER="qutebrowser"
 [ -x "$(command -v firefox)" ] && export  BROWSER="firefox"
+[ -x "$(command -v qutebrowser)" ] && export  BROWSER="qutebrowser"
 
 export MAKEFLAGS="-j8" # Reduce compile times
 
