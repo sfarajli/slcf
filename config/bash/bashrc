@@ -13,6 +13,11 @@ shopt -s autocd   # Automatically cd into typed directory
 
 PS1='\[\e[01;31m\]$(code=$?; [ "$code" -ne 0 ] && echo "[${code}] ")\[\e[00m\]\[\e[01;34m\]\u\[\e[00m\]@\H \w % '
 
+# Source bash completion
+for bc in /etc/bash_completion /usr/share/bash-completion/bash_completion; do
+    [ -f "$bc" ] && . "$bc"
+done
+
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
 else
