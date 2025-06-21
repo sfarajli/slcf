@@ -83,10 +83,11 @@ check \
 
 # Build dependencies
 check \
-    cc:"c compiler is missing"  \
-    curl                        \
-    ld:"linker is missing"      \
-    make                        \
+    cc:"c compiler is missing"        \
+    curl                              \
+    fc-cache:"font config is missing" \
+    ld:"linker is missing"            \
+    make                              \
     tar || retval=1
 
 # Libraries

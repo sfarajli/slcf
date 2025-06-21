@@ -109,6 +109,7 @@ dmenu-install dwm-install slstatus-install st-install:
 font1-install font2-install:
 	tar xf $<
 	$(COPY) $$(basename $< .tar.gz) $(FONTDIR)
+	fc-cache
 
 check:
 	@./dep.sh
