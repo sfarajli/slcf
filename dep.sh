@@ -50,7 +50,6 @@ retval=0
         sudo                                    \
         tldr,"A tldr implementation is missing" \
         unclutter,"unclutter-xfixes is missing" \
-        xclip                                   \
         yt-dlp
 
 
@@ -69,6 +68,7 @@ check \
     startx:"xorg-xinit is missing" \
     sxiv,nsxiv                     \
     vim,nvim                       \
+    xclip                          \
     zathura                        \
     zsh,bash
 
