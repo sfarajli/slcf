@@ -45,7 +45,7 @@ check \
     sxiv,nsxiv                     \
     vim,nvim                       \
     zathura                        \
-    zsh,bash || retval=1
+    zsh,bash
 
 # Script dependencies
 check \
@@ -54,7 +54,7 @@ check \
     xgamma                        \
     xinput                        \
     xset                          \
-    xwallpaper || retval=1
+    xwallpaper
 
 # Build dependencies
 check \
