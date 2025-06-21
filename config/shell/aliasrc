@@ -45,15 +45,15 @@ if [ -x "$(command -v systemctl)" ]; then
 	alias \
 	blue="sudo systemctl start bluetooth"      \
 	net="sudo systemctl start NetworkManager"  \
-	netstop="systemctl stop NetworkManager"         \
+	netstop="systemctl stop NetworkManager"    \
 	red="sudo systemctl stop bluetooth"        \
 	systemctl="sudo systemctl"
 elif [ -x "$(command -v rc-service)" ]; then
 	alias \
-	blue="sudo rc-service bluetooth start"     \
-	net="sudo rc-service NetworkManager start" \
-	netstop="sudo rc-service NetworkManager stop"   \
-	rc-service="sudo rc-service"               \
+	blue="sudo rc-service bluetooth start"        \
+	net="sudo rc-service NetworkManager start"    \
+	netstop="sudo rc-service NetworkManager stop" \
+	rc-service="sudo rc-service"                  \
 	red="sudo rc-service bluetooth stop"
 fi
 
