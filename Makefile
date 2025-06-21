@@ -28,11 +28,11 @@ GITCONFIG = $(HOME)/.gitconfig
 COPY = cp -r
 LINK = ln -sf
 
-all: config scripts directory check
+all: config scripts directory
 
 full: config scripts directory desktop
 
-desktop: dmenu-install dwm-install slstatus-install st-install font1-install font2-install
+desktop: dmenu-install dwm-install slstatus-install st-install font1-install font2-install check
 
 config:
 	mkdir -p $(CONFDIR)/sites
@@ -85,32 +85,41 @@ directory:
 			$(TESTPROJDIR) \
 			$(BINDIR)
 
-include Sourcedeps
+sync: $(ARCHIVE)
 
 $(ARCHIVE):
 	curl -LO https://farajli.net/archive/$@
 
-$(SOFTWARE) $(FONTS):
-	tar -xf $<
+dmenu-install: $(DMENU).tar.gz
+dwm-install: $(DWM).tar.gz
+slstatus-install: $(SLSTATUS).tar.gz
+st-install: $(ST).tar.gz
+font1-install: $(FONT1).tar.gz
+font2-install: $(FONT2).tar.gz
 
 dmenu-install dwm-install slstatus-install st-install:
+	tar xf $<
 	PREFIX=~/.local make -C $$(basename $< .tar.gz) install
 
 font1-install font2-install:
-	$(COPY) $< $(FONTDIR)
+	tar xf $<
+	$(COPY) $$(basename $< .tar.gz) $(FONTDIR)
 
 check:
-	@-./dep.sh
+	@./dep.sh
+
+fullcheck:
+	@./dep.sh --optional
 
 dist: clean
 	mkdir -p slcf/
-	cp -R config distros scripts dep.sh Makefile README Sourcedeps slcf/
+	cp -R config distros scripts dep.sh Makefile README slcf/
 	tar -czf slcf.tar.gz slcf/
 	rm -rf slcf/
 
 clean:
 	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(SOFTWARE) $(FONTS)
 
-.PHONY: all arch-linux check config desktop directory dist \
-	dmenu-install dwm-install font1-install font2-install \
-	fonts full git scripts server slstatus-install st-install
+.PHONY: all arch-linux check clean config desktop directory dist    \
+	dmenu-install dwm-install font1-install font2-install fonts \
+	full fullcheck git scripts server slstatus-install st-install sync
