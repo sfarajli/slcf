@@ -6,6 +6,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XINITRC="$XDG_CONFIG_HOME/x11/xinitrc"
 export ZSHRC="$XDG_CONFIG_HOME/zsh/zshrc"
+export BASHRC="$HOME/.bashrc"
 
 mkdir -p "${XDG_BIN_DIR}"
 PATH="${XDG_BIN_DIR}":$PATH
@@ -19,3 +20,6 @@ PATH="${XDG_BIN_DIR}":$PATH
 [ -x "$(command -v firefox)" ] && export  BROWSER="firefox"
 
 export MAKEFLAGS="-j8"		# Reduce compile times
+
+# Source bashrc for tty
+[ -n "$BASH_VERSION" ] && [ -f "${BASHRC}" ] && . "${BASHRC}"
