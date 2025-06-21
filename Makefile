@@ -1,32 +1,32 @@
 .POSIX:
 
-DWM = dwm-farajli-6.5
-ST = st-farajli-0.9.2
-DMENU = dmenu-farajli-5.3
-SLSTATUS = slstatus-farajli-1.0
-FONT1 = LiberationMono
-FONT2 = JetBrainsMono
+DWM         = dwm-farajli-6.5
+ST          = st-farajli-0.9.2
+DMENU       = dmenu-farajli-5.3
+SLSTATUS    = slstatus-farajli-1.0
+FONT1       = LiberationMono
+FONT2       = JetBrainsMono
 
-SOFTWARE = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
-FONTS = $(FONT1) $(FONT2)
-ARCHIVE = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
+SOFTWARE    = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
+FONTS       = $(FONT1) $(FONT2)
+ARCHIVE     = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
 
-CONFDIR = $(HOME)/.config
-MUSICDIR = $(HOME)/music
-PROJDIR = $(HOME)/proj
-BOOKDIR = $(HOME)/tproj
+CONFDIR     = $(HOME)/.config
+MUSICDIR    = $(HOME)/music
+PROJDIR     = $(HOME)/proj
+BOOKDIR     = $(HOME)/tproj
 TESTPROJDIR = $(HOME)/tproj
-BINDIR = $(HOME)/.local/bin
-FONTDIR = $(HOME)/.local/share/fonts/
+BINDIR      = $(HOME)/.local/bin
+FONTDIR     = $(HOME)/.local/share/fonts/
 
-BASHRC = $(HOME)/.bashrc
-ZSHRC = $(HOME)/.zshrc
-ZPROFILE = $(HOME)/.zprofile
+BASHRC      = $(HOME)/.bashrc
+ZSHRC       = $(HOME)/.zshrc
+ZPROFILE    = $(HOME)/.zprofile
 BASHPROFILE = $(HOME)/.bash_profile
-GITCONFIG = $(HOME)/.gitconfig
+GITCONFIG   = $(HOME)/.gitconfig
 
-COPY = cp -r
-LINK = ln -sf
+COPY        = cp -r
+LINK        = ln -sf
 
 all: config scripts directory
 
@@ -36,23 +36,23 @@ desktop: dmenu-install dwm-install slstatus-install st-install font1-install fon
 
 config:
 	mkdir -p $(CONFDIR)/sites
-	$(COPY) config/bash/bashrc		$(BASHRC)
-	$(COPY) config/zsh/zshrc		$(ZSHRC)
-	$(COPY) config/lf 			$(CONFDIR)
-	$(COPY) config/mpv 			$(CONFDIR)
-	$(COPY) config/sxiv 			$(CONFDIR)
-	$(COPY) config/nsxiv 			$(CONFDIR)
-	$(COPY) config/picom 			$(CONFDIR)
-	$(COPY) config/qutebrowser 		$(CONFDIR)
-	$(COPY) config/shell 			$(CONFDIR)
-	$(COPY) config/vim			$(CONFDIR)
-	$(COPY) config/nvim			$(CONFDIR)
-	$(COPY) config/x11 			$(CONFDIR)
-	$(COPY) config/zathura 			$(CONFDIR)
-	$(COPY) config/mimeapps.list 		$(CONFDIR)
-	$(COPY) config/sites/bookmarks.txt 	$(CONFDIR)/sites
-	$(LINK) $(CONFDIR)/shell/profile	$(BASHPROFILE)
-	$(LINK) $(CONFDIR)/shell/profile	$(ZPROFILE)
+	$(COPY) config/bash/bashrc              $(BASHRC)
+	$(COPY) config/zsh/zshrc                $(ZSHRC)
+	$(COPY) config/lf                       $(CONFDIR)
+	$(COPY) config/mpv                      $(CONFDIR)
+	$(COPY) config/sxiv                     $(CONFDIR)
+	$(COPY) config/nsxiv                    $(CONFDIR)
+	$(COPY) config/picom                    $(CONFDIR)
+	$(COPY) config/qutebrowser              $(CONFDIR)
+	$(COPY) config/shell                    $(CONFDIR)
+	$(COPY) config/vim                      $(CONFDIR)
+	$(COPY) config/nvim                     $(CONFDIR)
+	$(COPY) config/x11                      $(CONFDIR)
+	$(COPY) config/zathura                  $(CONFDIR)
+	$(COPY) config/mimeapps.list            $(CONFDIR)
+	$(COPY) config/sites/bookmarks.txt      $(CONFDIR)/sites
+	$(LINK) $(CONFDIR)/shell/profile        $(BASHPROFILE)
+	$(LINK) $(CONFDIR)/shell/profile        $(ZPROFILE)
 
 git:
 	sed '/# signingkey = <to be set manually>/d' config/git/gitconfig > $(GITCONFIG)
@@ -64,26 +64,28 @@ git:
 	@echo "    git config --global user.signingkey <YOUR_KEY_ID>" >&2
 
 scripts:
-	mkdir -p $(BINDIR)
-	$(COPY) scripts/* 			$(BINDIR)
+	mkdir -p          $(BINDIR)
+	$(COPY) scripts/* $(BINDIR)
 
 server:
-	$(COPY) config/bash/bashrc 	$(BASHRC)
-	$(COPY) config/zsh/zshrc 	$(ZSHRC)
-	$(COPY) config/lf 		$(CONFDIR)
-	$(COPY) config/shell		$(CONFDIR)
-	$(COPY) config/vim		$(CONFDIR)
+	$(COPY) config/bash/bashrc $(BASHRC)
+	$(COPY) config/zsh/zshrc   $(ZSHRC)
+	$(COPY) config/lf          $(CONFDIR)
+	$(COPY) config/shell       $(CONFDIR)
+	$(COPY) config/vim         $(CONFDIR)
+	$(COPY) scripts/noc
 
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
 
 directory:
-	mkdir -p 	$(CONFDIR) \
-			$(MUSICDIR) \
-			$(PROJDIR) \
-			$(BOOKDIR) \
-			$(TESTPROJDIR) \
-			$(BINDIR)
+	mkdir -p \
+		$(BINDIR)      \
+		$(BOOKDIR)     \
+		$(CONFDIR)     \
+		$(MUSICDIR)    \
+		$(PROJDIR)     \
+		$(TESTPROJDIR)
 
 sync: $(ARCHIVE)
 
@@ -118,7 +120,7 @@ dist: clean
 	rm -rf slcf/
 
 clean:
-	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(SOFTWARE) $(FONTS)
+	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(FONTS) $(SOFTWARE)
 
 .PHONY: all arch-linux check clean config desktop directory dist    \
 	dmenu-install dwm-install font1-install font2-install fonts \
