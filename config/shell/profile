@@ -1,12 +1,12 @@
 # Directories and Files
+export BASHRC="${HOME}/.bashrc"
+export ZSHRC="${HOME}/.zshrc"
+export XINITRC="${XDG_CONFIG_HOME}/x11/xinitrc"
 export XDG_BIN_DIR="${HOME}/.local/bin"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_STATE_HOME="${HOME}/.local/state"
-export XINITRC="${XDG_CONFIG_HOME}/x11/xinitrc"
-export ZSHRC="${HOME}/.zshrc"
-export BASHRC="${HOME}/.bashrc"
 
 mkdir -p "${XDG_BIN_DIR}"
 export PATH="${XDG_BIN_DIR}:${PATH}"
