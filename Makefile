@@ -19,11 +19,12 @@ TESTPROJDIR = $(HOME)/tproj
 BINDIR      = $(HOME)/.local/bin
 FONTDIR     = $(HOME)/.local/share/fonts/
 
-BASHRC      = $(HOME)/.bashrc
-ZSHRC       = $(HOME)/.zshrc
-ZPROFILE    = $(HOME)/.zprofile
 BASHPROFILE = $(HOME)/.bash_profile
+BASHRC      = $(HOME)/.bashrc
 GITCONFIG   = $(HOME)/.gitconfig
+ZCACHE      = $(HOME)/.cache/zsh/history
+ZPROFILE    = $(HOME)/.zprofile
+ZSHRC       = $(HOME)/.zshrc
 
 COPY        = cp -r
 LINK        = ln -sf
@@ -53,6 +54,8 @@ config:
 	$(COPY) config/sites/bookmarks.txt      $(CONFDIR)/sites
 	$(LINK) $(CONFDIR)/shell/profile        $(BASHPROFILE)
 	$(LINK) $(CONFDIR)/shell/profile        $(ZPROFILE)
+	mkdir -p                                $$(dirname $(ZCACHE))
+	touch                                   $(ZCACHE)
 
 git:
 	sed '/# signingkey = <to be set manually>/d' config/git/gitconfig > $(GITCONFIG)
