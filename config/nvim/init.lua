@@ -79,4 +79,4 @@ vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', { noremap = tr
 
 -- Other
 vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>q'       , '<cmd>wqa!<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>', { noremap = true, silent = true })

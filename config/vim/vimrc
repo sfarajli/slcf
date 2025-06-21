@@ -41,4 +41,4 @@ inoremap <C-Space> <Esc>
 
 " Other
 nnoremap <silent> <leader><leader> :w!<CR>
-nnoremap <silent> <leader>q :wqa!<CR>
+nnoremap <silent> <leader>q :wq!<CR>

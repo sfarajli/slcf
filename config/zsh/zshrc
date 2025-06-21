@@ -60,9 +60,10 @@ setopt HIST_FIND_NO_DUPS     # Don't show duplicate commands when backward searc
 
 # Custom keybinds
 bindkey '^R' history-incremental-search-backward
+bindkey -s '^f' '^uls\n'
 bindkey -s '^o' '^ulfcd\n'
-bindkey -s '^f' '^ucd "$(dirname "$(fzf --reverse)")"\n'
 bindkey -s '^v' '^u!!\n'
+bindkey ^@ vi-cmd-mode
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc" ];then
 	source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"

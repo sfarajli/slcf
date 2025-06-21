@@ -29,6 +29,30 @@ check() {
 
 retval=0
 
+# Optional Dependencies, skip QEMU and lualatex check
+[ "${1}" = "--optional" ] && check \
+	cmus                                    \
+	latex,pdflatex:"Latex is missing"       \
+	mutt,neomutt                            \
+	pamus                                   \
+	pandoc                                  \
+	shellcheck                              \
+	trans:"Translate shell is missing"      \
+        abook                                   \
+        acpi                                    \
+        cmus                                    \
+        dash                                    \
+        docker                                  \
+        ffmpeg                                  \
+        less                                    \
+        pass                                    \
+        python3                                 \
+        rsync                                   \
+        sudo                                    \
+        tldr,"A tldr implementation is missing" \
+        unclutter,"unclutter-xfixes is missing" \
+        yt-dlp
+
 # Programs
 check \
     Xorg                           \
@@ -44,8 +68,9 @@ check \
     startx:"xorg-xinit is missing" \
     sxiv,nsxiv                     \
     vim,nvim                       \
+    xclip                          \
     zathura                        \
-    zsh,bash || retval=1
+    zsh,bash
 
 # Script dependencies
 check \
@@ -54,7 +79,7 @@ check \
     xgamma                        \
     xinput                        \
     xset                          \
-    xwallpaper || retval=1
+    xwallpaper
 
 # Build dependencies
 check \
