@@ -87,7 +87,7 @@ check \
 check \
     cc:"c compiler is missing"        \
     curl                              \
-    fc-cache:"font config is missing" \
+    fc-cache:"fontconfig is missing" \
     ld:"linker is missing"            \
     make                              \
     tic:"ncurses is missing"          \
