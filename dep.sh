@@ -49,8 +49,8 @@ retval=0
         python3                                 \
         rsync                                   \
         sudo                                    \
-        tldr,"A tldr implementation is missing" \
-        unclutter,"unclutter-xfixes is missing" \
+        tldr:"A tldr implementation is missing" \
+        unclutter:"unclutter-xfixes is missing" \
         yt-dlp
 
 # Programs
