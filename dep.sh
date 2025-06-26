@@ -33,7 +33,7 @@ retval=0
 [ "${1}" = "--optional" ] && check \
 	cmus                                    \
 	latex,pdflatex:"Latex is missing"       \
-	mutt,neomutt                            \
+	neomutt,mutt                            \
 	pamus                                   \
 	pandoc                                  \
 	shellcheck                              \
@@ -66,8 +66,8 @@ check \
     scrot                          \
     setxkbmap                      \
     startx:"xorg-xinit is missing" \
-    sxiv,nsxiv                     \
-    vim,nvim                       \
+    nsxiv,sxiv                     \
+    nvim,vim                       \
     xclip                          \
     zathura                        \
     zsh,bash
