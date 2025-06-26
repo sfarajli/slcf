@@ -1,35 +1,38 @@
 .POSIX:
 
-DMENU       = dmenu-farajli-5.3
-DWM         = dwm-farajli-6.5
-FONT1       = LiberationMono
-FONT2       = JetBrainsMono
-SLSTATUS    = slstatus-farajli-1.0
-ST          = st-farajli-0.9.2
+DMENU           = dmenu_farajli-5.3.0
+DWM             = dwm_farajli-6.5.0
+FONT1           = LiberationMono
+FONT2           = JetBrainsMono
+SLSTATUS        = slstatus_farajli-1.0.0
+ST              = st_farajli-0.9.2.0
 
-FONTS       = $(FONT1) $(FONT2)
-SOFTWARE    = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
-ARCHIVE     = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
+FONTS           = $(FONT1) $(FONT2)
+SOFTWARE        = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
+ARCHIVE         = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
 
-BINDIR      = $(HOME)/.local/bin
-CONFDIR     = $(HOME)/.config
-FONTDIR     = $(HOME)/.local/share/fonts/
+BINDIR          = $(HOME)/.local/bin
+CONFDIR         = $(HOME)/.config
+FONTDIR         = $(HOME)/.local/share/fonts/
 
-BASHPROFILE = $(HOME)/.bash_profile
-BASHRC      = $(HOME)/.bashrc
-GITCONFIG   = $(HOME)/.gitconfig
-ZCACHE      = $(HOME)/.cache/zsh/history
-ZPROFILE    = $(HOME)/.zprofile
-ZSHRC       = $(HOME)/.zshrc
+BASHPROFILE     = $(HOME)/.bash_profile
+BASHRC          = $(HOME)/.bashrc
+GITCONFIG       = $(HOME)/.gitconfig
+ZCACHE          = $(HOME)/.cache/zsh/history
+ZPROFILE        = $(HOME)/.zprofile
+ZSHRC           = $(HOME)/.zshrc
 
-COPY        = cp -r
-LINK        = ln -sf
+INSTALL_TARGETS = dmenu-install dwm-install font1-install font2-install slstatus-install st-install
+DIRECTORIES     = $(BINDIR) $(CONFDIR) $(FONTDIR)
 
-all: config directory scripts
+COPY            = cp -r
+LINK            = ln -sf
 
-full: config desktop directory scripts
+all: config $(DIRECTORIES) scripts
 
-desktop: dmenu-install dwm-install font1-install font2-install slstatus-install st-install
+full: all desktop
+
+desktop: $(INSTALL_TARGETS)
 
 $(BINDIR) $(CONFDIR) $(FONTDIR):
 	mkdir -p $@
@@ -82,21 +85,21 @@ arch-linux:
 
 sync: $(ARCHIVE)
 
-$(ARCHIVE): check
+$(ARCHIVE):
 	curl -LO https://farajli.net/archive/$@
 
-dmenu-install: $(DMENU).tar.gz
-dwm-install: $(DWM).tar.gz
-slstatus-install: $(SLSTATUS).tar.gz
-st-install: $(ST).tar.gz
-font1-install: $(FONT1).tar.gz
-font2-install: $(FONT2).tar.gz
+dmenu-install:    $(DMENU).tar.gz    $(BINDIR)
+dwm-install:      $(DWM).tar.gz      $(BINDIR)
+slstatus-install: $(SLSTATUS).tar.gz $(BINDIR)
+st-install:       $(ST).tar.gz       $(BINDIR)
+font1-install:    $(FONT1).tar.gz    $(FONTDIR)
+font2-install:    $(FONT2).tar.gz    $(FONTDIR)
 
-dmenu-install dwm-install slstatus-install st-install: check
+dmenu-install dwm-install slstatus-install st-install:
 	tar xf $<
 	PREFIX=~/.local make -C $$(basename $< .tar.gz) install
 
-font1-install font2-install: $(FONTDIR) check
+font1-install font2-install:
 	tar xf $<
 	$(COPY) $$(basename $< .tar.gz) $(FONTDIR)
 	fc-cache
@@ -116,6 +119,6 @@ dist: clean
 clean:
 	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(FONTS) $(SOFTWARE)
 
-.PHONY: all arch-linux check clean config desktop directory dist    \
-	dmenu-install dwm-install font1-install font2-install fonts \
-	full fullcheck git scripts server slstatus-install st-install sync
+.PHONY: all arch-linux check clean config desktop directory dist \
+	fonts full fullcheck git scripts server sync \
+	$(INSTALL_TARGETS)
