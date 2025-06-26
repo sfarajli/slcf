@@ -20,7 +20,8 @@ case "${1}" in
 "-s")
 	[ "${#}" -gt 3 ] && invalid_use
 
-	echo $(printf 'notify-send "%s" "%s"' "${1}" "${2}")
+	shift
+	eval $(printf 'notify-send "%s" "%s"' "${1}" "${2}")
 
 	exit 0
 ;;
