@@ -77,7 +77,7 @@ check \
 # Script dependencies
 check \
     brightnessctl                 \
-    pactl:"pulseaudio is missing" \
+    pulseaudio                    \
     xgamma                        \
     xinput                        \
     xset                          \
