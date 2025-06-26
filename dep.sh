@@ -90,6 +90,7 @@ check \
     fc-cache:"font config is missing" \
     ld:"linker is missing"            \
     make                              \
+    tic:"ncurses is missing"          \
     tar || retval=1
 
 # Libraries
