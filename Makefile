@@ -42,6 +42,7 @@ config: $(CONFDIR)
 	mkdir -p                                $(CONFDIR)/sites
 	touch                                   $(ZCACHE)
 	$(COPY) config/bash/bashrc              $(BASHRC)
+	$(COPY) config/dunst                    $(CONFDIR)
 	$(COPY) config/lf                       $(CONFDIR)
 	$(COPY) config/mimeapps.list            $(CONFDIR)
 	$(COPY) config/mpv                      $(CONFDIR)
