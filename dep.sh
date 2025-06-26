@@ -61,13 +61,13 @@ check \
     git                            \
     lf                             \
     mpv                            \
+    nsxiv,sxiv                     \
+    nvim,vim                       \
     picom                          \
     qutebrowser                    \
     scrot                          \
     setxkbmap                      \
     startx:"xorg-xinit is missing" \
-    nsxiv,sxiv                     \
-    nvim,vim                       \
     xclip                          \
     zathura                        \
     zsh,bash
