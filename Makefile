@@ -12,12 +12,8 @@ SOFTWARE    = $(DWM) $(DMENU) $(SLSTATUS) $(ST)
 ARCHIVE     = $(SOFTWARE:=.tar.gz) $(FONTS:=.tar.gz)
 
 BINDIR      = $(HOME)/.local/bin
-BOOKDIR     = $(HOME)/tproj
 CONFDIR     = $(HOME)/.config
 FONTDIR     = $(HOME)/.local/share/fonts/
-MUSICDIR    = $(HOME)/music
-PROJDIR     = $(HOME)/proj
-TESTPROJDIR = $(HOME)/tproj
 
 BASHPROFILE = $(HOME)/.bash_profile
 BASHRC      = $(HOME)/.bashrc
@@ -33,9 +29,12 @@ all: config directory scripts
 
 full: config desktop directory scripts
 
-desktop: dmenu-install dwm-install font1-install font2-install check slstatus-install st-install
+desktop: dmenu-install dwm-install font1-install font2-install slstatus-install st-install
 
-config:
+$(BINDIR) $(CONFDIR) $(FONTDIR):
+	mkdir -p $@
+
+config: $(CONFDIR)
 	mkdir -p                                $$(dirname $(ZCACHE))
 	mkdir -p                                $(CONFDIR)/sites
 	touch                                   $(ZCACHE)
@@ -66,7 +65,7 @@ git:
 	@echo "    gpg --list-secret-keys --keyid-format=long" >&2
 	@echo "    git config --global user.signingkey <YOUR_KEY_ID>" >&2
 
-scripts:
+scripts: $(BINDIR)
 	mkdir -p          $(BINDIR)
 	$(COPY) scripts/* $(BINDIR)
 
@@ -81,18 +80,9 @@ server:
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
 
-directory:
-	mkdir -p \
-		$(BINDIR)      \
-		$(BOOKDIR)     \
-		$(CONFDIR)     \
-		$(MUSICDIR)    \
-		$(PROJDIR)     \
-		$(TESTPROJDIR)
-
 sync: $(ARCHIVE)
 
-$(ARCHIVE):
+$(ARCHIVE): check
 	curl -LO https://farajli.net/archive/$@
 
 dmenu-install: $(DMENU).tar.gz
@@ -102,11 +92,11 @@ st-install: $(ST).tar.gz
 font1-install: $(FONT1).tar.gz
 font2-install: $(FONT2).tar.gz
 
-dmenu-install dwm-install slstatus-install st-install:
+dmenu-install dwm-install slstatus-install st-install: check
 	tar xf $<
 	PREFIX=~/.local make -C $$(basename $< .tar.gz) install
 
-font1-install font2-install:
+font1-install font2-install: $(FONTDIR) check
 	tar xf $<
 	$(COPY) $$(basename $< .tar.gz) $(FONTDIR)
 	fc-cache
