@@ -53,6 +53,7 @@ config: $(CONFDIR)
 	$(COPY) config/sites/bookmarks.txt      $(CONFDIR)/sites
 	$(COPY) config/sxiv                     $(CONFDIR)
 	$(COPY) config/vim                      $(CONFDIR)
+	$(COPY) config/wallpapers               $(CONFDIR)
 	$(COPY) config/x11                      $(CONFDIR)
 	$(COPY) config/zathura                  $(CONFDIR)
 	$(COPY) config/zsh/zshrc                $(ZSHRC)
