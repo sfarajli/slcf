@@ -14,7 +14,7 @@ EOF
 exit 0
 }
 
-check_program "notify-send" "dunst must be installed"
+check_program "notify-send" "libnotify must be installed"
 
 case "${1}" in
 "-s")
