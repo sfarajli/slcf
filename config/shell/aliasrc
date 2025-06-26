@@ -5,6 +5,10 @@
 [ -x "$(command -v nvim)" ] && alias vi="nvim"
 [ -x "$(command -v neomutt)" ] && alias mutt="neomutt"
 
+if [ -x "$(command -v nsxiv)" ] && ! [ -x "$(command -v sxiv)" ]; then
+	alias sxiv="nsxiv"
+fi
+
 # TODO: Deal with the flags that are not supported on BSD
 # Older versions of ip doesn't support -color flg, so don't use it
 alias \

@@ -31,45 +31,47 @@ retval=0
 
 # Optional Dependencies, skip QEMU and lualatex check
 [ "${1}" = "--optional" ] && check \
-	cmus                                    \
-	latex,pdflatex:"Latex is missing"       \
-	neomutt,mutt                            \
-	pamus                                   \
-	pandoc                                  \
-	shellcheck                              \
-	trans:"Translate shell is missing"      \
-        abook                                   \
-        acpi                                    \
-        cmus                                    \
-        dash                                    \
-        docker                                  \
-        ffmpeg                                  \
-        less                                    \
-        pass                                    \
-        python3                                 \
-        rsync                                   \
-        sudo                                    \
-        tldr:"A tldr implementation is missing" \
-        unclutter:"unclutter-xfixes is missing" \
-        yt-dlp
+     cmus                                    \
+     latex,pdflatex:"latex is missing"       \
+     neomutt,mutt                            \
+     pamus                                   \
+     pandoc                                  \
+     shellcheck                              \
+     ssh                                     \
+     trans:"translate shell is missing"      \
+     abook                                   \
+     acpi                                    \
+     cmus                                    \
+     dash                                    \
+     docker                                  \
+     ffmpeg                                  \
+     less                                    \
+     pass                                    \
+     python3                                 \
+     rsync                                   \
+     sudo                                    \
+     tldr:"a tldr implementation is missing" \
+     unclutter:"unclutter-xfixes is missing" \
+     yt-dlp
 
 # Programs
 check \
-    Xorg                           \
-    dunst                          \
-    fzf                            \
-    git                            \
-    lf                             \
-    mpv                            \
-    nsxiv,sxiv                     \
-    nvim,vim                       \
-    picom                          \
-    qutebrowser                    \
-    scrot                          \
-    setxkbmap                      \
-    startx:"xorg-xinit is missing" \
-    xclip                          \
-    zathura                        \
+    Xorg                               \
+    dunst                              \
+    fzf                                \
+    git                                \
+    lf                                 \
+    mpv                                \
+    notify-send:"libnotify is missing" \
+    nsxiv,sxiv                         \
+    nvim,vim                           \
+    picom                              \
+    qutebrowser                        \
+    scrot                              \
+    setxkbmap                          \
+    startx:"xorg-xinit is missing"     \
+    xclip                              \
+    zathura                            \
     zsh,bash
 
 # Script dependencies

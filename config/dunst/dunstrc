@@ -1,0 +1,27 @@
+[global]
+font = "Liberation Mono 12"
+frame_width = 1
+gap_size = 8
+gaps = true
+offset = 12
+origin = bottom-right
+padding = 12
+separator_color = "auto"
+
+[urgency_low]
+frame_color = "#434C5E"        # Polar Night (dim)
+foreground = "#D8DEE9"         # Frost white (soft text)
+background = "#2E3440"         # Polar Night (dark bg)
+timeout = 5
+
+[urgency_normal]
+frame_color = "#81A1C1"        # Frost Blue (accent)
+foreground = "#E5E9F0"         # Arctic White (text)
+background = "#3B4252"         # Polar Night (slightly lighter bg)
+timeout = 10
+
+[urgency_critical]
+frame_color = "#BF616A"        # Aurora Red (error)
+foreground = "#ECEFF4"         # Bright Frost (text)
+background = "#3B4252"
+timeout = 0
