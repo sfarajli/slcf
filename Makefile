@@ -1,7 +1,7 @@
 .POSIX:
 
 DMENU           = dmenu_farajli-5.3.0
-DWM             = dwm_farajli-6.5.0
+DWM             = dwm_farajli-6.5.1
 FONT1           = LiberationMono
 FONT2           = JetBrainsMono
 SLSTATUS        = slstatus_farajli-1.0.0
