@@ -6,6 +6,9 @@ and doesn't affect other users or make system-wide changes but it does overwrite
 so, it's recommended to create a new user and run make as that user.
 If you like the setup then you can install it for your main user.
 
+# Screenshots
+![desktop screenshot](./screenshot.png)
+
 # Instlallation 
 1. Make sure to use Zsh or Bash as your interactive shell, have an internet connection, and install at least the build-time dependencies.
 
