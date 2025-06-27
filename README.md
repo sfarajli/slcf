@@ -14,11 +14,11 @@ If you like the setup then you can install it for your main user.
 useradd -m -s /bin/zsh <user> 
 ```
 
-2. run 
+3. run 
 ``` bash
 make
 ```
-3. Log out, log back in, and run `startx` on the TTY.
+4. Log out, log back in, and run `startx` on the TTY.
 
 # Dependencies 
 ## Build time dependencies
