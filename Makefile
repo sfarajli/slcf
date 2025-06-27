@@ -28,9 +28,7 @@ DIRECTORIES     = $(BINDIR) $(CONFDIR) $(FONTDIR)
 COPY            = cp -r
 LINK            = ln -sf
 
-all: config $(DIRECTORIES) scripts
-
-full: all desktop
+all: config $(DIRECTORIES) scripts desktop
 
 desktop: $(INSTALL_TARGETS)
 
@@ -106,12 +104,6 @@ font1-install font2-install:
 	$(COPY) $$(basename $< .tar.gz) $(FONTDIR)
 	fc-cache
 
-check:
-	@./dep.sh
-
-fullcheck:
-	@./dep.sh --optional
-
 dist: clean
 	mkdir -p slcf/
 	cp -R config distros scripts dep.sh Makefile README slcf/
@@ -121,6 +113,6 @@ dist: clean
 clean:
 	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(FONTS) $(SOFTWARE)
 
-.PHONY: all arch-linux check clean config desktop directory dist \
-	fonts full fullcheck git scripts server sync \
+.PHONY: all arch-linux clean config desktop directory dist \
+	fonts git scripts server sync \
 	$(INSTALL_TARGETS)
