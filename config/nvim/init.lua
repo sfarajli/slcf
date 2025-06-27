@@ -1,4 +1,11 @@
-require("plugins")
+local ok, err = pcall(require, "plugins")
+if ok then
+  	-- Plugin settings
+	vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', { noremap = true, silent = true })
+	vim.cmd.colorscheme("duskfox")
+else
+  vim.notify("Error loading plugins: " .. err, vim.log.levels.WARN)
+end
 
 vim.g.mapleader = ' '
 vim.opt.background = "dark"
@@ -8,7 +15,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.shortmess:append("I")     -- Disable intro message
 vim.opt.wrap = false
-vim.cmd.colorscheme("duskfox")
 
 vim.opt.fillchars = {
     vert = "|",
@@ -73,9 +79,6 @@ vim.keymap.set('i', '<C-l>'    , '<Right>', { noremap = true })
 vim.keymap.set('i', '<C-j>'    , '<Down>' , { noremap = true })
 vim.keymap.set('i', '<C-k>'    , '<Up>'   , { noremap = true })
 vim.keymap.set('i', '<C-space>', '<ESC>'  , { noremap = true })
-
--- Plugins
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', { noremap = true, silent = true })
 
 -- Other
 vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , { noremap = true, silent = true })
