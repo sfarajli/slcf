@@ -1,5 +1,13 @@
 from current_theme import *
 
+c.tabs.show = 'multiple'
+
+c.statusbar.show = 'in-mode'
+
+c.url.searchengines = { 'DEFAULT': 'https://google.com/search?hl=en&q={}' }
+
+c.url.start_pages = '~/.config/qutebrowser/startpage/index.html'
+
 # Text color of the completion widget. May be a single color to use for
 # all columns or a list of three colors, one for each column.
 c.colors.completion.fg = base05
