@@ -32,9 +32,12 @@ make
 - tar
 
 ## Build time libraries
-- libx11
+- libx11 
 - libxft
 - libxinerama
+
+note: Some distros require installing `-devel` or `-dev` variants
+(e.g. libX11-devel, libx11-dev) for headers and build files. 
 
 ## Program dependencies (optional but recommended)
 - Xorg                               
