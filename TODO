@@ -1,9 +1,10 @@
-[] Add mutt config
-[] Pull fonts 
-[] Comprehensive dependency check 
-[] Test on FreeBSD
-[] Test on Debian
-[] Test on Arch
-[] Test on Gentoo
-[] Test on Ubuntu
-[] Test on Void
+[x] Test on Debian
+[x] Test on Arch
+[x] Test on Gentoo
+[x] Test on Ubuntu
+[x] Test on Void
+
+[] Add BSD support
+[] Replace JetBrains Mono Nerd Font with a smaller alternative
+[] Send notification when battery is too low
+[] Verify installed files
