@@ -42,7 +42,7 @@ shift $((OPTIND - 1))
 
 outfile="${input}"
 
-[ -d "${input}" ] && outfile="${input}/$(date '+%b%d::%H%M%S')"
+[ -d "${input}" ] && outfile="${input}/$(date '+%b%d::%H%M%S').png"
 
 if [ ! -e "$(dirname "${outfile}")" ]; then
 	mkdir -p "$(dirname "${outfile}")" > /dev/null 2>&1 \
