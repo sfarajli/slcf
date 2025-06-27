@@ -47,7 +47,7 @@ make
 - nsxiv or sxiv                         
 - nvim or vim                           
 - picom                              
-- qutebrowser or firefox                      
+- qutebrowser
 - scrot                              
 - setxkbmap                          
 - xorg-xinit
