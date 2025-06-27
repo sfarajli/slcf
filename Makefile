@@ -4,7 +4,7 @@ DMENU           = dmenu_farajli-5.3.0
 DWM             = dwm_farajli-6.5.2
 FONT1           = LiberationMono
 FONT2           = JetBrainsMono
-SLSTATUS        = slstatus_farajli-1.0.0
+SLSTATUS        = slstatus_farajli-1.0.1
 ST              = st_farajli-0.9.2.1
 
 FONTS           = $(FONT1) $(FONT2)
