@@ -1,5 +1,7 @@
 .POSIX:
 
+VERSION         = 0.1
+
 DMENU           = dmenu_farajli-5.3.0
 DWM             = dwm_farajli-6.5.2
 FONT1           = LiberationMono
@@ -105,13 +107,14 @@ font1-install font2-install:
 	fc-cache
 
 dist: clean
-	mkdir -p slcf/
-	cp -R config distros scripts dep.sh Makefile README slcf/
-	tar -czf slcf.tar.gz slcf/
-	rm -rf slcf/
+	mkdir -p slcf-$(VERSION)
+	cp -R config/ distros/ scripts/ LICENSE Makefile README.md \
+		screenshot.png TODO slcf-$(VERSION)
+	tar -czf slcf-$(VERSION).tar.gz slcf-$(VERSION)
+	rm -rf slcf-$(VERSION)
 
 clean:
-	rm -rf slcf/ slcf.tar.gz $(ARCHIVE) $(FONTS) $(SOFTWARE)
+	rm -rf slcf-$(VERSION) slcf-$(VERSION).tar.gz $(ARCHIVE) $(FONTS) $(SOFTWARE)
 
 .PHONY: all arch-linux clean config desktop directory dist \
 	fonts git scripts server sync \
