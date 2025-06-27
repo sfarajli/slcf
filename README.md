@@ -41,11 +41,11 @@ make
 - dunst                              
 - fzf                                
 - git                                
-- lf                                 
+- lf >= r31                                 
 - mpv                                
 - libnotify (notify-send command)
 - nsxiv or sxiv                         
-- nvim or vim                           
+- nvim >= 0.10.3 or vim                           
 - picom                              
 - qutebrowser
 - scrot                              
