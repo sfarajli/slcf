@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- <C-j> and <C-k> don't work either in normal or insert mode.
 
 -- Macros
-vim.fn.setreg('p', "o# %% py\027o##\027O") -- Insert python cell
+vim.fn.setreg('p', "i# %% py\027o##\027O") -- Insert python cell
 
 -- Tabs
 vim.keymap.set('n', '<C-t>', '<cmd>tabnew<CR>'  , { noremap = true, silent = true })
