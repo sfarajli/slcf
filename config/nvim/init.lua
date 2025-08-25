@@ -76,6 +76,8 @@ vim.keymap.set('i', '<C-space>', '<ESC>'  , { noremap = true })
 
 -- Plugins
 vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>w', '<cmd>MdEval<CR>'              , { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>'         , { noremap = true, silent = true })
 
 -- Other
 vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , { noremap = true, silent = true })

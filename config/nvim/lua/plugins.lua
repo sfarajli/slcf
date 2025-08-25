@@ -25,6 +25,7 @@ require("lazy").setup({
 		"EdenEast/nightfox.nvim",
 		"nvim-neo-tree/neo-tree.nvim",
 		"nvim-orgmode/orgmode",
+		"jubnzv/mdeval.nvim",
 		-- neo-tree-dependencies
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -99,4 +100,8 @@ require("nvim-autopairs").setup({
 require('orgmode').setup({
 	org_agenda_files = '~/orgfiles/**/*',
 	org_default_notes_file = '~/orgfiles/refile.org',
+})
+
+require 'mdeval'.setup({
+  require_confirmation=false
 })
