@@ -18,7 +18,7 @@ fi
 dunst &
 picom &
 setxkbmap -option "caps:ctrl_modifier"   # Map Caps Lock to Ctrl
-setxkbmap us 			         # Set US keyboard layout
+setxkbmap us 			                 # Set US keyboard layout
 slstatus &
 swall                                    # Set a wallpaper
 unclutter &                              # Hide mouse cursor if inactive
