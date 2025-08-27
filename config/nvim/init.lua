@@ -1,5 +1,7 @@
 require("plugins")
 
+local opts = { noremap = true, silent = true }
+
 vim.g.mapleader = ' '
 vim.opt.background = "dark"
 vim.opt.clipboard = "unnamedplus" -- Use system clipboard
@@ -9,6 +11,14 @@ vim.opt.relativenumber = true
 vim.opt.shortmess:append("I")     -- Disable intro message
 vim.opt.wrap = false
 vim.cmd.colorscheme("duskfox")
+
+-- Tree
+vim.g.netrw_banner       = 0       -- Hide top banner
+vim.g.netrw_liststyle    = 3       -- Tree-style listing
+vim.g.netrw_browse_split = 4       -- Open in previous window
+vim.g.netrw_altv         = 1       -- Put vertical splits to the right
+vim.g.netrw_winsize      = 25      -- Width of netrw window
+vim.g.netrw_keepdir      = 0       -- Don't keep cwd synced with netrw
 
 vim.opt.fillchars = {
     vert = "|",
@@ -20,6 +30,45 @@ vim.opt.fillchars = {
     foldsep = "|",
     foldclose = ">",
 }
+
+-- Open Vexplore if the first argument is a directory
+if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+  -- Delete the default empty buffer
+  vim.cmd("enew")       -- create a new empty buffer
+  vim.cmd("bdelete #")  -- delete the previous buffer (the auto Ex buffer)
+  -- Open vertical explorer for the directory
+  vim.cmd("Vexplore " .. vim.fn.fnameescape(vim.fn.argv(0)))
+end
+
+-- Function to toggle vertical netrw explorer
+local function toggle_vexplore()
+  -- Check if a netrw buffer already exists
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+      if ft == "netrw" then
+        -- If found, close the window
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if vim.api.nvim_win_get_buf(win) == buf then
+            vim.api.nvim_win_close(win, true)
+            return
+          end
+        end
+      end
+    end
+  end
+  -- If no netrw buffer found, open vertical explorer
+  vim.cmd("Vexplore")
+end
+
+-- Map 'l' and 'l' to open file/dir in netrw buffers
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "n", "l", "<CR>", { silent = true })
+    vim.api.nvim_buf_set_keymap(0, "n", "h", "<CR>", { silent = true })
+  end,
+})
 
 -- Remove trailing whitespace on all lines before saving, excluding markdown files
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -58,13 +107,13 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.fn.setreg('p', "i# %% py\027o##\027O") -- Insert python cell
 
 -- Tabs
-vim.keymap.set('n', '<C-t>', '<cmd>tabnew<CR>'  , { noremap = true, silent = true })
-vim.keymap.set('n', 'J'    , '<cmd>tabn<CR>'    , { noremap = true, silent = true })
-vim.keymap.set('n', 'K'    , '<cmd>tabp<CR>'    , { noremap = true, silent = true })
+vim.keymap.set('n', '<C-t>', '<cmd>tabnew<CR>', opts)
+vim.keymap.set('n', 'J'    , '<cmd>tabn<CR>'  , opts)
+vim.keymap.set('n', 'K'    , '<cmd>tabp<CR>'  , opts)
 
 -- Windows
-vim.keymap.set('n', '<C-Down>' , '<cmd>split<CR>' , { noremap = true, silent = true })
-vim.keymap.set('n', '<C-Right>', '<cmd>vsplit<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-Down>' , '<cmd>split<CR>' , opts)
+vim.keymap.set('n', '<C-Right>', '<cmd>vsplit<CR>', opts)
 vim.keymap.set('n', '<C-h>'    , '<C-w>h'         , { noremap = true })
 vim.keymap.set('n', '<C-j>'    , '<C-w>j'         , { noremap = true })
 vim.keymap.set('n', '<C-k>'    , '<C-w>k'         , { noremap = true })
@@ -78,10 +127,10 @@ vim.keymap.set('i', '<C-k>'    , '<Up>'   , { noremap = true })
 vim.keymap.set('i', '<C-space>', '<ESC>'  , { noremap = true })
 
 -- Plugins
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>w', '<cmd>MdEval<CR>'              , { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>'         , { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>w', '<cmd>MdEval<CR>'     , opts)
+vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>', opts)
 
 -- Other
-vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , opts)
+vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>', opts)
+vim.keymap.set("n", "<leader>e", toggle_vexplore      , opts)

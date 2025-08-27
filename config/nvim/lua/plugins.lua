@@ -23,30 +23,26 @@ require("lazy").setup({
 		"numToStr/Comment.nvim",
 		"windwp/nvim-autopairs",
 		"EdenEast/nightfox.nvim",
-		"nvim-neo-tree/neo-tree.nvim",
 		"nvim-orgmode/orgmode",
 		"jubnzv/mdeval.nvim",
-		-- neo-tree-dependencies
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim"
 	},
+
 })
 
 require("Comment").setup{
-    padding = true,   -- Add a space b/w comment and the line
-    sticky = true,    -- Whether the cursor should stay at its position
-    ignore = nil,     -- Lines to be ignored while (un)comment
-    -- LHS of toggle mappings in NORMAL mode
-    toggler = {
-        line = 'cc',  --Line-comment toggle keymap
-        block = 'cb', -- Block-comment toggle keymap
-    },
-    -- LHS of operator-pending mappings in NORMAL and VISUAL mode
-    opleader = {
-        line = 'cc',  --Line-comment keymap
-        block = 'cb', --Block-comment keymap
-    },
+	padding = true,   -- Add a space b/w comment and the line
+	sticky = true,    -- Whether the cursor should stay at its position
+	ignore = nil,     -- Lines to be ignored while (un)comment
+	-- LHS of toggle mappings in NORMAL mode
+	toggler = {
+		line = 'cc',  --Line-comment toggle keymap
+		block = 'cb', -- Block-comment toggle keymap
+	},
+	-- LHS of operator-pending mappings in NORMAL and VISUAL mode
+	opleader = {
+		line = 'cc',  --Line-comment keymap
+		block = 'cb', --Block-comment keymap
+	},
 }
 
 require("toggleterm").setup{
@@ -62,39 +58,11 @@ require("toggleterm").setup{
 
 }
 
-require("neo-tree").setup({
-	filesystem = {
-		window = {
-			mappings = {
-				["l"] = "open",
-				["h"] = "close_node",
-				["zh"] = "toggle_hidden",
-				["H"] = "close_all_nodes",
-			}
-		}
-	},
-	default_component_configs = {
-		indent = {
-			--Indent Markers
-			with_markers = true,
-			indent_marker = "│",
-			last_indent_marker = "└",
-			indent_size = 2,
-			-- Expanders
-			with_expanders = false, --Not active
-			expander_collapsed = ">",
-			expander_expanded = "",
-			expander_highlight = "NeoTreeExpander",
-
-		},
-	},
-})
-
 require("nvim-autopairs").setup({
-	 disable_filetype = { "TelescopePrompt", "spectre_panel", "neo-tree-popup", "conf"},
-	 disable_in_macro = true,
-	 disable_in_visualblock = false,
-	 disable_in_replace_mode = true,
+	disable_filetype = { "TelescopePrompt", "spectre_panel", "neo-tree-popup", "conf"},
+	disable_in_macro = true,
+	disable_in_visualblock = false,
+	disable_in_replace_mode = true,
 })
 
 require('orgmode').setup({
@@ -103,5 +71,5 @@ require('orgmode').setup({
 })
 
 require 'mdeval'.setup({
-  require_confirmation=false
+	require_confirmation=false
 })
