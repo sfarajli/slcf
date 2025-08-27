@@ -21,83 +21,134 @@ vim.g.netrw_winsize      = 25      -- Width of netrw window
 vim.g.netrw_keepdir      = 0       -- Don't keep cwd synced with netrw
 
 vim.opt.fillchars = {
-    vert = "|",
-    fold = " ",
-    eob = " ",
-    diff = "/",
-    msgsep = "-",
-    foldopen = "▾",
-    foldsep = "|",
-    foldclose = ">",
+	vert = "|",
+	fold = " ",
+	eob = " ",
+	diff = "/",
+	msgsep = "-",
+	foldopen = "▾",
+	foldsep = "|",
+	foldclose = ">",
 }
 
 -- Open Vexplore if the first argument is a directory
 if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
-  -- Delete the default empty buffer
-  vim.cmd("enew")       -- create a new empty buffer
-  vim.cmd("bdelete #")  -- delete the previous buffer (the auto Ex buffer)
-  -- Open vertical explorer for the directory
-  vim.cmd("Vexplore " .. vim.fn.fnameescape(vim.fn.argv(0)))
+	-- Delete the default empty buffer
+	vim.cmd("enew")       -- create a new empty buffer
+	vim.cmd("bdelete #")  -- delete the previous buffer (the auto Ex buffer)
+	-- Open vertical explorer for the directory
+	vim.cmd("Vexplore " .. vim.fn.fnameescape(vim.fn.argv(0)))
+end
+
+--[[ FIXME: Sometime crashes ]]
+-- Store terminal buffer
+local term_buf = nil
+
+local function toggle_terminal()
+	local current_buf = vim.api.nvim_get_current_buf()
+
+	-- If we're in the terminal, toggle to previous buffer
+	if term_buf and vim.api.nvim_buf_is_valid(term_buf) and current_buf == term_buf then
+		vim.cmd("b#")  -- switch to previous buffer
+		return
+	end
+
+	-- If the terminal buffer doesn't exist or was closed, create a new one
+	if not term_buf or not vim.api.nvim_buf_is_valid(term_buf) then
+		vim.cmd("enew")  -- create a new empty buffer
+		vim.cmd("terminal")
+		term_buf = vim.api.nvim_get_current_buf()
+
+		-- Automatically close buffer when the terminal exits
+		vim.api.nvim_create_autocmd("TermClose", {
+			buffer = term_buf,
+			once = true,
+			callback = function()
+				if vim.api.nvim_buf_is_valid(term_buf) then
+					vim.api.nvim_buf_delete(term_buf, { force = true })
+					term_buf = nil
+				end
+			end,
+		})
+	else
+		-- Otherwise, switch to the existing terminal buffer
+		vim.cmd("buffer " .. term_buf)
+	end
+
+	vim.cmd("startinsert")  -- automatically enter insert mode
 end
 
 -- Function to toggle vertical netrw explorer
 local function toggle_vexplore()
-  -- Check if a netrw buffer already exists
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_loaded(buf) then
-      local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-      if ft == "netrw" then
-        -- If found, close the window
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          if vim.api.nvim_win_get_buf(win) == buf then
-            vim.api.nvim_win_close(win, true)
-            return
-          end
-        end
-      end
-    end
-  end
-  -- If no netrw buffer found, open vertical explorer
-  vim.cmd("Vexplore")
+	-- Check if a netrw buffer already exists
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_loaded(buf) then
+			local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+			if ft == "netrw" then
+				-- If found, close the window
+				for _, win in ipairs(vim.api.nvim_list_wins()) do
+					if vim.api.nvim_win_get_buf(win) == buf then
+						vim.api.nvim_win_close(win, true)
+						return
+					end
+				end
+			end
+		end
+	end
+	-- If no netrw buffer found, open vertical explorer
+	vim.cmd("Vexplore")
 end
 
 -- Map 'l' and 'l' to open file/dir in netrw buffers
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "netrw",
-  callback = function()
-    vim.api.nvim_buf_set_keymap(0, "n", "l", "<CR>", { silent = true })
-    vim.api.nvim_buf_set_keymap(0, "n", "h", "<CR>", { silent = true })
-  end,
+	pattern = "netrw",
+	callback = function()
+		vim.api.nvim_buf_set_keymap(0, "n", "l", "<CR>", { silent = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "h", "<CR>", { silent = true })
+	end,
+})
+
+-- Make netrw buffers read-only and unlisted
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "netrw",
+    callback = function()
+        -- Prevent any writing
+        vim.bo.buflisted = false        -- hide from buffer list
+        vim.bo.readonly = true          -- normal :w prevented
+        vim.bo.modifiable = false       -- prevent edits
+        vim.bo.buftype = "nofile"       -- treat as scratch buffer
+        vim.bo.swapfile = false         -- no swap
+    end,
 })
 
 -- Remove trailing whitespace on all lines before saving, excluding markdown files
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    if vim.bo.filetype == "markdown" then
-      return
-    end
-    vim.cmd([[%s/\s\+$//e]])
-  end,
+	pattern = "*",
+	callback = function()
+		if vim.bo.filetype == "markdown" then
+			return
+		end
+		vim.cmd([[%s/\s\+$//e]])
+	end,
 })
 
 -- Disable auto-comment
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-  end,
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+	end,
 })
 
 -- Enable spellcheck for certain file types
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = {
-    "gitcommit", "markdown", "text", "rst",
-    "asciidoc", "org", "norg", "latex", "tex", "mail", "pandoc"
-  },
-  callback = function()
-    vim.opt_local.spell = true
-  end,
+	pattern = {
+		"gitcommit", "markdown", "text", "rst",
+		"asciidoc", "org", "norg", "latex", "tex", "mail", "pandoc"
+	},
+	callback = function()
+		vim.opt_local.spell = true
+	end,
 })
 
 -- NOTE: On some terminal emulators, the keybinds
@@ -127,10 +178,12 @@ vim.keymap.set('i', '<C-k>'    , '<Up>'   , { noremap = true })
 vim.keymap.set('i', '<C-space>', '<ESC>'  , { noremap = true })
 
 -- Plugins
-vim.keymap.set('n', '<leader>w', '<cmd>MdEval<CR>'     , opts)
-vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>', opts)
+vim.keymap.set('n', '<leader>w', '<cmd>MdEval<CR>'         , opts)
+vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>'    , opts)
 
 -- Other
-vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>' , opts)
-vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>', opts)
-vim.keymap.set("n", "<leader>e", toggle_vexplore      , opts)
+vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>'   , opts)
+vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>'  , opts)
+vim.keymap.set("n", "<leader>e"       , toggle_vexplore , opts)
+vim.keymap.set('n', '<C-f>'           , toggle_terminal , opts)
+vim.keymap.set('t', '<C-f>'           , function() vim.cmd("stopinsert") toggle_terminal() end, opts)
