@@ -27,7 +27,13 @@ fi
 
 while getopts "hcd:" option; do
 	case "${option}" in
-	c) run "xwallpaper --clear" ;;
+	c)
+		#FIXME: use `run` function
+		killall picom
+		xwallpaper --clear
+		picom &
+		exit 0
+		;;
 
 	d) input="${OPTARG}" ;;
 

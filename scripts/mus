@@ -2,6 +2,6 @@
 
 # Play a file in $HOME/music directory using mpv
 
-music_name=$(find "${HOME}"/music | fzf)
+music_name=$(find "${HOME}"/media/music | fzf)
 
 mpv "${music_name}"

@@ -10,7 +10,7 @@ options:
  -s              Select the area with the cursor
  -h              Print this message and exit
 
-NOTE: save directory is ~/pics/screenshots
+NOTE: save directory is ~/pics/screenshot
 EOF
 
 exit 0
@@ -18,7 +18,7 @@ exit 0
 
 check_program "scrot"
 
-default_dir="${HOME}"/pics/screenshots
+default_dir="${HOME}"/pics/screenshot
 
 s_flg=""
 while getopts "d:sh" option; do
