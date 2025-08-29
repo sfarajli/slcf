@@ -17,13 +17,13 @@ fi
 
 dunst &
 picom &
-setxkbmap -option "caps:ctrl_modifier"   # Map Caps Lock to Ctrl
-setxkbmap us 			         # Set US keyboard layout
+setxkbmap -option "caps:ctrl_modifier"      # Map Caps Lock to Ctrl
+setxkbmap us                                # Set US keyboard layout
 slstatus &
-swall                                    # Set a wallpaper
-unclutter &                              # Hide mouse cursor if inactive
-xgamma -gamma 0.8                        # Change gamma
-xset r rate 300 50                       # Increase cursor speed
-xset s off && xset -dpms                 # Disable screen blackening
+swall -d "$HOME/.config/wallpapers/current" # Set a wallpaper
+unclutter &                                 # Hide mouse cursor if inactive
+xgamma -gamma 0.8                           # Change gamma
+xset r rate 300 50                          # Increase cursor speed
+xset s off && xset -dpms                    # Disable screen blackening
 
 exec dwm
