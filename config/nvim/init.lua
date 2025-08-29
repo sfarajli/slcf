@@ -40,44 +40,6 @@ if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
 	vim.cmd("Vexplore " .. vim.fn.fnameescape(vim.fn.argv(0)))
 end
 
---[[ FIXME: Sometime crashes ]]
--- Store terminal buffer
-local term_buf = nil
-
-local function toggle_terminal()
-	local current_buf = vim.api.nvim_get_current_buf()
-
-	-- If we're in the terminal, toggle to previous buffer
-	if term_buf and vim.api.nvim_buf_is_valid(term_buf) and current_buf == term_buf then
-		vim.cmd("b#")  -- switch to previous buffer
-		return
-	end
-
-	-- If the terminal buffer doesn't exist or was closed, create a new one
-	if not term_buf or not vim.api.nvim_buf_is_valid(term_buf) then
-		vim.cmd("enew")  -- create a new empty buffer
-		vim.cmd("terminal")
-		term_buf = vim.api.nvim_get_current_buf()
-
-		-- Automatically close buffer when the terminal exits
-		vim.api.nvim_create_autocmd("TermClose", {
-			buffer = term_buf,
-			once = true,
-			callback = function()
-				if vim.api.nvim_buf_is_valid(term_buf) then
-					vim.api.nvim_buf_delete(term_buf, { force = true })
-					term_buf = nil
-				end
-			end,
-		})
-	else
-		-- Otherwise, switch to the existing terminal buffer
-		vim.cmd("buffer " .. term_buf)
-	end
-
-	vim.cmd("startinsert")  -- automatically enter insert mode
-end
-
 -- Function to toggle vertical netrw explorer
 local function toggle_vexplore()
 	-- Check if a netrw buffer already exists
@@ -184,6 +146,5 @@ vim.keymap.set('n', '<leader>c', '<cmd>MdEvalClean<CR>'    , opts)
 -- Other
 vim.keymap.set('n', '<leader><leader>', '<cmd>w!<CR>'   , opts)
 vim.keymap.set('n', '<leader>q'       , '<cmd>wq!<CR>'  , opts)
-vim.keymap.set("n", "<leader>e"       , toggle_vexplore , opts)
-vim.keymap.set('n', '<C-f>'           , toggle_terminal , opts)
-vim.keymap.set('t', '<C-f>'           , function() vim.cmd("stopinsert") toggle_terminal() end, opts)
+vim.keymap.set('n', '<leader>m'       , '<cmd>make<CR>' , opts)
+vim.keymap.set('n', '<leader>e'       , toggle_vexplore , opts)

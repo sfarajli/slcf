@@ -19,6 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Setups
 require("lazy").setup({
 	spec = {
+		"akinsho/toggleterm.nvim",
 		"numToStr/Comment.nvim",
 		"windwp/nvim-autopairs",
 		"EdenEast/nightfox.nvim",
@@ -58,3 +59,15 @@ require('orgmode').setup({
 require 'mdeval'.setup({
 	require_confirmation=false
 })
+
+require("toggleterm").setup{
+	size = 10,
+	open_mapping = [[<c-f>]],
+	hide_numbers = true,
+	shade_terminals = true,
+	direction = "float",
+	float_opts = {
+		-- border = 'curved',
+		winblend = 0, --transparency
+	}
+}
