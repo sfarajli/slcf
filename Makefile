@@ -74,13 +74,13 @@ scripts: $(BINDIR)
 	mkdir -p          $(BINDIR)
 	$(COPY) scripts/* $(BINDIR)
 
-server:
+server: $(BINDIR) $(CONFDIR)
 	$(COPY) config/bash/bashrc $(BASHRC)
 	$(COPY) config/lf          $(CONFDIR)
 	$(COPY) config/shell       $(CONFDIR)
 	$(COPY) config/vim         $(CONFDIR)
 	$(COPY) config/zsh/zshrc   $(ZSHRC)
-	$(COPY) scripts/noc
+	$(COPY) scripts/noc        $(BINDIR)
 
 arch-linux:
 	sudo $(COPY) distros/arch-linux/pacman.conf /etc
