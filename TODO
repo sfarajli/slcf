@@ -8,3 +8,4 @@
 [] Replace JetBrains Mono Nerd Font with a smaller alternative
 [] Send notification when battery is too low
 [] Verify installed files
+[] Add temporary turn-off for compositor to `run` function in slib
