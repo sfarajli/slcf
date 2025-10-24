@@ -1,0 +1,2 @@
+# BUG: trash command in lf doesn't work with files which has spaces in them.
+- Emergency: low
