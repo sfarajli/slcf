@@ -1,2 +1,5 @@
 # BUG: trash command in lf doesn't work with files which has spaces in them.
 - Emergency: low
+
+# BUG: wallpapers are located in .config instead they should be in a data directory
+- Emergency: low
