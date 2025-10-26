@@ -9,11 +9,11 @@ install_bash
 install_git
 install_lf
 install_nvim
-install_scripts
 install_shell
 install_sites
 install_vim
 install_zsh
+install_cli_scripts
 
 # GUI
 install_dunst
@@ -27,6 +27,7 @@ install_sxiv
 install_wallpapers
 install_x11
 install_zathura
+install_gui_scripts
 
 # Suckless
 install_dmenu

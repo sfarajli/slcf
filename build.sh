@@ -101,9 +101,16 @@ install_shell() {
 	LINK "${CONFDIR}"/shell/profile      "${ZPROFILE}"
 }
 
-install_scripts() {
-	mkdir -p       "${BINDIR}"
-	COPY scripts/* "${BINDIR}"
+install_script_lib() { COPY scripts/slib "${BINDIR}"; }
+
+install_cli_scripts() {
+	install_script_lib
+	COPY scripts/cli/* "${BINDIR}"
+}
+
+install_gui_scripts() {
+	install_script_lib
+	COPY scripts/gui/* "${BINDIR}"
 }
 
 install_liberationmono() { pkg "LiberationMono" sync unpack font_install; }
