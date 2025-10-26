@@ -46,5 +46,4 @@ while getopts "i:d:s:pth" option; do
 	esac
 done
 
-# Unreachable
 invalid_use
