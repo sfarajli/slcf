@@ -1,9 +1,9 @@
 # slcf - Suleyman's linux configuration files
 My linux xorg configuration.
 
-slcf only installs configuration to the home directory of the user running the Makefile 
+slcf only installs configuration to the home directory of the user running the install script
 and doesn't affect other users or make system-wide changes but it does overwrites the current configuration,
-so, it's recommended to create a new user and run make as that user.
+so, it's recommended to create a new user and run the install script as that user.
 If you like the setup then you can install it for your main user.
 
 # Screenshots
@@ -17,9 +17,11 @@ If you like the setup then you can install it for your main user.
 useradd -m -s /bin/zsh <user> 
 ```
 
-3. run 
+3. configure `install` script
+
+4. run 
 ``` bash
-make
+./install
 ```
 4. Log out, log back in, and run `startx` on the TTY.
 
@@ -45,7 +47,7 @@ note: Some distros require installing `-devel` or `-dev` variants
 ## Program dependencies (optional but recommended)
 - Xorg                               
 - dunst                              
-- fzf                                
+- fzf  [useless]                               
 - git                                
 - lf >= r31                                 
 - mpv                                
