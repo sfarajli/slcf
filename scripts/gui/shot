@@ -18,7 +18,7 @@ exit 0
 
 check_program "scrot"
 
-default_dir="${HOME}"/pics/screenshot
+default_dir="${XDG_SCREENSHOT_DIR:-${HOME}/media/photo/screenshot}"
 
 s_flg=""
 while getopts "d:sh" option; do
@@ -38,7 +38,10 @@ shift $((OPTIND - 1))
 
 [ ${#} != 0 ] && invalid_use
 
-[ -z "${input}" ] && input="${default_dir}"
+if [ -z "${input}" ]; then
+	input="${default_dir}"
+	mkdir -p "${default_dir}"
+fi
 
 outfile="${input}"
 
