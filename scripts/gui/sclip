@@ -1,0 +1,27 @@
+#!/bin/sh
+
+. slib
+
+help() {
+cat << EOF
+${0}: Copy the content of filepath into clipboard
+options:
+ -h              Print this message and exit
+EOF
+
+exit 0
+}
+
+check_program "xclip"
+
+[ "${#}" != 1 ] && invalid_use
+[ "${1}" = "-h" ] && help
+
+
+FILE="${1}"
+
+[ ! -f "${FILE}" ] && err "${FILE} not found"
+
+MIME_TYPE=$(file --mime-type -b "${FILE}")
+
+run "xclip -selection clipboard -t ${MIME_TYPE} -i ${FILE}"
