@@ -1,17 +1,6 @@
 #!/bin/sh
 
-BINDIR="${HOME}/.local/bin}"
-CONFDIR="${HOME}/.config}"
-DATADIR="${HOME}/.local/share}"
-FONTDIR="${HOME}/.local/share/fonts}"
-BASHRC="${HOME}/.bashrc}"
-BASHPROFILE="${HOME}/.bash_profile}"
-ZPROFILE="${HOME}/.zprofile}"
-ZSHRC="${HOME}/.zshrc}"
-ZCACHE="${HOME}/.cache/zsh/history"
-GITCONFIG="${HOME}/.gitconfig}"
-
-. build.sh
+. ./build.sh
 
 create_dirs
 
@@ -46,4 +35,4 @@ install_slstatus
 install_st
 
 # Arch Linux
-install_pacman
+# install_pacman

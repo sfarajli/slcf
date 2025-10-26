@@ -2,6 +2,17 @@
 
 set -e
 
+BINDIR="${HOME}/.local/bin"
+CONFDIR="${HOME}/.config"
+DATADIR="${HOME}/.local/share"
+FONTDIR="${HOME}/.local/share/fonts"
+BASHRC="${HOME}/.bashrc"
+BASHPROFILE="${HOME}/.bash_profile"
+ZPROFILE="${HOME}/.zprofile"
+ZSHRC="${HOME}/.zshrc"
+ZCACHE="${HOME}/.cache/zsh/history"
+GITCONFIG="${HOME}/.gitconfig"
+
 dwm_version="dwm_farajli-6.5.2"
 dmenu_version="dmenu_farajli-5.3.0"
 slstatus_version="slstatus_farajli-1.0.1"
@@ -27,8 +38,8 @@ pkg() {
 		"sync") curl -LO https://farajli.net/archive/"${package}".tar.gz ;;
 		"unpack") tar xf "${package}".tar.gz ;;
 		"compile") make -C "${package}" ;;
-		"install") PREFIX=${BINDIR} make -C "${package}" install ;;
-		"font_install")	cp -r font "${FONTDIR}" ;;
+		"install") PREFIX="${BINDIR}" make -C "${package}" install ;;
+		"font_install")	cp -r "${package}" "${FONTDIR}" ;;
 		?)
 			echo Invalid usage of pkg >&2
 			return 1
@@ -36,6 +47,8 @@ pkg() {
 		esac
 	done
 }
+
+clean() { rm -rf -- *.tar.gz LiberationMono "${dwm_version}" "${dmenu_version}" "${slstatus_version}" "${st_version}"; }
 
 create_dirs() {
 	MAKEDIR "${BINDIR}"
@@ -95,6 +108,6 @@ install_scripts() {
 
 install_liberationmono() { pkg "LiberationMono" sync unpack font_install; }
 install_dwm()            { pkg "${dwm_version}" sync unpack install;      }
-install_st()             { pkg "${st_version}" sync unpack instal;        }
+install_st()             { pkg "${st_version}" sync unpack install;       }
 install_dmenu()          { pkg "${dmenu_version}" sync unpack install;    }
 install_slstatus()       { pkg "${slstatus_version}" sync unpack install; }
