@@ -21,8 +21,14 @@ st_version="st_farajli-0.9.2.1"
 MAKEDIR() { mkdir -pv "${1}"; }
 
 COPY() {
-	cp -r  "${1}" "${2}"
-	echo "copied" "${1}" '->' "${2}"
+	cp -r "${@}"
+
+	printf 'copied'
+	while [ "$#" -gt 1 ]; do
+	    printf ' %s' "$1"
+	    shift
+	done
+	printf ' -> %s\n' "$1"
 }
 
 LINK() {
