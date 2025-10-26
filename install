@@ -1,0 +1,49 @@
+#!/bin/sh
+
+BINDIR="${HOME}/.local/bin}"
+CONFDIR="${HOME}/.config}"
+DATADIR="${HOME}/.local/share}"
+FONTDIR="${HOME}/.local/share/fonts}"
+BASHRC="${HOME}/.bashrc}"
+BASHPROFILE="${HOME}/.bash_profile}"
+ZPROFILE="${HOME}/.zprofile}"
+ZSHRC="${HOME}/.zshrc}"
+ZCACHE="${HOME}/.cache/zsh/history"
+GITCONFIG="${HOME}/.gitconfig}"
+
+. build.sh
+
+create_dirs
+
+# CLI
+install_bash
+install_git
+install_lf
+install_nvim
+install_scripts
+install_shell
+install_sites
+install_vim
+install_zsh
+
+# GUI
+install_dunst
+install_liberationmono
+install_mimeapps
+install_mpv
+install_nsxiv
+install_picom
+install_qutebrowser
+install_sxiv
+install_wallpapers
+install_x11
+install_zathura
+
+# Suckless
+install_dmenu
+install_dwm
+install_slstatus
+install_st
+
+# Arch Linux
+install_pacman
