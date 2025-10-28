@@ -1,0 +1,20 @@
+#!/bin/sh
+
+. slib
+
+help() {
+cat << EOF
+${0}: Wrapper script to set lock the screen
+EOF
+
+exit 0
+}
+
+check_program "slock"
+
+[ "${#}" -eq 1 ] && [ "${1}" = "-h" ] && help
+
+[ "${#}" != 0 ] && invalid_use
+
+BACKGROUND="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
+slock -f "${BACKGROUND}"
