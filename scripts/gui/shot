@@ -53,7 +53,7 @@ if [ ! -e "$(dirname "${outfile}")" ]; then
 fi
 
 if [ "${s_flg}" = "1" ]; then
-	run "scrot -zs ${outfile}" "${outfile}"
+	run --reload-compositor "scrot -zs ${outfile}" "${outfile}"
 else
 	run "scrot -z ${outfile}" "${outfile}"
 fi
