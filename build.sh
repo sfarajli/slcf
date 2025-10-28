@@ -76,7 +76,7 @@ install_sxiv()        {	COPY config/sxiv                     "${CONFDIR}"; }
 install_vim()         {	COPY config/vim                      "${CONFDIR}"; }
 install_x11()         {	COPY config/x11                      "${CONFDIR}"; }
 install_zathura()     {	COPY config/zathura                  "${CONFDIR}"; }
-install_wallpapers()  { COPY config/wallpapers               "${DATADIR}"; }
+install_wallpapers()  { COPY etc/wallpapers                  "${DATADIR}"; }
 install_pacman()      { sudo cp distros/arch-linux/pacman.conf /etc;       }
 
 install_git() {
