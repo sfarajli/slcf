@@ -21,8 +21,7 @@ alias dmenucmd="dmenu -bw 1 -c -g 1 -l 25"
 
 if [ "${#}" -eq 0 ]; then
 
-	# FIXME: Use XDG_CONFIG
-	link_file="${HOME}/.config"/sites/bookmarks.txt
+	link_file="${XDG_CONFIG_HOME:-$HOME/.config}/sites/bookmarks.txt"
 
 	check_program "dmenu"
 
