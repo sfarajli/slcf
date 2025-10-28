@@ -18,7 +18,10 @@ EOF
 exit 0
 }
 
+
 check_program "xwallpaper"
+
+SYMLINK="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
 
 if [ "${#}" = 0 ]; then
 	input="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
@@ -28,7 +31,9 @@ fi
 
 while getopts "hcld:" option; do
 	case "${option}" in
-	c) run --reload-compositor "xwallpaper --clear" ;;
+	c)
+		unlink "${SYMLINK}"
+		run --reload-compositor "xwallpaper --clear" ;;
 
 	d) input="${OPTARG}" ;;
 
@@ -60,7 +65,6 @@ fi
 
 [ -z "${image}" ] && err "No image file found"
 
-SYMLINK="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
 mkdir -p "$(dirname "${SYMLINK}")" && \
 	ln -sf "${image}" "${SYMLINK}" && \
 	run "xwallpaper --zoom ${image}" "${image}"
