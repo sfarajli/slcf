@@ -19,21 +19,14 @@ exit 0
 check_program "xwallpaper"
 
 if [ "${#}" = 0 ]; then
-	#FIXME: use XDG_CONFIG
-	input="${HOME}/.config/wallpapers"
+	input="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
 elif [ "${#}" != 1 ] && [ "${#}" != 2 ]; then
 	invalid_use
 fi
 
 while getopts "hcd:" option; do
 	case "${option}" in
-	c)
-		#FIXME: use `run` function
-		killall picom
-		xwallpaper --clear
-		picom &
-		exit 0
-		;;
+	c) run --reload-compositor "xwallpaper --clear" ;;
 
 	d) input="${OPTARG}" ;;
 
