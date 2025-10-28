@@ -62,40 +62,75 @@ check_program() {
 }
 
 # @FUNCTION: run
-# USAGE: [--reload-status] <command> [success-msg] [failure-msg]
+# @USAGE: [--reload-status] [--reload-compositor] [--on-success <cmd>] [--on-failure <cmd>] <command> [success-msg] [failure-msg]
 # @DESCRIPTION:
-# Run the specified command and output success/failure message if provided.
-# Optionally reload the status bar.
+# Safely execute a simple shell command, print optional success/failure messages,
+# and optionally reload status bars or restart the compositor.
 #
-# Success messages are printed to stdout, failure messages are printed to stderr.
-# To add a failure message a success message must also be present.
-# The output of the command is not suppressed.
+# Success messages are printed to stdout; failure messages are printed to stderr.
+# To specify a failure message, a success message must also be provided.
+# Command output is not suppressed.
 #
-# This implementation does **not** use `eval`. Only simple commands and arguments are supported.
-# Shell control operators like `&&`, `||`, pipes (`|`), or redirection (`>`, `>>`, etc.) will not work.
-# This prevents unintended execution and makes it safe for use in scripts.
+# Options:
+#   --reload-status        Reload the status bar (via `slreload`).
+#   --reload-compositor    Restart the compositor (kills and restarts `picom`).
+#   --on-success <cmd>     Run another command if the main command succeeds.
+#   --on-failure <cmd>     Run another command if the main command fails.
 #
-# @EXAMPLE:
-# Run xwallpaper command if success print out ${image}:
+# Restrictions:
+#   - Does NOT use `eval`; only simple commands and arguments are supported.
+#   - Shell operators like `&&`, `||`, `|`, `>`, `>>`, etc. will NOT work.
+#   - This design prevents unintended execution and makes the function safe in scripts.
 #
-# run "xwallpaper --zoom ${image}" "${image}"
+# Return value:
+#   0 if the command succeeds, 1 otherwise.
+#
+# @EXAMPLES:
+#   # Run xwallpaper and print the image path on success
+#   run "xwallpaper --zoom ${image}" "${image}"
+#
+#   # Restart compositor and show a success message
+#   run --reload-compositor "xwallpaper --zoom ${image}" "Wallpaper updated" "Wallpaper failed"
+#
+#   # With success and failure hooks
+#   run --on-success "notify-send 'OK'" \
+#       --on-failure "notify-send 'Failed'" \
+#       "cp config config.bak" "Backup complete" "Backup failed"
 
 run() {
 	relstat=0
-	if [ "${1}" = "--reload-status" ];then
-		relstat=1
+	compstat=0
+
+	while [ $# -gt 0 ]; do
+		case "$1" in
+			--reload-status) relstat=1 ;;
+			--reload-compositor) compstat=1 ;;
+			--on-success) success_command="${2}"; shift ;;
+			--on-failure) failure_command="${2}"; shift ;;
+			*) break;
+		esac
 		shift
+	done
+
+	if [ "${compstat}" -eq 1 ]; then
+		pgrep -x picom > /dev/null && killall picom
 	fi
 
 	if ${1}; then
 		[ -n "${2}" ] && echo "${2}"
+		[ -n "${success_command}" ] && sh -c "${success_command}"
 	else
 		[ -n "${3}" ] && err "${3}"
+		[ -n "${failure_command}" ] && sh -c "${failure_command}"
 		exit 1
 	fi
 
 	if [ "${relstat}" -eq 1 ]; then
 		slreload || echo "Warning: Failed to reload slstatus" >&2
+	fi
+
+	if [ "${compstat}" -eq 1 ]; then
+    		picom -b || echo "Warning: Failed to start picom" >&2
 	fi
 
 	exit 0
