@@ -4,7 +4,10 @@
 [x] Test on Ubuntu
 [x] Test on Void
 
+[] screen lock script
 [x] add unified clipboard system
+[x] update wallpaper script to use the .local/share directory
+[] update wallpaper script to have a symlink to the selected wallpaper
 [] add dunst config to show on the middle screen
 [] Add BSD support
 [x] Replace JetBrains Mono Nerd Font with a smaller alternative
