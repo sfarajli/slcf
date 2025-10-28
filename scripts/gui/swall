@@ -10,7 +10,9 @@ options:
  -c              Remove the current wallpaper
  -h              Print this message and exit
 
-NOTE: default directory is ~/.config/wallpapers
+NOTE: default directory is ~/.local/share/wallpapers
+A symlink at ~/.config/wallpapers/current is created pointing to the selected wallpaper.
+
 EOF
 
 exit 0
@@ -24,7 +26,7 @@ elif [ "${#}" != 1 ] && [ "${#}" != 2 ]; then
 	invalid_use
 fi
 
-while getopts "hcd:" option; do
+while getopts "hcld:" option; do
 	case "${option}" in
 	c) run --reload-compositor "xwallpaper --clear" ;;
 
@@ -58,4 +60,7 @@ fi
 
 [ -z "${image}" ] && err "No image file found"
 
-run "xwallpaper --zoom ${image}" "${image}"
+SYMLINK="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
+mkdir -p "$(dirname "${SYMLINK}")" && \
+	ln -sf "${image}" "${SYMLINK}" && \
+	run "xwallpaper --zoom ${image}" "${image}"
