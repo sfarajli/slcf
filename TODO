@@ -4,8 +4,14 @@
 [x] Test on Ubuntu
 [x] Test on Void
 
-[] screen lock script
-[x] add unified clipboard system
+[] move the current wallpaper from ~/.config to ~/.cache
+[x] screen lock script
+[] fix nsend eval vulnerability
+[] Enable wrap option for text based files in neovim
+[] add pacman.conf
+[] Clipboard system for lf
+[] Clipboard system for zathura
+[] add unified clipboard system
 [x] update wallpaper script to use the .local/share directory
 [x] update wallpaper script to have a symlink to the selected wallpaper
 [] add dunst config to show on the middle screen
@@ -13,5 +19,6 @@
 [x] Replace JetBrains Mono Nerd Font with a smaller alternative
 [] Send notification when battery is too low
 [] Verify installed files
+[] Unified library to send desktop notifications
 [x] Add temporary turn-off for compositor to the `run` function in slib
 [x] Enhance the `run` function
