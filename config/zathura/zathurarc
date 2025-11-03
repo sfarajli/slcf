@@ -112,8 +112,9 @@ set default-bg "#282c34"
 
 set recolor-keephue
 set font "Liberation Mono 9"
+set selection-clipboard clipboard
 map t toggle_statusbar
 map i recolor
 map J zoom in
 map K zoom out
-set selection-clipboard clipboard
+map y feedkeys ":exec sh -c \"printf \\\"$FILE\\\" | sclip -i\"<Return>"
