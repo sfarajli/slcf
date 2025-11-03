@@ -17,6 +17,8 @@ fi
 
 dunst &
 picom &
+dcheck_battery &
+dcheck_mail &
 setxkbmap -option "caps:ctrl_modifier"      # Map Caps Lock to Ctrl
 setxkbmap us                                # Set US keyboard layout
 slstatus &
