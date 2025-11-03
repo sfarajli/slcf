@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while :; do
+    mbsync -a
+    sleep 300
+done

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+BAT="/sys/class/power_supply/BAT0"
+
+while true; do
+    percent=$(cat "${BAT}/capacity")
+    status=$(cat "${BAT}/status")
+
+    # Only notify if battery is low AND not charging
+    if [ "${status}" = "Discharging" ] && [ "${percent}" -lt 7 ]; then
+        nsend -c "Battery" "Critically low: ${percent}%"
+    fi
+
+    sleep 120
+done
