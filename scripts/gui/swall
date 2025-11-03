@@ -11,7 +11,7 @@ options:
  -h              Print this message and exit
 
 NOTE: default directory is ~/.local/share/wallpapers
-A symlink at ~/.config/wallpapers/current is created pointing to the selected wallpaper.
+A symlink at ~/.cache/wallpapers/current is created pointing to the selected wallpaper.
 
 EOF
 
@@ -21,7 +21,7 @@ exit 0
 
 check_program "xwallpaper"
 
-SYMLINK="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
+SYMLINK="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
 
 if [ "${#}" = 0 ]; then
 	input="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"

@@ -16,5 +16,5 @@ check_program "slock"
 
 [ "${#}" != 0 ] && invalid_use
 
-BACKGROUND="${XDG_CONFIG_HOME:-$HOME/.config}/wallpaper/current"
+BACKGROUND="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
 slock -f "${BACKGROUND}"
