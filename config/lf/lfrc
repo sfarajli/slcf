@@ -32,17 +32,20 @@ set rulerfmt "\033[32;1;7m"
 
 set promptfmt "\033[48;1;234m %w/%f"
 
+# Use a custom separator to safely split filenames that contain spaces.
+set filesep " / "
+
 cmd trash ${{
 	set -f
 	mkdir -p ~/.trash
-	for entry in $fx; do
-		trash_path=~/.trash/$(basename -- "${entry}")
+	echo "$fx" | sed 's/ \/ /\n/g' | while IFS= read -r file; do
+		tmp=~/.trash/$(basename -- "${file}")
+		trash_path=$(printf '%s' "$tmp" | tr ' ' '_')
 		if [ -e "${trash_path}" ]; then
 			printf '%s exists\n' "${trash_path}" >&2
 			trash_path="${trash_path}_$(date +%s)_$RANDOM"
 			printf 'moving to %s\n' "${trash_path}" >&2
 		fi
-
-		mv -- "${entry}" "${trash_path}"
+		mv -- "${file}" "${trash_path}"
 	done
 }}
