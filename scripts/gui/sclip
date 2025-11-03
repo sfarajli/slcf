@@ -4,9 +4,12 @@
 
 help() {
 cat << EOF
-${0}: Copy the content of filepath into clipboard
+${0}: print the clipboard content
 options:
  -h              Print this message and exit
+ -c [text]       Copy text to clipboard
+ -f [file]       Copy content of file into clipboard
+ -i              Copy standart input into clipboard
 EOF
 
 exit 0
@@ -14,14 +17,37 @@ exit 0
 
 check_program "xclip"
 
-[ "${#}" != 1 ] && invalid_use
-[ "${1}" = "-h" ] && help
+i_flg=0
+while getopts "f:c:ih" option; do
+	case "${option}" in
+	f) filepath="${OPTARG}" ;;
 
+	c) input="${OPTARG}" ;;
 
-FILE="${1}"
+	i) i_flg=1 ;;
 
-[ ! -f "${FILE}" ] && err "${FILE} not found"
+	h) help ;;
 
-MIME_TYPE=$(file --mime-type -b "${FILE}")
+	*) invalid_use -h ;;
+	esac
+done
 
-run "xclip -selection clipboard -t ${MIME_TYPE} -i ${FILE}"
+shift $((OPTIND - 1))
+
+[ "${#}" -ne 0 ] && invalid_use
+
+if [ -n "${filepath}" ]; then
+	mime_type=$(file --mime-type -b "${filepath}")
+	run --success-notify "${filepath} copied" \
+		--failure-notify "${filepath} failed to copy" \
+		"xclip -selection clipboard -t ${mime_type} -i ${filepath}"
+fi
+
+[ "${i_flg}" -eq 1 ] && input=$(cat)
+
+if [ -n "${input}" ]; then
+	printf '%s' "${input}" | xclip -selection clipboard
+	exit 0
+fi
+
+run "xclip -o -selection clipboard"
