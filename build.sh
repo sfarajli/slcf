@@ -77,7 +77,7 @@ install_vim()         {	COPY config/vim                      "${CONFDIR}"; }
 install_x11()         {	COPY config/x11                      "${CONFDIR}"; }
 install_zathura()     {	COPY config/zathura                  "${CONFDIR}"; }
 install_wallpapers()  { COPY etc/wallpapers                  "${DATADIR}"; }
-install_pacman()      { sudo cp distros/arch-linux/pacman.conf /etc;       }
+install_pacman()      { sudo cp etc/arch/pacman.conf         /etc;         }
 
 install_git() {
 	sed '/# signingkey = <to be set manually>/d' config/git/gitconfig > "${GITCONFIG}"
