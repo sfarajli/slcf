@@ -77,6 +77,7 @@ install_vim()         {	COPY config/vim                      "${CONFDIR}"; }
 install_x11()         {	COPY config/x11                      "${CONFDIR}"; }
 install_zathura()     {	COPY config/zathura                  "${CONFDIR}"; }
 install_wallpapers()  { COPY etc/wallpapers                  "${DATADIR}"; }
+install_daemons()     { COPY daemons/*                        "${BINDIR}"; }
 install_pacman()      { sudo cp etc/arch/pacman.conf         /etc;         }
 
 install_git() {
@@ -118,6 +119,7 @@ install_gui_scripts() {
 	install_script_lib
 	COPY scripts/gui/* "${BINDIR}"
 }
+
 
 install_liberationmono() { pkg "LiberationMono" sync unpack font_install; }
 install_dwm()            { pkg "${dwm_version}" sync unpack install;      }
