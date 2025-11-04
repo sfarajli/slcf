@@ -4,7 +4,12 @@
 
 help() {
 cat << EOF
-${0}: Wrapper script to set lock the screen
+${0}: Wrapper script to take screenshots
+options:
+ -n              Black screen
+ -b              Blur
+ -c              Take the current state of the desktop
+ -h              Print this message and exit
 EOF
 
 exit 0
@@ -12,9 +17,43 @@ exit 0
 
 check_program "slock"
 
-[ "${#}" -eq 1 ] && [ "${1}" = "-h" ] && help
+blur=0
+set_current_state=0
+current_wallpaper="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
+while getopts "bcnh" option; do
+	case "${option}" in
+	b)
+		check_program "mogrify" "imagemagick must be installed"
+		blur=1 ;;
 
-[ "${#}" != 0 ] && invalid_use
+	c)
+		check_program "scrot"
+		set_current_state=1
+	;;
+	n)
+		slock
+		exit 0;;
 
-BACKGROUND="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
-slock -f "${BACKGROUND}"
+	h) help ;;
+
+	*) invalid_use -h ;;
+
+	esac
+done
+
+shift $((OPTIND - 1))
+
+[ "${#}" -eq 0 ] || invalid_use
+
+background="/tmp/$(date '+%b%d::%H%M%S').png"
+
+if [ "$set_current_state" -eq 0 ]; then
+	# Avoid distorting the wallpaper when calling `mogrify`
+	cp "${current_wallpaper}" "${background}"
+else
+	scrot -z "${background}"
+fi
+
+[ "${blur}" -eq 1 ] && mogrify -blur 0x8 "${background}"
+
+slock -f "${background}"
