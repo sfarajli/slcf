@@ -59,7 +59,7 @@ if [ -n "${input}" ]; then
 fi
 
 if [ -n "${waldir}" ]; then
-	image=$(find "${waldir}" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' 2>/dev/null \
+	image=$(find "${waldir}" -iregex '.*.\(jpg\|jpeg\|png\)' 2>/dev/null \
 	| shuf -n 1 )
 fi
 
