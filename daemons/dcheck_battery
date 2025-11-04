@@ -8,7 +8,7 @@ while true; do
 
     # Only notify if battery is low AND not charging
     if [ "${status}" = "Discharging" ] && [ "${percent}" -lt 7 ]; then
-        nsend -c "Battery" "Critically low: ${percent}%"
+        nsend -s "Battery" "Critically low: ${percent}%"
     fi
 
     sleep 120
