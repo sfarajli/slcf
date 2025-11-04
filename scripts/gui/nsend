@@ -14,19 +14,21 @@ EOF
 exit 0
 }
 
-check_program "notify-send" "libnotify must be installed"
-
-case "${1}" in
-"-s")
-	[ "${#}" -gt 3 ] && invalid_use
-
-	shift
-	eval $(printf 'notify-send "%s" "%s"' "${1}" "${2}")
-
-	exit 0
+case "${#}" in
+1)
+	[ "${1}" = "-h" ] && help
+	invalid_use
 ;;
-"-h") help ;;
-
+2)
+	[ "${1}" = "-s" ] || invalid_use
+	notification_string="${2}"
+;;
+3)
+	[ "${1}" = "-s" ] || invalid_use
+	notification_string="${2}: ${3}"
+;;
 *) invalid_use ;;
-
 esac
+
+
+send_notification "${notification_string}"
