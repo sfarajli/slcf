@@ -18,11 +18,14 @@ exit 0
 check_program "xclip"
 
 i_flg=0
-while getopts "f:c:ih" option; do
+silent=0
+while getopts "f:c:sih" option; do
 	case "${option}" in
 	f) filepath="${OPTARG}" ;;
 
 	c) input="${OPTARG}" ;;
+
+	s) silent=1 ;;
 
 	i) i_flg=1 ;;
 
@@ -38,6 +41,11 @@ shift $((OPTIND - 1))
 
 if [ -n "${filepath}" ]; then
 	mime_type=$(file --mime-type -b "${filepath}")
+
+	if [ "${silent}" -eq 1 ]; then
+		run "xclip -selection clipboard -t ${mime_type} -i ${filepath}"
+	fi
+
 	run --success-notify "${filepath} copied" \
 		--failure-notify "${filepath} failed to copy" \
 		"xclip -selection clipboard -t ${mime_type} -i ${filepath}"
@@ -46,8 +54,17 @@ fi
 [ "${i_flg}" -eq 1 ] && input=$(cat)
 
 if [ -n "${input}" ]; then
+	# Don't use `run` since pipes are used
 	printf '%s' "${input}" | xclip -selection clipboard
-	exit 0
+
+	if [ $? -eq 0 ]; then
+		[ "${silent}" -eq 0 ] && send_notification "${argv0}:" "'${input}' copied"
+		exit 0
+	fi
+
+	[ "${silent}" -eq 0 ] && send_notification "${argv0}:" "'${input}' failed to copy"
+
+	exit 1
 fi
 
 run "xclip -o -selection clipboard"
