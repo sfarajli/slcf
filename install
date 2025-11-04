@@ -5,35 +5,36 @@
 create_dirs
 
 # CLI
-install_bash
-install_git
-install_lf
-install_nvim
-install_shell
-install_sites
-install_vim
-install_zsh
-install_cli_scripts
+# install_bash
+# install_git
+# install_lf
+# install_nvim
+# install_shell
+# install_sites
+# install_vim
+# install_zsh
+# install_cli_scripts
 
 # GUI
-install_dunst
-install_liberationmono
-install_mimeapps
-install_mpv
-install_nsxiv
-install_picom
-install_qutebrowser
-install_sxiv
-install_wallpapers
-install_x11
-install_zathura
+# install_dunst
+# install_liberationmono
+# install_mimeapps
+# install_mpv
+# install_nsxiv
+# install_picom
+# install_qutebrowser
+# install_sxiv
+# install_wallpapers
+# install_x11
+# install_zathura
 install_gui_scripts
+# install_daemons
 
 # Suckless
-install_dmenu
-install_dwm
-install_slstatus
-install_st
+# install_dmenu
+# install_dwm
+# install_slstatus
+# install_st
 
 # Arch Linux
 # install_pacman
