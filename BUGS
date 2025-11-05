@@ -1,2 +1,8 @@
-# BUG: trash command in lf doesn't work with files which has spaces in them.
+# [FIXED] trash command in lf doesn't work with files which has spaces in them.
 - Emergency: low
+
+# Using /tmp/noti.txt for notification is not secure
+- Emergency: moderate
+
+# Automatic slock build script causes problems
+- Emergency: moderate
