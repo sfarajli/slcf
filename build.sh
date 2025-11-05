@@ -45,7 +45,7 @@ pkg() {
 		"sync") curl -LO https://farajli.net/archive/"${package}".tar.gz ;;
 		"unpack") tar xf "${package}".tar.gz ;;
 		"compile") make -C "${package}" ;;
-		"install") PREFIX="${BINDIR}" make -C "${package}" install ;;
+		"install") PREFIX=$(dirname "${BINDIR}") make -C "${package}" install ;;
 		"font_install")	cp -r "${package}" "${FONTDIR}" ;;
 		?)
 			echo Invalid usage of pkg >&2
