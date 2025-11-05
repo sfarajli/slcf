@@ -19,10 +19,10 @@ map zz :{{ set preview; set ratios 1:2:3; }}
 
 # Directory change keybinds (some overwrite default ones)
 # <c-h> and <c-k> might fail on some terminal emulators
-map <c-h> cd ~/
+map <c-e> cd ~/
 map <c-p> cd ~/proj
-map <c-t> cd ~/tproj
-map <c-k> cd /tmp
+map <c-t> cd ~/tmp
+map <c-v> cd /tmp
 map <c-w> cd ~/work
 
 # Theme
