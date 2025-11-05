@@ -73,5 +73,10 @@ note: Some distros require installing `-devel` or `-dev` variants
 - Refer to [my dwm build man page](https://git.farajli.net/dwm.git/tree/dwm.1) for keybinds.
 
 # Troubleshooting
+- slock gives OOM error, to fix it just run:
+    ``` bash
+    sudo chown root:root $(which slock)
+	sudo chmod u+s $(which slock) 
+    ```
 - brightnessctl can require privileged user to function, to solve it refer to [brightnessctl page](https://github.com/Hummer12007/brightnessctl#Permissions).
 - pulseaudio sometimes doesn't start automatically to start it manually run `pulseaudio --start`.
