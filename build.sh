@@ -55,7 +55,7 @@ pkg() {
 	done
 }
 
-clean() { rm -rf -- *.tar.gz LiberationMono "${dwm_version}" "${dmenu_version}" "${slstatus_version}" "${st_version}"; }
+clean() { rm -rf -- *.tar.gz LiberationMono "${dwm_version}" "${dmenu_version}" "${slstatus_version}" "${st_version}" "${slock_version}"; }
 
 create_dirs() {
 	MAKEDIR "${BINDIR}"
