@@ -46,16 +46,14 @@ note: Some distros require installing `-devel` or `-dev` variants
 
 ## Program dependencies (optional but recommended)
 - Xorg                               
-- dunst                              
-- fzf  [useless]                               
+- fzf 
 - git                                
 - lf >= r31                                 
 - mpv                                
-- libnotify (notify-send command)
 - nsxiv or sxiv                         
 - nvim >= 0.10.3 or vim                           
 - picom                              
-- qutebrowser
+- firefox
 - scrot                              
 - setxkbmap                          
 - xorg-xinit
