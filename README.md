@@ -9,7 +9,7 @@ If you like the setup then you can install it for your main user.
 # Screenshots
 ![desktop screenshot](./screenshot.png)
 
-# Instlallation 
+# Installation 
 1. Make sure to use Zsh or Bash as your interactive shell, have an internet connection, and install at least the build-time dependencies.
 
 2. Create a new user (set shell either to Zsh or Bash):
