@@ -1,10 +1,7 @@
 # slcf - Suleyman's linux configuration files
 My linux xorg configuration.
 
-slcf only installs configuration to the home directory of the user running the install script
-and doesn't affect other users or make system-wide changes but it does overwrites the current configuration,
-so, it's recommended to create a new user and run the install script as that user.
-If you like the setup then you can install it for your main user.
+SLCF only installs configuration to the home directory of the user running the install script and does not affect other users or make system-wide changes. However, it *does* overwrite the current configuration, so it’s recommended to create a new user and run the install script as that user. If you like the setup, then you can install it for your main user.
 
 # Screenshots
 ![desktop screenshot](./screenshot.png)
