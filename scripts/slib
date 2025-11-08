@@ -115,6 +115,7 @@ send_notification() {
 run() {
 	relstat=0
 	compstat=0
+	exitval=0
 
 	while [ $# -gt 0 ]; do
 		case "$1" in
@@ -137,7 +138,8 @@ run() {
 	else
 		[ -n "${3}" ] && err "${3}"
 		[ -n "${failure_msg}" ] && send_notification "${argv0}:" "${failure_msg}"
-		exit 1
+
+		exitval=1
 	fi
 
 	if [ "${relstat}" -eq 1 ]; then
@@ -148,5 +150,5 @@ run() {
     		picom -b || echo "Warning: Failed to start picom" >&2
 	fi
 
-	exit 0
+	exit "${exitval}"
 }
