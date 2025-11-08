@@ -22,7 +22,6 @@ dcheck_mail &
 setxkbmap -option "caps:ctrl_modifier"      # Map Caps Lock to Ctrl
 setxkbmap us                                # Set US keyboard layout
 slstatus &
-swall -d "$HOME/.config/wallpapers/current" # Set a wallpaper
 unclutter &                                 # Hide mouse cursor if inactive
 xgamma -gamma 0.8                           # Change gamma
 xset r rate 300 50                          # Increase cursor speed
