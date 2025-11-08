@@ -5,7 +5,7 @@
 [x] Test on Void
 
 [] Verify installed files
-[] Install slock
+[x] Install slock
 [x] in script only the name of the program should be given not the whole path
 [x] Fix bugs and overall polish before release
 [x] Handle deamons
