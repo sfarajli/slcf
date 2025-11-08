@@ -26,7 +26,7 @@ useradd -m -s /bin/zsh <user>
 4. Log out, log back in, and run `startx` on the TTY.
 
 # Dependencies 
-If GUI is disabled in the install file then build dependencies are not needed.
+If GUI is disabled in the install file then build dependencies are not needed. Both program and script dependencies are optional but recommended.
 
 ## Build time dependencies
 - curl
@@ -50,7 +50,7 @@ If GUI is disabled in the install file then build dependencies are not needed.
 note: Some distros require installing `-devel` or `-dev` variants
 (e.g. libX11-devel, libx11-dev) for headers and build files. 
 
-## Program dependencies (optional but recommended)
+## Program dependencies
 - Xorg                               
 - fzf 
 - git                                
@@ -67,7 +67,7 @@ note: Some distros require installing `-devel` or `-dev` variants
 - zathura                            
 - zsh or bash
 
-## Script dependencies (optional but recommended)
+## Script dependencies 
 - brightnessctl                 
 - pulseaudio                    
 - xgamma                        
