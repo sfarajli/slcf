@@ -7,6 +7,7 @@ cat << EOF
 ${0}: print the clipboard content
 options:
  -h              Print this message and exit
+ -s              Do not send notifications
  -c [text]       Copy text to clipboard
  -f [file]       Copy content of file into clipboard
  -i              Copy standart input into clipboard
