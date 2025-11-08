@@ -1,6 +1,6 @@
 #!/bin/sh
 
-userresources="$HOME/.config/x11/xresources"
+userresources="${XDG_CONFIG_HOME:-${HOME}/.config}/x11/xresources"
 
 # merge in defaults and keymaps
 if [ -f "$userresources" ]; then
@@ -19,12 +19,13 @@ dunst &
 picom &
 dcheck_battery &
 dcheck_mail &
-setxkbmap -option "caps:ctrl_modifier"      # Map Caps Lock to Ctrl
-setxkbmap us                                # Set US keyboard layout
+setxkbmap -option "caps:ctrl_modifier"                  # Map Caps Lock to Ctrl
+setxkbmap us                                            # Set US keyboard layout
 slstatus &
-unclutter &                                 # Hide mouse cursor if inactive
-xgamma -gamma 0.8                           # Change gamma
-xset r rate 300 50                          # Increase cursor speed
-xset s off && xset -dpms                    # Disable screen blackening
+unclutter &                                             # Hide mouse cursor if inactive
+xgamma -gamma 0.8                                       # Change gamma
+swall -d "${DATADIR:-${HOME}/.local/share}/wallpapers"  # Set a wallpaper
+xset r rate 300 50                                      # Increase cursor speed
+xset s off && xset -dpms                                # Disable screen blackening
 
 exec dwm
