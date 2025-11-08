@@ -13,7 +13,7 @@ ZSHRC="${HOME}/.zshrc"
 ZCACHE="${HOME}/.cache/zsh/history"
 GITCONFIG="${HOME}/.gitconfig"
 
-dwm_version="dwm_farajli-6.5.3"
+dwm_version="dwm_farajli-6.5.4"
 dmenu_version="dmenu_farajli-5.3.0"
 slstatus_version="slstatus_farajli-1.0.1"
 st_version="st_farajli-0.9.2.1"
@@ -127,4 +127,4 @@ install_dwm()            { pkg "${dwm_version}" sync unpack install;      }
 install_st()             { pkg "${st_version}" sync unpack install;       }
 install_dmenu()          { pkg "${dmenu_version}" sync unpack install;    }
 install_slstatus()       { pkg "${slstatus_version}" sync unpack install; }
-install_slock()          { pkg "${slock_version}" sync unpack install; }
+install_slock()          { pkg "${slock_version}" sync unpack install;    }
