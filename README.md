@@ -26,6 +26,8 @@ useradd -m -s /bin/zsh <user>
 4. Log out, log back in, and run `startx` on the TTY.
 
 # Dependencies 
+If GUI is in the install file then build dependencies are not needed.
+
 ## Build time dependencies
 - curl
 - fontconfig (fc-cache command)
@@ -36,7 +38,7 @@ useradd -m -s /bin/zsh <user>
 - pkg-config
 - tar
 
-## Build time libraries (not needed if GUI is disabled)
+## Build time libraries 
 - libx11  
 - libxft  
 - libxinerama  
