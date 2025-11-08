@@ -89,7 +89,7 @@ install_git() {
 	"#####################################################################" \
 	"Configure it manually using:" \
 	"    gpg --list-secret-keys --keyid-format=long" \
-	"    git config --global user.signingkey <YOUR_KEY_ID>" >&2
+	"    git config --global user.signingkey <YOUR_KEY_ID>" " " >&2
 }
 
 install_sites() {
