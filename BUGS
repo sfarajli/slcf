@@ -4,5 +4,8 @@
 # Using /tmp/noti.txt for notification is not secure
 - Emergency: moderate
 
-# Automatic slock build script causes problems
+# Automatic slock build script causes problems with OOM
 - Emergency: moderate
+
+# Getopts invalid flag message uses full path instead of just the program name
+- Emergency: low
