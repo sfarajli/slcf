@@ -29,17 +29,21 @@ useradd -m -s /bin/zsh <user>
 ## Build time dependencies
 - curl
 - fontconfig (fc-cache command)
-- gcc 
+- gcc (or most other c compilers)
 - ld
 - make
 - ncurses (tic command)
 - pkg-config
 - tar
 
-## Build time libraries
-- libx11 
-- libxft
-- libxinerama
+## Build time libraries (not needed if GUI is disabled)
+- libx11  
+- libxft  
+- libxinerama  
+- libxext  
+- libxrandr  
+- libxcrypt 
+- imlib2  
 
 note: Some distros require installing `-devel` or `-dev` variants
 (e.g. libX11-devel, libx11-dev) for headers and build files. 
