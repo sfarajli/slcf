@@ -26,7 +26,7 @@ useradd -m -s /bin/zsh <user>
 4. Log out, log back in, and run `startx` on the TTY.
 
 # Dependencies 
-If GUI is in the install file then build dependencies are not needed.
+If GUI is disabled in the install file then build dependencies are not needed.
 
 ## Build time dependencies
 - curl
