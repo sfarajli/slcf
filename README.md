@@ -21,7 +21,7 @@ useradd -m -s /bin/zsh <user>
 
 4. run 
 ``` bash
-./install
+./install > /dev/null
 ```
 4. Log out, log back in, and run `startx` on the TTY.
 
