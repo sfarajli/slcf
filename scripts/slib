@@ -76,6 +76,24 @@ send_notification() {
 	xsetroot -name "fsignal:1"
 }
 
+# @FUNCTION: get_random_filename
+# @USAGE: get_random_filename [parentdir] <extension>
+# @DESCRIPTION:
+# Write a random file path to stdout, under parentdir, (if provided else under /tmp) with the extension.
+#
+# @EXAMPLE:
+# Get a filepath in the `/var` directory with the extension `.png`
+#
+# get_random_filename /var .png
+
+get_random_filename() {
+	[ "${#}" -eq 2 ] && parentdir="${2}" || parentdir="/tmp"
+
+	extension="${1}"
+
+	echo "${parentdir}/$(date '+%b%d::%H%M%S')${extension}"
+}
+
 # @FUNCTION: run
 # @USAGE: [--reload-status] [--reload-compositor] [--success-notify <msg>] [--failure-notify <msg>] <command> [success-msg] [failure-msg]
 # @DESCRIPTION:
