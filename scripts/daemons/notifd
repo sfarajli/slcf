@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Notification daemon that clears notification text after a given time
+
 . "lib_handle.sh"
 
 FIFO=/tmp/noti.fifo
