@@ -27,7 +27,7 @@ while getopts "cd:h" option; do
 	case "${option}" in
 	c)
 		rm -f "${SYMLINK}"
-		run --reload-compositor "wallpaper_handle clear"
+		run --reload-compositor wallpaper_handle clear
 	;;
 	d) input="${OPTARG}" ;;
 	h) help ;;
