@@ -79,7 +79,7 @@ input_device_handle() {
 	"disable") xinput disable "${2}";;
 	"list") xinput list ;;
 	"get-id")
-		dev=$(xinput list --name-only | grep -i -m1 "${1}" ) || return 1
+		dev=$(xinput list --name-only | grep -i -m1 "${2}" ) || return 1
 		printf "${dev#∼ }"
 	;;
 	"is_enabled")
