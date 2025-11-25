@@ -2,17 +2,14 @@
 
 progname=$(basename "${0}")
 
-# @FUNCTION: err
-# @USAGE: [-x] <message> ...
-# @DESCRIPTION:
-# Print given messages to stderr line by line and exit with status 1.
+# Print each message to stderr, then exit with status 1.
 #
-# If "-x" is specified, suppress the program prefix (`program: `)
-# from the output. Otherwise, the first line is prefixed with "program: ".
+# If the first argument is "-x", the program name prefix is not added.
+# Otherwise, the first printed line starts with "program: ".
 #
-# This function is intended for fatal errors; it always exits the script.
-# @EXAMPLE:
-# err "Invalid usage" "Try '${progname} -h' for help."
+# Example:
+#   err "Invalid usage" "Try '${progname} -h' for help."
+
 err() {
 	if [ "${1}" != "-x" ]; then
 		printf "%s: " "${progname}"
@@ -26,32 +23,28 @@ err() {
 	exit 1
 }
 
-# @FUNCTION: invalid_use
-# USAGE: [-h]
-# @DESCRIPTION:
-# Output a usage error message. If `-h` is not specified output:
-# 	"<program>: Invalid usage "
-# 	"Try 'program -h' for help."
-# else output only:
-# 	"Try 'program -h' for help."
+# Print a usage error message.
+#
+# Without "-h", it prints:
+#   "<program>: Invalid usage"
+#   "Try 'program -h' for help."
+#
+# With "-h", it prints only:
+#   "Try 'program -h' for help."
 
 invalid_use() {
 	[ "${1}" = "-h" ] && err -x "Try '${progname} -h' for help."
 	err "Invalid usage" "Try '${progname} -h' for help."
 }
 
-# @FUNCTION: check_program
-# USAGE: <command> [error-msg]
-# @DESCRIPTION:
-# Check if command exists on the system.
-# If not, print an error message to stderr and exit with status 1.
-# The default error message is "`command` must be installed"
-# but can optionally be overwritten.
+# Check if a command exists.
+# If it does not, print an error message to stderr and exit with status 1.
 #
-# @EXAMPLE:
-# Check if pulseaudio is installed.
+# The default message is: "`command` must be installed"
+# You can override it with a custom message.
 #
-# check_program "pactl" "pulseaudio must be installed"
+# Example:
+#   check_program "pactl" "pulseaudio must be installed"
 
 check_program() {
 	command -v "${1}" > /dev/null 2>&1 && return 0
@@ -59,15 +52,12 @@ check_program() {
 	err "${1} must be installed"
 }
 
-# @FUNCTION: get_random_filename
-# @USAGE: get_random_filename [parentdir] <extension>
-# @DESCRIPTION:
-# Write a random file path to stdout, under parentdir, (if provided else under /tmp) with the extension.
+# Print a random file path to stdout.
+# The file will be placed in the given directory, or in /tmp if none is provided.
+# The last argument is the file extension.
 #
-# @EXAMPLE:
-# Get a filepath in the `/var` directory with the extension `.png`
-#
-# get_random_filename .png /var
+# Example:
+#   get_random_filename /var .png
 
 get_random_filename() {
 	[ "${#}" -eq 2 ] && parentdir="${2}" || parentdir="/tmp"
@@ -77,41 +67,31 @@ get_random_filename() {
 	echo "${parentdir}/$(date '+%b%d::%H%M%S')${extension}"
 }
 
-# @FUNCTION: run
-# @USAGE: [--reload-status] [--reload-compositor] [--success-notify <msg>] [--failure-notify <msg>] <command> [success-msg] [failure-msg]
-# @DESCRIPTION:
-# Safely execute a simple shell command, print optional success/failure messages,
-# and optionally reload the status bar or restart the compositor.
+# Run a command with optional flags that control exit behavior
+# and automatic reload actions.
 #
-# Success messages are printed to stdout; failure messages are printed to stderr.
-# Optional desktop notifications can be sent using --success-notify and --failure-notify.
-# Command output is not suppressed.
+# Options must appear first and in the order listed:
+#   --no-exit
+#   --reload-status
+#   --reload-compositor
 #
-# Options:
-#   --reload-status        Reload the status bar (via `slreload`).
-#   --reload-compositor    Restart the compositor (kills and restarts `picom`).
-#   --success-notify <msg> Send a desktop notification on success.
-#   --failure-notify <msg> Send a desktop notification on failure.
+# Supported options:
+#   --no-exit
+#       Do not exit after running the command. Normally, the
+#       function exits with the command's status.
 #
-# Restrictions:
-#   - Does NOT use `eval`; only simple commands and arguments are supported.
-#   - Shell operators like `&&`, `||`, `|`, `>`, `>>`, etc. will NOT work.
-#   - This design prevents unintended execution and makes the function safe in scripts.
+#   --reload-status
+#       After the command finishes, call: status_handle reload
 #
-# Return value:
-#   Exits with 0 if the command succeeds, 1 otherwise.
+#   --reload-compositor
+#       Before running the command, stop the compositor.
+#       After the command finishes, start it again.
 #
-# @EXAMPLES:
-#   # Run xwallpaper and print the image path on success
-#   run "xwallpaper --zoom ${image}" "${image}"
+# After the options, the remaining arguments are treated as the
+# command to run (passed through eval).
 #
-#   # Restart compositor and show a success message
-#   run --reload-compositor "xwallpaper --zoom ${image}" "Wallpaper updated" "Wallpaper failed"
-#
-#   # With notification hooks
-#   run --success-notify "Wallpaper set" \
-#       --failure-notify "Wallpaper failed" \
-#       "xwallpaper --zoom ${image}" "Wallpaper updated" "Wallpaper failed"
+# Example:
+#   run --reload-status --reload-compositor my_command --flag
 
 run() {
 	no_exit=0

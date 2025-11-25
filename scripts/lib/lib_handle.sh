@@ -1,5 +1,17 @@
 #!/bin/sh
+
 . "lib_common.sh"
+
+# This script defines a set of “*_handle” helper functions used to control
+# system features.
+#
+# Each handler uses an external program and centralizes these calls
+# here so they can be easily swapped or replaced in one location if
+# you decide to use different tools later.
+#
+# Each function expects a first argument selecting an action, followed by
+# any required parameters. They provide a simple, unified interface for
+# controlling desktop-related functionality from other scripts.
 
 volume_handle() {
 	case "${1}" in
@@ -111,7 +123,9 @@ notify_handle() {
 	case "${1}" in
 	"reload") xsetroot -name "fsignal:1" ;;
 	"send")
-		echo "${2}" > /tmp/noti.fifo
+		# Avoid Hanging
+		printf "%s\n" "${2}" |
+			dd of=/tmp/noti.fifo oflag=nonblock 2>/dev/null
 		shift 2
 		printf "%s\n" "$*" > /tmp/noti.txt
 		xsetroot -name "fsignal:1"
