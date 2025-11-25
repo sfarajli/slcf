@@ -4,13 +4,14 @@
 [x] Test on Ubuntu
 [x] Test on Void
 
+[x] Unified system for programs
 [] Verify installed files
-[] Add szoom script
-[] Add timer to nsend
+[] Add list of common keybinds for new users on the screen
+[] Add zoom
+[x] Add nsend daemon
 [] Add more screenshots
 [] Unlock the gpg keys automatically when login
-[] Automatically start everything under the deamon directory
-[] Add current state screenshot to slib
+[x] Add current state screenshot to slib
 [x] Install slock
 [x] in script only the name of the program should be given not the whole path
 [x] Fix bugs and overall polish before release
