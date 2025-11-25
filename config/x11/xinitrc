@@ -15,16 +15,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-dunst &
-picom &
-dcheck_battery &
-dcheck_mail &
+. "lib_handle.sh"
+compositor_handle start &
+status_handle start &
+bat-checkd &
+mail-syncd &
+notifd &
 setxkbmap -option "caps:ctrl_modifier"                  # Map Caps Lock to Ctrl
 setxkbmap us                                            # Set US keyboard layout
-slstatus &
-unclutter &                                             # Hide mouse cursor if inactive
 xgamma -gamma 0.8                                       # Change gamma
-swall -d "${DATADIR:-${HOME}/.local/share}/wallpapers"  # Set a wallpaper
+swall                                                   # Set a wallpaper
 xset r rate 300 50                                      # Increase cursor speed
 xset s off && xset -dpms                                # Disable screen blackening
 
