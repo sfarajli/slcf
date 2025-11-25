@@ -134,14 +134,18 @@ notify_handle() {
 }
 
 compositor_handle() {
-    case "${1}" in
-        "start") pgrep -x picom >/dev/null || picom -b & ;;
-        "stop") pgrep -x picom >/dev/null && pkill -x picom ;;
-    esac
+	case "${1}" in
+	"start") pgrep -x picom >/dev/null || picom -b & ;;
+	"stop") pgrep -x picom >/dev/null && pkill -x picom ;;
+	esac
 }
 
 status_handle() {
-	[ "${1}" = "reload" ] && slreload
+	case "${1}" in
+	"start") slstatus & ;;
+	"stop") pgrep -x slstatus >/dev/null && pkill -x slstatus ;;
+	"reload") slreload ;;
+	esac
 }
 
 menu_handle() {
