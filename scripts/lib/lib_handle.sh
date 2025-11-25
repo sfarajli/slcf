@@ -154,5 +154,5 @@ menu_handle() {
 	"center") flags="-bw 1 -c -g 1 -l 25" ;;
 	esac
 	shift
-	dmenu "${flags}"
+	dmenu ${flags}
 }
