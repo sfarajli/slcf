@@ -4,7 +4,7 @@
 
 help() {
 cat << EOF
-${0}: Remove empty lines and all the comments starting with '#'.
+${progname}: Remove empty lines and all the comments starting with '#'.
 options:
  -h              Print this message and exit
 EOF

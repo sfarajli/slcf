@@ -5,7 +5,7 @@
 
 help() {
 cat << EOF
-${0}: Wrapper script to change backlight
+${progname}: Wrapper script to change backlight
 options:
  -i [Brg]        Increase backlight by Brg
  -d [Brg]        Decrease backlight by Brg

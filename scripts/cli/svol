@@ -5,7 +5,7 @@
 
 help() {
 cat << EOF
-${0}: Change volume
+${progname}: Change volume
 options:
  -i [Vol]        Increase volume by Vol
  -d [Vol]        Decrease volume by Vol
