@@ -25,6 +25,7 @@ if [ "${#}" -eq 0 ]; then
 	link=$(< "${bookmark_path}" menu_handle center)
 
 	[ -z "${link}" ] || "${BROWSER}" "${link}"
+	exit $?
 fi
 
 [ "${#}" -ne 1 ] && invalid_use
