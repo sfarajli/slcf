@@ -1,6 +1,19 @@
 #!/bin/sh
 
-# Remove empty lines and all the comments starting with "#"
+. "lib_common.sh"
+
+help() {
+cat << EOF
+${0}: Remove empty lines and all the comments starting with '#'.
+options:
+ -h              Print this message and exit
+EOF
+exit 0
+}
+
+[ "${1}" = "-h" ] && help
+
+[ ${#} -gt 0 ] && invalid_use
 
 for file in "${@}"; do
 	sed -i "s/\s*#.*//g; /^$/ d" "${file}"

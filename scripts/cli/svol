@@ -1,10 +1,11 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
-${0}: Wrapper script to change volume
+${0}: Change volume
 options:
  -i [Vol]        Increase volume by Vol
  -d [Vol]        Decrease volume by Vol
@@ -13,37 +14,24 @@ options:
  -t              Toggle between mute and unmute
  -h              Print this message and exit
 EOF
-
 exit 0
 }
 
-check_program "pactl" "pulseaudio must be installed"
+volume_handle check_program
 
 [ $# != 1 ] && [ $# != 2 ] && invalid_use
 
 while getopts "i:d:s:pth" option; do
 	case "${option}" in
-	i) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ +${OPTARG}%" ;;
-
-	d) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ -${OPTARG}%" ;;
-
-	s) run --reload-status "pactl set-sink-volume @DEFAULT_SINK@ ${OPTARG}%" ;;
-
-	t) run --reload-status "pactl set-sink-mute @DEFAULT_SINK@ toggle" ;;
-
-	p)
-		if ! pactl get-sink-volume @DEFAULT_SINK@ \
-			| sed -e 's,.* \([0-9][0-9]*\)%.*,\1,' | head -n1 2>/dev/null; then
-			err "Failed to get current volume"
-		else
-			exit 0
-		fi
-	;;
+	i) run --reload-status "volume_handle up ${OPTARG}"   ;;
+	d) run --reload-status "volume_handle down ${OPTARG}" ;;
+	s) run --reload-status "volume_handle set ${OPTARG}"  ;;
+	t) run --reload-status "volume_handle toggle"         ;;
+	p) volume_handle get-current ;;
 	h) help ;;
 
 	*) invalid_use -h ;;
 
 	esac
 done
-
 invalid_use

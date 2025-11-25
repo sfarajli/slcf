@@ -1,59 +1,44 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
-${0}: Wrapper script to take screenshots
+${0}: Lock screen
 options:
- -n              Black screen
- -b              Blur
- -c              Take the current state of the desktop
+ -n              Black screen lock
  -h              Print this message and exit
 EOF
-
 exit 0
 }
 
-check_program "slock"
+trap 'rm -f "${lock_image}"' EXIT INT TERM HUP
 
-blur=0
-set_current_state=0
-current_wallpaper="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
-while getopts "bcnh" option; do
-	case "${option}" in
-	b)
-		check_program "mogrify" "imagemagick must be installed"
-		blur=1 ;;
-
-	c)
-		check_program "scrot"
-		set_current_state=1
-	;;
-	n)
-		slock
-		exit 0;;
-
-	h) help ;;
-
-	*) invalid_use -h ;;
-
-	esac
-done
-
-shift $((OPTIND - 1))
-
-[ "${#}" -eq 0 ] || invalid_use
-
-background="/tmp/$(date '+%b%d::%H%M%S').png"
-
-if [ "$set_current_state" -eq 0 ]; then
-	# Avoid distorting the wallpaper when calling `mogrify`
-	cp "${current_wallpaper}" "${background}"
-else
-	scrot -z "${background}"
+if [ "${#}" -eq 1 ]; then
+	[ "${1}" = "-h" ] && help
+	[ "${1}" = "-n" ] || invalid_use
+	screenlock_handle
+	exit 0
 fi
 
-[ "${blur}" -eq 1 ] && mogrify -blur 0x8 "${background}"
+[ "${#}" -ne 0 ] && invalid_use
 
-slock -f "${background}"
+mode=$(printf "Blank\nBlur\nWallpaper" | menu_handle default)
+if [ "${mode}" = "Blank" ]; then
+	screenlock_handle
+	exit 0
+fi
+
+lock_image=$(get_random_filename .png)
+if [ "${mode}" = "Blur" ]; then
+	screenshot_handle fullscreen "${lock_image}"
+	image_handle blur "${lock_image}"
+fi
+
+if [ "${mode}" = "Wallpaper" ]; then
+	current_wallpaper="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
+	cp "${current_wallpaper}" "${lock_image}"
+fi
+
+screenlock_handle "${lock_image}"

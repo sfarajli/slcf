@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
 
 help() {
 cat << EOF
@@ -9,33 +9,25 @@ options:
 [link]           Open link
  -h              Print this message and exit
 
-NOTE: bookmarks file is located at ~/.config/sites/bookmarks
+NOTE: bookmarks file is located at ~/.config/sites/bookmarks.txt
 EOF
-
 exit 0
 }
 
-alias dmenucmd="dmenu -bw 1 -c -g 1 -l 25"
-
-[ -z "${BROWSER}" ] && browser="qutebrowser" || browser="${BROWSER}"
+[ -z "${BROWSER}" ] && BROWSER="firefox"
 
 if [ "${#}" -eq 0 ]; then
+	bookmark_path="${XDG_CONFIG_HOME:-$HOME/.config}/sites/bookmarks.txt"
+	[ -e "${bookmark_path}" ] || err "Couldn't find bookmarks file"
 
-	link_file="${XDG_CONFIG_HOME:-$HOME/.config}/sites/bookmarks.txt"
+	. "lib_handle.sh"
 
-	check_program "dmenu"
+	link=$(< "${bookmark_path}" menu_handle center)
 
-	[ -z "${XDG_HOME_CONFIG}" ] || link_file="${XDG_HOME_CONFIG}"/sites/bookmarks.txt
-	[ -e "${link_file}" ] || err "Couldn't find bookmarks file"
-
-	link=$(< "${link_file}" dmenucmd)
-
-	[ -z "${link}" ] || "${browser}" "${link}"
-
-elif [ "${#}" -eq 1 ]; then
-	[ "${1}" = "-h" ] && help
-
-	"${browser}" "${1}"
-else
-	invalid_use
+	[ -z "${link}" ] || "${BROWSER}" "${link}"
 fi
+
+[ "${#}" -ne 1 ] && invalid_use
+[ "${1}" = "-h" ] && help
+
+"${BROWSER}" "${1}"

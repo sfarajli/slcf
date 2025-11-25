@@ -1,71 +1,72 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
-${0}: print the clipboard content
+${progname}: print the clipboard content
 options:
- -h              Print this message and exit
  -s              Do not send notifications
  -c [text]       Copy text to clipboard
  -f [file]       Copy content of file into clipboard
  -i              Copy standart input into clipboard
+ -h              Print this message and exit
 EOF
-
 exit 0
 }
 
-check_program "xclip"
+clipboard_handle check_program
 
-i_flg=0
+if [ "${#}" -eq 0 ]; then
+	clipboard_handle get-clipboard
+	exit $?
+fi
+
+read_stdin=0
 silent=0
 while getopts "f:c:sih" option; do
 	case "${option}" in
 	f) filepath="${OPTARG}" ;;
-
 	c) input="${OPTARG}" ;;
-
 	s) silent=1 ;;
-
-	i) i_flg=1 ;;
-
+	i) read_stdin=1 ;;
 	h) help ;;
 
 	*) invalid_use -h ;;
 	esac
 done
-
 shift $((OPTIND - 1))
 
 [ "${#}" -ne 0 ] && invalid_use
 
 if [ -n "${filepath}" ]; then
-	mime_type=$(file --mime-type -b "${filepath}")
+	mime_type=$(file_handle get-mime_type "$filepath") || {
+		err "Failed to detect mime type"; exit 1;}
 
-	if [ "${silent}" -eq 1 ]; then
-		run "xclip -selection clipboard -t ${mime_type} -i ${filepath}"
-	fi
+	clipboard_handle file "${mime_type}" "${filepath}"
+	status=$?
 
-	run --success-notify "${filepath} copied" \
-		--failure-notify "${filepath} failed to copy" \
-		"xclip -selection clipboard -t ${mime_type} -i ${filepath}"
+else
+	[ -z "$input" ] && [ "$read_stdin" -eq 1 ] && input=$(cat)
+	[ -z "$input" ] && err "Empty input"
+
+	printf '%s' "${input}" | clipboard_handle text
+	status=$?
 fi
 
-[ "${i_flg}" -eq 1 ] && input=$(cat)
-
-if [ -n "${input}" ]; then
-	# Don't use `run` since pipes are used
-	printf '%s' "${input}" | xclip -selection clipboard
-
-	if [ $? -eq 0 ]; then
-		[ "${silent}" -eq 0 ] && send_notification "${argv0}:" "'${input}' copied"
-		exit 0
+if [ "${silent}" -eq 0 ]; then
+	if [ "${status}" -eq 0 ]; then
+		if [ -n "${filepath}" ]; then
+			notify_handle "Copied file: ${filepath}"
+		else
+			notify_handle "Copied text"
+		fi
+	else
+		if [ -n "${filepath}" ]; then
+			notify_handle "Failed to copy file: ${filepath}"
+		else
+			notify_handle "Failed to copy text"
+		fi
 	fi
-
-	[ "${silent}" -eq 0 ] && send_notification "${argv0}:" "'${input}' failed to copy"
-
-	exit 1
 fi
-
-run "xclip -o -selection clipboard"

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
@@ -8,29 +9,26 @@ ${0}: Wrapper script to take screenshots
 options:
  -d [File]       Write to File
  -s              Select the area with the cursor
+ -w              Select the area with the cursor
  -h              Print this message and exit
 
-NOTE: save directory is ~/pics/screenshot
+NOTE: save directory is ~/media/photo/screenshot
 EOF
-
 exit 0
 }
 
-check_program "scrot"
-
+screenshot_handle check_program
 default_dir="${XDG_SCREENSHOT_DIR:-${HOME}/media/photo/screenshot}"
 
-s_flg=""
-while getopts "d:sh" option; do
+mode="fullscreen"
+while getopts "d:swh" option; do
 	case "${option}" in
-	d) input="${OPTARG}" ;;
+	d) input="${OPTARG}"     ;;
+	s) mode="select"         ;;
+	w) mode="focused-window" ;;
+	h) help                  ;;
 
-	s) s_flg="1" ;;
-
-	h) help ;;
-
-	*) invalid_use -h ;;
-
+	*) invalid_use -h        ;;
 	esac
 done
 
@@ -48,12 +46,13 @@ outfile="${input}"
 [ -d "${input}" ] && outfile="${input}/$(date '+%b%d::%H%M%S').png"
 
 if [ ! -e "$(dirname "${outfile}")" ]; then
-	mkdir -p "$(dirname "${outfile}")" > /dev/null 2>&1 \
-	|| err "Failed to create directory"
+	mkdir -p "$(dirname "${outfile}")" ||
+		err "Failed to create directory ${outfile}"
 fi
 
-if [ "${s_flg}" = "1" ]; then
-	run --reload-compositor "scrot -zs ${outfile}" "${outfile}"
+if [ "${mode}" = "select" ]; then
+	run --no-exit --reload-compositor \
+		"screenshot_handle ${mode} ${outfile}" && echo "${outfile}"
 else
-	run "scrot -z ${outfile}" "${outfile}"
+	screenshot_handle "${mode}" "${outfile}" && echo "${outfile}"
 fi

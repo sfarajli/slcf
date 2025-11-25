@@ -1,34 +1,44 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
-${0}: Wrapper script to send notifications
+${argv0}: Send notifications
 options:
- -s [Name] [Msg] Send Msg with Name
- -s [Msg]        Send Msg Without Name
+ -s [Msg]        Send Msg
+ -t [Time]       Disappear after Time (in second)
  -h              Print this message and exit
-EOF
 
+Note: time must be between 0 and 300,
+by default time is set to unlimited.
+EOF
 exit 0
 }
 
-case "${#}" in
-1)
-	[ "${1}" = "-h" ] && help
-	invalid_use
-;;
-2)
-	[ "${1}" = "-s" ] || invalid_use
-	notification_string="${2}"
-;;
-3)
-	[ "${1}" = "-s" ] || invalid_use
-	notification_string="${2}: ${3}"
-;;
-*) invalid_use ;;
-esac
+[ "${#}" -eq 0 ] && invalid_use
 
+time=-1
+while getopts "s:t:h" option; do
+	case "${option}" in
+	s) msg="${OPTARG}"  ;;
+	t)
+		time="${OPTARG}"
 
-send_notification "${notification_string}"
+		case "${time}" in
+			''|*[!0-9]*) err "Not a number: ${time}" ;;
+		esac
+
+		[ "${time}" -gt 300 ] && err "Out of range: ${time}"
+	;;
+	h) help             ;;
+
+	*) invalid_use -h   ;;
+	esac
+done
+
+shift $((OPTIND - 1))
+[ ${#} != 0 ] && invalid_use
+
+notify_handle send "${time}" "${msg}"

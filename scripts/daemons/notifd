@@ -1,0 +1,35 @@
+#!/bin/sh
+
+. "lib_handle.sh"
+
+FIFO=/tmp/noti.fifo
+FILE=/tmp/noti.txt
+
+[ -p "${FIFO}" ] || mkfifo "${FIFO}"
+
+exec 3<"${FIFO}"
+exec 4>"${FIFO}"
+
+tpid=""
+
+cancel() {
+    [ -n "${tpid}" ] && kill "${tpid}" 2>/dev/null
+    tpid=""
+}
+
+while read n <&3; do
+    [ "${n}" = "-1" ] && { cancel; continue; }
+
+    case "${n}" in ''|*[!0-9]*) continue ;; esac
+
+    cancel
+
+    [ "${n}" -gt 0 ] || { :>"${FILE}"; notify_handle reload; continue; }
+
+    (
+        sleep "${n}"
+        :>"${FILE}"
+        notify_handle reload
+    ) &
+    tpid=$!
+done

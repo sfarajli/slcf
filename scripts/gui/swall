@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. slib
+. "lib_common.sh"
+. "lib_handle.sh"
 
 help() {
 cat << EOF
@@ -12,58 +13,53 @@ options:
 
 NOTE: default directory is ~/.local/share/wallpapers
 A symlink at ~/.cache/wallpapers/current is created pointing to the selected wallpaper.
-
 EOF
-
 exit 0
 }
 
-check_program "xwallpaper"
-
+wallpaper_handle check_program
 SYMLINK="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper/current"
 
-if [ "${#}" = 0 ]; then
-	input="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
-elif [ "${#}" != 1 ] && [ "${#}" != 2 ]; then
-	invalid_use
-fi
+[ "${#}" -eq 0 ] && input="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
+[ "${#}" -gt 2 ] && invalid_use
 
-while getopts "hcld:" option; do
+while getopts "cd:h" option; do
 	case "${option}" in
 	c)
-		unlink "${SYMLINK}"
-		run --reload-compositor "xwallpaper --clear" ;;
-
+		rm -f "${SYMLINK}"
+		run --reload-compositor "wallpaper_handle clear"
+	;;
 	d) input="${OPTARG}" ;;
-
 	h) help ;;
 
 	*) invalid_use -h ;;
-
 	esac
 done
-
 shift $((OPTIND - 1))
 
 [ "${#}" != 0 ] && invalid_use
 
 if [ -n "${input}" ]; then
-	case $(file -L -b --mime-type "${input}") in
-	image/*) image="${input}" ;;
-
-	inode/directory) waldir="${input}" ;;
-
-	*) err "Couldn't read given file" ;;
-	esac
+	if [ -d "${input}" ]; then
+		waldir="${input}"
+	elif [ -f "${input}" ]; then
+		case "${input}" in
+			*.jpg|*.JPG|*.jpeg|*.JPEG|*.png|*.PNG) image="${input}" ;;
+			*) err "Unsupported file type" ;;
+		esac
+	else
+		err "Couldn't read given file"
+	fi
 fi
 
-if [ -n "${waldir}" ]; then
-	image=$(find "${waldir}" -iregex '.*.\(jpg\|jpeg\|png\)' 2>/dev/null \
-	| shuf -n 1 )
+if [ -d "$waldir" ]; then
+	image=$(
+		find "$waldir" \( -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' \) 2>/dev/null |
+			awk 'BEGIN{srand()} {a[NR]=$0} END{if(NR>0) print a[int(rand()*NR)+1]}'
+		)
 fi
 
 [ -z "${image}" ] && err "No image file found"
 
-mkdir -p "$(dirname "${SYMLINK}")" && \
-	ln -sf "${image}" "${SYMLINK}" && \
-	run "xwallpaper --zoom ${image}" "${image}"
+mkdir -p "$(dirname "${SYMLINK}")" && ln -sf "${image}" "${SYMLINK}"
+wallpaper_handle set "${image}" && echo "${image}"

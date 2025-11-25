@@ -1,6 +1,6 @@
 #!/bin/sh
 
-argv0=$(basename "${0}")
+progname=$(basename "${0}")
 
 # @FUNCTION: err
 # @USAGE: [-x] <message> ...
@@ -12,10 +12,10 @@ argv0=$(basename "${0}")
 #
 # This function is intended for fatal errors; it always exits the script.
 # @EXAMPLE:
-# err "Invalid usage" "Try '${argv0} -h' for help."
+# err "Invalid usage" "Try '${progname} -h' for help."
 err() {
 	if [ "${1}" != "-x" ]; then
-		printf "%s: " "${argv0}"
+		printf "%s: " "${progname}"
 	else
 		shift
 	fi
@@ -36,8 +36,8 @@ err() {
 # 	"Try 'program -h' for help."
 
 invalid_use() {
-	[ "${1}" = "-h" ] && err -x "Try '${argv0} -h' for help."
-	err "Invalid usage" "Try '${argv0} -h' for help."
+	[ "${1}" = "-h" ] && err -x "Try '${progname} -h' for help."
+	err "Invalid usage" "Try '${progname} -h' for help."
 }
 
 # @FUNCTION: check_program
@@ -59,23 +59,6 @@ check_program() {
 	err "${1} must be installed"
 }
 
-# @FUNCTION: send_notification
-# @USAGE: send_notification <message> ...
-# @DESCRIPTION:
-# Write a notification message to a temporary file and trigger a dwm notification signal.
-# The message is written to /tmp/noti.txt. If writing fails, a warning is printed to stderr.
-# After writing, a dwm signal is sent using `xsetroot -name "fsignal:1"`.
-#
-# @EXAMPLE:
-# Send a desktop notification with the message "Backup complete".
-#
-# send_notification "Backup complete"
-
-send_notification() {
-	echo "$@" > /tmp/noti.txt || echo "Warning: failed to write to notification file" >&2
-	xsetroot -name "fsignal:1"
-}
-
 # @FUNCTION: get_random_filename
 # @USAGE: get_random_filename [parentdir] <extension>
 # @DESCRIPTION:
@@ -84,7 +67,7 @@ send_notification() {
 # @EXAMPLE:
 # Get a filepath in the `/var` directory with the extension `.png`
 #
-# get_random_filename /var .png
+# get_random_filename .png /var
 
 get_random_filename() {
 	[ "${#}" -eq 2 ] && parentdir="${2}" || parentdir="/tmp"
@@ -131,42 +114,21 @@ get_random_filename() {
 #       "xwallpaper --zoom ${image}" "Wallpaper updated" "Wallpaper failed"
 
 run() {
-	relstat=0
-	compstat=0
-	exitval=0
+	no_exit=0
+	reload_status=0
+	reload_compositor=0
 
-	while [ $# -gt 0 ]; do
-		case "$1" in
-			--reload-status) relstat=1 ;;
-			--reload-compositor) compstat=1 ;;
-			--success-notify) success_msg="${2}"; shift ;;
-			--failure-notify) failure_msg="${2}"; shift ;;
-			*) break;
-		esac
-		shift
-	done
+	[ "${1}" = "--no-exit" ]           && no_exit=1           && shift
+    	[ "${1}" = "--reload-status" ]     && reload_status=1     && shift
+    	[ "${1}" = "--reload-compositor" ] && reload_compositor=1 && shift
 
-	if [ "${compstat}" -eq 1 ]; then
-		pgrep -x picom > /dev/null && killall picom
-	fi
+	trap '
+		[ "${reload_status}" -eq 1 ] && status_handle reload
+		[ "${reload_compositor}" -eq 1 ] && compositor_handle start
+	' EXIT
 
-	if ${1}; then
-		[ -n "${2}" ] && echo "${2}"
-		[ -n "${success_msg}" ] && send_notification "${argv0}:" "${success_msg}"
-	else
-		[ -n "${3}" ] && err "${3}"
-		[ -n "${failure_msg}" ] && send_notification "${argv0}:" "${failure_msg}"
+	[ "${reload_compositor}" -eq 1 ] && compositor_handle stop
 
-		exitval=1
-	fi
-
-	if [ "${relstat}" -eq 1 ]; then
-		slreload || echo "Warning: Failed to reload slstatus" >&2
-	fi
-
-	if [ "${compstat}" -eq 1 ]; then
-    		picom -b || echo "Warning: Failed to start picom" >&2
-	fi
-
-	exit "${exitval}"
+	eval "${@}"
+	[ "${no_exit}" -eq 1 ] || exit "${?}"
 }

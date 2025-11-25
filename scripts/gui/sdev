@@ -1,0 +1,49 @@
+#!/bin/sh
+
+. "lib_common.sh"
+. "lib_handle.sh"
+
+help() {
+cat << EOF
+${0}: Disable and Enable devices
+options:
+ -e [dev]        Enable dev
+ -d [dev]        Disable dev
+ -t [dev]        Toggle dev
+ -l              List devices
+ -h              Print this message and exit
+
+Note: Nondescriptive inputs may disable/enable unwanted devices.
+EOF
+exit 0
+}
+
+input_device_handle check_program
+
+get_id() {
+    id=$(input_device_handle get-id "$1") || exit 1
+    printf '%s\n' "$id"
+}
+
+while getopts "e:d:t:lh" option; do
+	case "${option}" in
+	e) run "input_device_handle enable $(get_id ${OPTARG})" ;;
+	d) run "input_device_handle disable $(get_id ${OPTARG})" ;;
+	t)
+		id=$(get_id ${OPTARG})
+		if input_device_handle is_enabled "${id}"; then
+			input_device_handle disable "${id}"
+		else
+			input_device_handle enable "${id}"
+		fi
+		exit $?
+	;;
+	l) run "input_device_handle list" ;;
+	h) help ;;
+
+	*) invalid_use -h ;;
+
+	esac
+done
+
+invalid_use
