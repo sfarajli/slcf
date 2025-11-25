@@ -31,7 +31,6 @@ while getopts "i:d:s:pth" option; do
 	h) help ;;
 
 	*) invalid_use -h ;;
-
 	esac
 done
 invalid_use
