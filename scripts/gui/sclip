@@ -27,7 +27,10 @@ read_stdin=0
 silent=0
 while getopts "f:c:sih" option; do
 	case "${option}" in
-	f) filepath="${OPTARG}" ;;
+	f)
+		filepath="${OPTARG}"
+		[ -f "${filepath}" ] || err "Not a file"
+	;;
 	c) input="${OPTARG}" ;;
 	s) silent=1 ;;
 	i) read_stdin=1 ;;
