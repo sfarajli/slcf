@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# FIXME: use `lib_handle.sh` library
 # For theme to be applied ~/.Xresource file must be present
 set -f
 
