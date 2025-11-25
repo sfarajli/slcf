@@ -78,7 +78,8 @@ install_vim()         {	COPY config/vim                      "${CONFDIR}"; }
 install_x11()         {	COPY config/x11                      "${CONFDIR}"; }
 install_zathura()     {	COPY config/zathura                  "${CONFDIR}"; }
 install_wallpapers()  { COPY etc/wallpapers                  "${DATADIR}"; }
-install_daemons()     { COPY scriptsdaemons/*                "${BINDIR}"; }
+install_script_lib()  { COPY scripts/lib/*                   "${BINDIR}";  }
+install_daemons()     { COPY scripts/daemons/*               "${BINDIR}";  }
 install_pacman()      { sudo cp etc/arch/pacman.conf         /etc;         }
 
 install_git() {
@@ -108,8 +109,6 @@ install_shell() {
 	LINK "${CONFDIR}"/shell/profile      "${BASHPROFILE}"
 	LINK "${CONFDIR}"/shell/profile      "${ZPROFILE}"
 }
-
-install_script_lib() { COPY scripts/lib/* "${BINDIR}"; }
 
 install_cli_scripts() {
 	install_script_lib
