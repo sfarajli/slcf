@@ -16,7 +16,6 @@ install_zsh
 install_cli_scripts
 
 # GUI
-install_dunst
 install_liberationmono
 install_mimeapps
 install_mpv
