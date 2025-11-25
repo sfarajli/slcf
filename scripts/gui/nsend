@@ -5,7 +5,7 @@
 
 help() {
 cat << EOF
-${argv0}: Send notifications
+${progname}: Send notifications
 options:
  -s [Msg]        Send Msg
  -t [Time]       Disappear after Time (in second)

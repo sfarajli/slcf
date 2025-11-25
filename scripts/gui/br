@@ -4,7 +4,7 @@
 
 help() {
 cat << EOF
-${0}: Open links from bookmarks through dmenu
+${progname}: Open links from bookmarks through dmenu
 options:
 [link]           Open link
  -h              Print this message and exit

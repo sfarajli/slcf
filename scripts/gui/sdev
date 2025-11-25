@@ -5,7 +5,7 @@
 
 help() {
 cat << EOF
-${0}: Disable and Enable devices
+${progname}: Disable and Enable devices
 options:
  -e [dev]        Enable dev
  -d [dev]        Disable dev

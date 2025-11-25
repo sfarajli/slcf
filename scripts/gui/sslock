@@ -5,7 +5,7 @@
 
 help() {
 cat << EOF
-${0}: Lock screen
+${progname}: Lock screen
 options:
  -n              Black screen lock
  -h              Print this message and exit
