@@ -109,6 +109,9 @@ run() {
 
 	[ "${reload_compositor}" -eq 1 ] && compositor_handle stop
 
-	eval "${@}"
-	[ "${no_exit}" -eq 1 ] || exit "${?}"
+	"${@}"
+	status=$?
+	[ "${no_exit}" -ne 0 ] && return "${status}"
+
+	exit "${status}"
 }

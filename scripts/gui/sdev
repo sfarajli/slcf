@@ -27,22 +27,15 @@ get_id() {
 
 while getopts "e:d:t:lh" option; do
 	case "${option}" in
-	e)
-		input_device_handle enable "$(get_id ${OPTARG})"
-		exit $?
-	;;
-	d)
-		input_device_handle disable "$(get_id ${OPTARG})"
-		exit $?
-	;;
+	e) run input_device_handle enable "$(get_id "${OPTARG}")"  ;;
+	d) run input_device_handle disable "$(get_id "${OPTARG}")" ;;
 	t)
-		id=$(get_id ${OPTARG})
+		id="$(get_id "${OPTARG}")"
 		if input_device_handle is_enabled "${id}"; then
-			input_device_handle disable "${id}"
+			run input_device_handle disable "${id}"
 		else
-			input_device_handle enable "${id}"
+			run input_device_handle enable "${id}"
 		fi
-		exit $?
 	;;
 	l)
 		input_device_handle list

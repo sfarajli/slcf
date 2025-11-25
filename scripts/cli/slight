@@ -21,12 +21,12 @@ exit 0
 brightness_handle check_program
 [ ${#} != 1 ] && [ ${#} != 2 ] && invalid_use
 
-while getopts "i:d:s:ph" option; do
+while getopts "i:d:s:tph" option; do
 	case "${option}" in
-	i) run --reload-status "brightness_handle up ${OPTARG}"    ;;
-	d) run --reload-status "brightness_handle down ${OPTARG}"  ;;
-	s) run --reload-status "brightness_handle set ${OPTARG}"   ;;
-	t) run --reload-status "brightness_handle toggle"          ;;
+	i) run --reload-status brightness_handle up "${OPTARG}"    ;;
+	d) run --reload-status brightness_handle down "${OPTARG}"  ;;
+	s) run --reload-status brightness_handle set "${OPTARG}"   ;;
+	t) run --reload-status brightness_handle toggle            ;;
 	p) brightness_handle get-current ;;
 	h) help ;;
 

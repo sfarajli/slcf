@@ -19,7 +19,7 @@ cancel() {
     tpid=""
 }
 
-while read n <&3; do
+while read -r n <&3; do
     [ "${n}" = "-1" ] && { cancel; continue; }
 
     case "${n}" in ''|*[!0-9]*) continue ;; esac

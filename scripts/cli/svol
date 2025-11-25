@@ -23,10 +23,10 @@ volume_handle check_program
 
 while getopts "i:d:s:pth" option; do
 	case "${option}" in
-	i) run --reload-status "volume_handle up ${OPTARG}"   ;;
-	d) run --reload-status "volume_handle down ${OPTARG}" ;;
-	s) run --reload-status "volume_handle set ${OPTARG}"  ;;
-	t) run --reload-status "volume_handle toggle"         ;;
+	i) run --reload-status volume_handle up "${OPTARG}"   ;;
+	d) run --reload-status volume_handle down "${OPTARG}" ;;
+	s) run --reload-status volume_handle set "${OPTARG}"  ;;
+	t) run --reload-status volume_handle toggle           ;;
 	p) volume_handle get-current ;;
 	h) help ;;
 

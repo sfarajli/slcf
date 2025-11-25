@@ -80,7 +80,7 @@ input_device_handle() {
 	"list") xinput list ;;
 	"get-id")
 		dev=$(xinput list --name-only | grep -i -m1 "${2}" ) || return 1
-		printf "${dev#∼ }"
+		printf "%s" "${dev#∼ }"
 	;;
 	"is_enabled")
     		xinput list-props "${2}" | grep -q "Device Enabled.*1$"
@@ -150,5 +150,5 @@ menu_handle() {
 	"center") flags="-bw 1 -c -g 1 -l 25" ;;
 	esac
 	shift
-	dmenu ${flags}
+	dmenu "${flags}"
 }

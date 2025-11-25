@@ -52,7 +52,9 @@ fi
 
 if [ "${mode}" = "select" ]; then
 	run --no-exit --reload-compositor \
-		"screenshot_handle ${mode} ${outfile}" && echo "${outfile}"
+		screenshot_handle "${mode}" "${outfile}"
+
+	[ $? -eq 0 ] && echo "${outfile}"
 else
 	screenshot_handle "${mode}" "${outfile}" && echo "${outfile}"
 fi
