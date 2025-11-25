@@ -61,5 +61,5 @@ fi
 
 [ -z "${image}" ] && err "No image file found"
 
+wallpaper_handle set "${image}" && echo "${image}" && \
 mkdir -p "$(dirname "${SYMLINK}")" && ln -sf "${image}" "${SYMLINK}"
-wallpaper_handle set "${image}" && echo "${image}"
