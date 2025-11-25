@@ -58,15 +58,15 @@ fi
 if [ "${silent}" -eq 0 ]; then
 	if [ "${status}" -eq 0 ]; then
 		if [ -n "${filepath}" ]; then
-			notify_handle "Copied file: ${filepath}"
+			notify_handle send "Copied file: ${filepath}"
 		else
 			notify_handle "Copied text"
 		fi
 	else
 		if [ -n "${filepath}" ]; then
-			notify_handle "Failed to copy file: ${filepath}"
+			notify_handle send "Failed to copy file: ${filepath}"
 		else
-			notify_handle "Failed to copy text"
+			notify_handle send "Failed to copy text"
 		fi
 	fi
 fi
