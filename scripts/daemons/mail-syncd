@@ -1,5 +1,9 @@
 #!/bin/sh
 
+. "lib_common.sh"
+
+check_program "mbsync"
+
 while true; do
     mbsync -a
     sleep 300
