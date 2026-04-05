@@ -1,4 +1,4 @@
-source "~/.config/mutt/account.muttrc" # To be added manually
+source "~/.config/mutt/account.muttrc"
 
 # General settings
 alternative_order text/plain text/enriched text/html   # prefer plain text over HTML when multiple MIME parts exist
@@ -14,8 +14,8 @@ set fcc_attach                                         # include attachments whe
 set forward_quote                                      # quote original message when forwarding
 set help = no                                          # disable help line at top
 set include                                            # include original message in replies
-set index_format="%4C %Z %{%b %d} %-20.20L %?g?[%g] ?%s"  # format of message list (index)
-set mail_check_stats=yes                               # show mailbox stats when checking mail
+set index_format = "%4C %Z %{%b %d} %-20.20L %?g?[%g] ?%s"  # format of message list (index)
+set mail_check_stats = yes                               # show mailbox stats when checking mail
 set mark_old = no                                      # don’t mark unread messages as old automatically
 set markers = no                                       # disable "+" markers for wrapped lines
 set mbox_type = Maildir                                # use Maildir format for mail storage
@@ -39,6 +39,16 @@ set strict_threads                                     # stricter email threadin
 set use_threads = threads                              # enable threading
 set wait_key = no                                      # don’t wait for keypress after commands
 set weed = yes                                         # hide uninteresting headers
+
+# Encryption
+set crypt_autoencrypt = no
+set crypt_autosign = yes
+set crypt_opportunistic_encrypt = no
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+set crypt_use_gpgme = yes
+set pgp_self_encrypt = yes
 
 # Mail directories
 set spoolfile = +INBOX
