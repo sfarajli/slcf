@@ -1,0 +1,112 @@
+source "~/.config/mutt/account.muttrc" # To be added manually
+
+# General settings
+alternative_order text/plain text/enriched text/html   # prefer plain text over HTML when multiple MIME parts exist
+auto_view text/html                                    # automatically display HTML emails
+ignore *                                               # ignore all headers by default (cleaner view)
+set abort_noattach = ask-yes                           # warn if sending mail without attachment when it looks like you meant to
+set abort_noattach_regex = "(attach|attachment|attached|enclosed|file|pdf|see file|see attached)"  # trigger words for above warning
+set auto_tag                                           # tagging applies to all tagged messages automatically
+set date_format="%d-%m-%Y"                             # date format in index/pager
+set display_filter="~/.config/mutt/strip.sh"           # external script to filter/clean message display
+set fast_reply = yes                                   # skip prompts when replying
+set fcc_attach                                         # include attachments when saving sent mail (FCC)
+set forward_quote                                      # quote original message when forwarding
+set help = no                                          # disable help line at top
+set include                                            # include original message in replies
+set index_format="%4C %Z %{%b %d} %-20.20L %?g?[%g] ?%s"  # format of message list (index)
+set mail_check_stats=yes                               # show mailbox stats when checking mail
+set mark_old = no                                      # don’t mark unread messages as old automatically
+set markers = no                                       # disable "+" markers for wrapped lines
+set mbox_type = Maildir                                # use Maildir format for mail storage
+set menu_context=5                                     # number of context lines in menus
+set menu_scroll                                        # scroll menus instead of paging
+set mime_forward = yes                                 # forward messages as MIME attachments
+set pager_format="%{%b %d} | %F | %s"                  # format in message pager
+set pipe_decode=yes                                    # decode messages before piping
+set pipe_decode_weed=yes                               # also apply weed when piping
+set query_command="abook --mutt-query '%s'"            # use abook for address lookup
+set sidebar_format="%D%* %<N?%N/>%S"                   # sidebar mailbox display format
+set sidebar_visible = no                               # sidebar hidden by default
+set sidebar_width = 20                                 # sidebar width
+set sig_dashes=yes                                     # add "-- " before signature
+set signature="~/.config/mutt/signature"               # signature file
+set sleep_time=0                                       # no delay after commands
+set sort=reverse-date                                  # newest emails first
+set sort_re                                            # sort threads by most recent message
+set status_format=" %f | Unread: %u Total: %m "        # status bar format
+set strict_threads                                     # stricter email threading rules
+set use_threads = threads                              # enable threading
+set wait_key = no                                      # don’t wait for keypress after commands
+set weed = yes                                         # hide uninteresting headers
+
+# Mail directories
+set spoolfile = +INBOX
+set postponed = +Drafts
+set trash = +Trash
+set record = +Sent
+
+# Classical mailboxes, useful for mutt build were notmuch is not enabled
+# mailboxes +INBOX +Archive +Drafts +Junk +Sent +Trash
+
+# If notmuch enabled
+named-mailboxes \
+	"INBOX" "notmuch://?query=folder:INBOX" \
+	"Archive" "notmuch://?query=folder:Archive" \
+	"Drafts" "notmuch://?query=folder:Drafts" \
+	"Junk" "notmuch://?query=folder:Junk" \
+	"Sent" "notmuch://?query=folder:Sent" \
+	"Trash" "notmuch://?query=folder:Trash"
+
+# VI keybinds
+unbind index,pager G
+unbind index,pager g
+bind attach l view-mailcap
+bind browser l select-entry
+bind index l display-message
+bind pager j next-line
+bind pager k previous-line
+bind pager l view-attachments
+macro index G  "<last-entry>"  "go to bottom"
+macro index gg "<first-entry>" "go to top"
+macro pager G  "<bottom>" "go to bottom of message"
+macro pager gg "<top>"    "go to top of message"
+
+# Keybinds and macros
+bind editor <Tab> complete-query
+bind index,pager <Space> noop
+bind index,pager <Space><Space> noop
+macro index,pager S "<sync-mailbox>!notmuch new<enter>"
+bind index,pager \CJ sidebar-next
+bind index,pager \CK sidebar-prev
+bind index,pager \CL sidebar-open
+bind index,pager i noop
+bind index,pager y modify-labels
+bind pager,attach h exit
+macro index "<space>m" "<save-message>?<tab><delete-message>" "save tagged mails or current mail"
+macro index <space>f "<enter-command>set use_threads = flat<enter>"
+macro index <space>t "<enter-command>set use_threads = threads<enter>"
+macro index,pager <Space><Space> "<save-message>" "save message"
+macro index,pager <space>a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "add the sender address to abook"
+macro index,pager <space>e "<sidebar-toggle-visible>" "toggle sidebar"
+macro index,pager <space>q "<vfolder-from-query>" "notmuch query"
+macro index,pager e "<enter-command>unignore from to cc date subject<enter><pipe-message>$MUTT_EDITOR -<enter>" "open in editor"
+macro index,pager i1 "<enter-command>set index_format=\"%4C %Z %{%b %d} %-20.20L %?g?[%g] ?%s\"<enter>" "index: default"
+macro index,pager i2 "<enter-command>set index_format=\"%4C %Z %-20.20L %?g?[%g] ?%s\"<enter>" "index: default"
+macro index,pager i3 "<enter-command>set index_format=\"%4C %Z %{%b %d} %-20.20L %-8b %?g?[%g] ?%s\"<enter>" "index: default"
+macro index,pager i4 "<enter-command>set index_format=\"%4C %Z %-20.20L %s\"<enter>" "index: default"
+macro index,pager i5 "<enter-command>set index_format=\"%4C %Z %?g?[%g] ?%s\"<enter>" "index: default"
+macro pager <space>s "<enter-command>ignore *<enter><exit><display-message>" "do not show headers"
+macro pager <space>l "<enter-command>unignore from to cc date subject<enter><exit><display-message>" "show essential headers"
+macro pager <space>u "<display-toggle-weed>" "toggle headers"
+
+# Full URL regex
+color body cyan default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+
+# Dracula-ish palette
+color index_number   color241 default
+color index_flags    color215 default
+color index_date     default  default
+color index_author   color117 default
+color index_tags     color110 default
+color indicator      color231 color60
