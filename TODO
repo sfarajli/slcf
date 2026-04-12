@@ -5,7 +5,7 @@
 [x] Test on Void
 
 [x] Unified system for programs
-[] Verify installed files
+[x] Verify installed files
 [] Add list of common keybinds for new users on the screen
 [] Add zoom
 [x] Add nsend daemon

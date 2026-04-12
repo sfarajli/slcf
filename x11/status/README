@@ -1,0 +1,33 @@
+slstatus - suckless status
+==========================
+Small tool for providing system information,
+Forked from https://git.suckless.org/slstatus
+
+
+Modules
+-------
+- Volume percentage
+- Wifi Connection
+- CPU percentage
+- Ram usage
+- Battery percentage
+- Backlight percentage
+- Date and time
+
+
+
+Installing
+----------
+Simply run
+make install
+
+
+Note
+----
+Some modules require scripts available at 
+https://git.farajli.net/slcf to function properly.
+
+
+Added patches
+-------------
+- https://tools.suckless.org/slstatus/patches/signals

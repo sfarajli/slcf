@@ -1,0 +1,31 @@
+dwm - dynamic window manager
+============================
+My build of dwm.
+Forked from https://git.suckless.org/dwm.
+
+
+Installing dwm
+--------------
+It’s recommended not to build dwm directly from this repository.
+Instead, use https://git.farajli.net/slcf,
+which provides a complete setup including slstatus, custom scripts, and other essential components.
+Refer to that repository for full build and installation instructions.
+
+If you prefer a minimal setup without additional dependencies, you can simply run:
+make install
+This will install dwm as-is from this repository.
+
+
+Keybinds
+--------
+Refer to the man page.
+
+
+Added Patches
+-------------
+- https://dwm.suckless.org/patches/preventfocusshift
+- https://dwm.suckless.org/patches/actualfullscreen
+- https://dwm.suckless.org/patches/fullgaps
+- https://dwm.suckless.org/patches/moveresize
+- https://dwm.suckless.org/patches/setborderpx
+- https://dwm.suckless.org/patches/focusmaster

@@ -1,0 +1,139 @@
+.TH DWM 1 dwm\-VERSION
+.SH NAME
+dwm \- dynamic window manager (Suleyman Farajli <suleyman@farajli.net>'s build)
+.SH DESCRIPTION
+dwm is a dynamic window manager for X. This build manages windows only in the tiled layout,
+but each window can still be set to fullscreen or floating explicitly.
+.P
+Windows are managed in a master and stacking area. The master
+area on the left contains one window by default, and the stacking area on the
+right contains all other windows. The number of master area windows can be
+adjusted from zero to an arbitrary number.
+.P
+Windows are grouped by tags. Each window can be tagged with one or multiple
+tags. Selecting certain tags displays all windows with these tags.
+.P
+Each screen contains a small status bar that displays all available tags and
+the text read from the root window name property when the screen is focused.
+In this build, the layout symbol and the title of the focused window are removed for simplicity.
+The selected tags are indicated with a slightly different
+color. The tags of the focused window are indicated with a filled square in the
+top left corner. The tags which are applied to one or more windows are
+indicated with an empty square in the top left corner.
+.P
+dwm draws a small border around windows to indicate the focus state.
+
+.SH KEYBINDINGS
+.TP
+.B Mod1\-Return
+Launch terminal (st)
+.TP
+.B Mod1\-Shift\-Return
+Launch browser (qutebrowser)
+.TP
+.B Mod1\-p
+Launch dmenu
+.TP
+.B Mod1\-Shift\-p
+Launch browser prompt (br)
+.TP
+.B Mod1\-b
+Toggle the visibility of the bar
+.TP
+.B Mod1\-j / Mod1\-k
+Cycle through the window stack
+.TP
+.B Mod1\-Shift\-m / Mod1\-m
+Increase/decrease number of master windows
+.TP
+.B Mod1\-h / Mod1\-l
+Resize master area
+.TP
+.B Mod1\-space
+Promote focused window to master (zoom)
+.TP
+.B Mod1\-Shift\-q
+Close focused window
+.TP
+.B Mod1\-Shift\-f
+Toggle floating mode for the focused window
+.TP
+.B Mod1\-f
+Toggle fullscreen mode
+.TP
+.B Mod1\-0
+View all tags
+.TP
+.B Mod1\-Shift\-0
+Apply current window to all tags
+.TP
+.B Mod1\-comma / Mod1\-period
+Focus monitor left/right
+.TP
+.B Mod1\-Shift\-comma / Mod1\-Shift\-period
+Send window to monitor left/right
+.TP
+.B Mod1\-minus / Mod1\-equal
+Decrease/increase gaps between windows
+.TP
+.B Mod1\-Shift\-minus / Mod1\-Shift\-equal
+Decrease/increase border width
+.TP
+.B Mod1\-u
+Focus master window
+.TP
+.B Mod1\-a
+Toggle focus between floating and tiled windows
+.TP
+.B Mod1\-Shift\-w
+Set wallpaper (swall)
+.TP
+.B Mod4\-Shift\-0
+Quit dwm
+.TP
+.B Mod4\-h / j / k / l
+Move floating window left/down/up/right
+.TP
+.B Mod4\-Shift\-h / j / k / l
+Resize floating window left/down/up/right
+.TP
+.B XF86MonBrightnessUp / XF86MonBrightnessDown
+Increase/decrease brightness (slight)
+.TP
+.B XF86AudioRaiseVolume / XF86AudioLowerVolume / XF86AudioMute
+Increase/decrease/mute volume (svol)
+
+.TP
+.B Tag switching
+Each number key (1 to 9) can be used with the following:
+.br
+Mod1 + KEY = View tag
+.br
+Mod1 + Control + KEY = Toggle view of tag
+.br
+Mod1 + Shift + KEY = Move focused window to tag
+.br
+Mod1 + Control + Shift + KEY = Toggle focused window on tag
+
+.SH CUSTOM SCRIPTS
+This build uses the following external shell utilities:
+
+.TP
+.B slight
+Adjust screen brightness
+.TP
+.B svol
+Adjust or mute audio volume
+.TP
+.B swall
+Set wallpaper
+.TP
+.B br
+Prompt to choose browser
+
+These are available at:
+.B https://git.farajli.net/slcf
+
+.SH SEE ALSO
+.BR dmenu (1),
+.BR st (1)

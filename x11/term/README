@@ -1,0 +1,21 @@
+st - simple terminal
+====================
+Simple terminal implementation,
+Forked from https://git.suckless.org/st
+
+
+Installing st
+-------------
+Simply run
+make install
+
+
+Keybinds
+--------
+Refer to the man page.
+
+
+Added Patches
+-------------
+- https://st.suckless.org/patches/anysize
+- https://st.suckless.org/patches/scrollback
