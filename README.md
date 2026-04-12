@@ -7,18 +7,16 @@ SLCF only installs configuration to the home directory of the user running the i
 ![desktop screenshot](./screenshot.png)
 
 # Installation 
-1. Make sure to use Zsh or Bash as your interactive shell, have an internet connection, and install at least the build-time dependencies.
+1. Make sure to use Zsh or Bash as your interactive shell, and install at least the build-time dependencies.
 
 2. Create a new user (set shell either to Zsh or Bash):
 ```
 useradd -m -s /bin/zsh <user> 
 ```
 
-3. configure `install` script
-
-4. run 
+3. run 
 ``` bash
-./install > /dev/null
+make
 ```
 4. Log out, log back in, and run `startx` on the TTY.
 
@@ -71,9 +69,6 @@ note: Some distros require installing `-devel` or `-dev` variants
 - xinput                        
 - xset                          
 - xwallpaper
-
-# Notes
-- Refer to [my dwm build man page](https://git.farajli.net/dwm.git/tree/dwm.1) for keybinds.
 
 # Troubleshooting
 - slock gives OOM error, to fix it just run:
